@@ -14,7 +14,10 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
-                    { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) }
+                    { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
+
+                    { path: 'listar', loadChildren: () => import('./demo/components/toList/toList.module').then(m => m.ToListModule) },
+                    { path: 'registrar', loadChildren: () => import('./demo/components/toRegister/toRegister.module').then(m => m.ToRegisterModule) },
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },

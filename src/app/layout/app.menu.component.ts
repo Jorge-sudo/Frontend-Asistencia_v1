@@ -15,13 +15,13 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Home',
+                label: 'Inicio',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
                 ]
             },
             {
-                label: 'UI Components',
+                label: 'Tablas',
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
                     { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
@@ -38,18 +38,30 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] },
+
+                    { label: 'Docente', icon: 'pi pi-fw pi-users', routerLink: ['/listar/docente'] },
+                    { label: 'Supervisor', icon: 'pi pi-fw pi-users', routerLink: ['/listar/supervisor'] },
+                    { label: 'Materias Asignadas', icon: 'pi pi-fw pi-calendar', routerLink: ['/listar/asignarMateria'] },
+                    { label: 'Materia', icon: 'pi pi-fw pi-book', routerLink: ['/listar/materia'] },
+                    { label: 'Asistencia', icon: 'pi pi-fw pi-check-square', routerLink: ['/listar/asistencia'] },
+                    { label: 'Licencia', icon: 'pi pi-fw pi-id-card', routerLink: ['/listar/licencia'] },
                 ]
             },
             {
-                label: 'Prime Blocks',
+                label: 'Formularios',
                 items: [
                     { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
                     { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
+
+                    { label: 'Docente', icon: 'pi pi-fw pi-users', routerLink: ['/registrar/docente'] },
+                    { label: 'Supervisor', icon: 'pi pi-fw pi-users', routerLink: ['/registrar/supervisor'] },
+                    { label: 'Asignar Materia', icon: 'pi pi-fw pi-calendar', routerLink: ['/registrar/asignarMateria'] },
+                    { label: 'Licencia', icon: 'pi pi-fw pi-id-card', routerLink: ['/registrar/licencia'] },
                 ]
             },
             {
-                label: 'Utilities',
+                label: 'Graficos',
                 items: [
                     { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'] },
                     { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
