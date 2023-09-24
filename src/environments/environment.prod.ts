@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+    controlAsistenciaApiUrl: 'http://localhost:8080',
+    production: true
 };
