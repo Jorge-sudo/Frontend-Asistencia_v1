@@ -14,6 +14,7 @@ import { PhotoService } from './asistencia/service/photo.service';
 import { DocenteService } from './asistencia/service/docente.service';
 import { AuthService } from './asistencia/components/auth/service/auth.service';
 import { authInterceptorProvider } from './asistencia/components/interceptors/AuthInterceptor';
+import { ToListModule } from './asistencia/components/toList/toList.module';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { authInterceptorProvider } from './asistencia/components/interceptors/Au
     ],
     imports: [
         AppRoutingModule,
-        AppLayoutModule
+        AppLayoutModule,
+        ToListModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

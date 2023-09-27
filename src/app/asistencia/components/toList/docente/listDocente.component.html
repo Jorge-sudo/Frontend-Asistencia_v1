@@ -1,4 +1,4 @@
-<div class="grid">
+<div class="grid" >
     <div class="col-12">
         <div class="card">
             <h5>Lista Docentes</h5>
@@ -11,19 +11,21 @@
             </p-toggleButton>
 
             <p-table #dt1
-                [value]="docenteService.docentes" dataKey="ci"
-                [loading]="docenteService.loading"
-                [totalRecords]="totalRecords"
-                [rowHover]="true" styleClass="p-datatable-gridlines"
-                [paginator]="true"
-                [globalFilterFields]="columnFilter"
-                responsiveLayout="scroll"
-                [rowsPerPageOptions]="[10, 25, 50]"
-                selectionMode="single" [(selection)]="docenteSelected"
-                [scrollable]="true" scrollHeight="400px"
-                [tableStyle]="{'min-width': '50rem'}"
-                (onPage)="onPageChange($event)"
-                *ngIf="docenteService.docentes">
+                    [value]="docentes" dataKey="ci"
+                    [loading]="loading" [rows]="10"
+                    [rowHover]="true" styleClass="p-datatable-gridlines"
+                    [paginator]="true" [lazy]="true"
+                    (onLazyLoad)="loadData($event)"
+                    [globalFilterFields]="columnFilter"
+                    responsiveLayout="scroll"
+                    [rowsPerPageOptions]="[10, 25, 50]"
+                    selectionMode="single" [(selection)]="docenteSelected"
+                    [scrollable]="true" scrollHeight="400px"
+                    [tableStyle]="{'min-width': '50rem'}"
+                    [totalRecords]="totalRecords"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Mostrando del  {first} al {last} de {totalRecords} entradas"
+                    >
 
 
                 <ng-template pTemplate="caption">
