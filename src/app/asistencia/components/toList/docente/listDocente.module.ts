@@ -14,6 +14,8 @@ import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
     imports: [
@@ -30,7 +32,9 @@ import { FormsModule } from '@angular/forms';
 		MultiSelectModule,
 		DropdownModule,
 		ProgressBarModule,
-		ToastModule
+		ToastModule,
+        InputSwitchModule,
+        ConfirmDialogModule
     ],
     declarations: [ListDocenteComponent]
 })
