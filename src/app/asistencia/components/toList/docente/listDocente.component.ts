@@ -3,9 +3,9 @@ import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService, LazyLoadEvent, ConfirmEventType } from 'primeng/api';
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { Observable, catchError, map, tap } from 'rxjs';
-import { Docente } from 'src/app/asistencia/api/Docente';
+import { Docente } from 'src/app/asistencia/api/docente';
 import { InputSwitchOnChangeEvent } from 'primeng/inputswitch';
-import { DocenteAndSupervisorActivo } from 'src/app/asistencia/api/command/DocenteAndSupervisorActivo';
+import { CommandDocenteAndSupervisorActivo } from 'src/app/asistencia/api/command/commandDocenteAndSupervisorActivo';
 
 @Component({
     templateUrl: './listDocente.component.html',
@@ -15,7 +15,7 @@ export class ListDocenteComponent implements OnInit{
 
     loading: boolean = true;
     docentes: Docente[] = [];
-    docenteActivo: DocenteAndSupervisorActivo = {};
+    docenteActivo: CommandDocenteAndSupervisorActivo = {};
     rows: number = 10;
     numberOfElements: number = 0;
     totalRecords: number = 0;
@@ -96,13 +96,13 @@ export class ListDocenteComponent implements OnInit{
         const newStatus = event.checked ? 'habilitar' : 'deshabilitar';
 
         this.confirmationService.confirm({
-            message: '¿Está seguro de que quieres ' + newStatus+ '?',
+            message: '¿Está seguro de que quieres ' + newStatus+ ' el estado?',
             header: 'Confirmación',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has aceptado' });
                 // Llamar al servicio para cambiar el estado
-                this.updateDocente(docente).subscribe();
+                this.updateDocente(docente, event).subscribe();
             },
             reject: (type: any) => {
                 switch (type) {
@@ -121,7 +121,7 @@ export class ListDocenteComponent implements OnInit{
     }
 
 
-    updateDocente(docente: Docente): Observable<any> {
+    updateDocente(docente: Docente, event:InputSwitchOnChangeEvent): Observable<any> {
         this.docenteActivo.ci = docente.ci;
         this.docenteActivo.activo = docente.activo;
 
@@ -129,11 +129,12 @@ export class ListDocenteComponent implements OnInit{
             map((result: any) => {
                 const response = result.update;
                 if (response) {
-                this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Se ha actualizado el estado del docente' });
+                this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Se ha actualizado el estado del docente ' + docente.nombre + ' ' + docente.apellido + '.' });
                 }
             }),
             catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido actualizar el estado del docente' });
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido actualizar el estado del docente ' + docente.nombre + ' ' + docente.apellido + '.'});
+                docente.activo = !event.checked;
                 throw error;
             })
         );

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DocenteAndSupervisorActivo } from '../api/command/DocenteAndSupervisorActivo';
+import { CommandDocenteAndSupervisorActivo } from '../api/command/commandDocenteAndSupervisorActivo';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class SupervisorService {
         return this.http.get<any>(this.apiUrl);
     }
 
-    public updateSupervisorActivo(supervisor: DocenteAndSupervisorActivo) {
-        return this.http.post<any>(this.apiUrl + '/activo', supervisor, {headers: this.httpHeaders});
+    public updateSupervisorActivo(command: CommandDocenteAndSupervisorActivo) {
+        return this.http.post<any>(this.apiUrl + '/activo', command, {headers: this.httpHeaders});
     }
 }
