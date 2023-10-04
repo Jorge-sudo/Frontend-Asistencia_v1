@@ -67,6 +67,10 @@ export class ListDocenteComponent implements OnInit{
                     this.totalRecords = result.data.totalElements;
                     this.totalPages = result.data.totalPages;
                     this.loading = !result.view;
+                }),
+                catchError((error) => {
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                    throw error;
                 })
             ).subscribe();
         }
@@ -87,6 +91,10 @@ export class ListDocenteComponent implements OnInit{
                 this.totalRecords = result.data.totalElements;
                 this.totalPages = result.data.totalPages;
                 this.loading = !result.view;
+            }),
+            catchError((error) => {
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                throw error;
             })
         ).subscribe();
     }

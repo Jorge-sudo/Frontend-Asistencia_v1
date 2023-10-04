@@ -1,8 +1,152 @@
-<div class="grid">
+<div class="grid" >
     <div class="col-12">
         <div class="card">
-            <h4>Lista de Licencias</h4>
-            <p>table.</p>
+            <h4>Lista Licencias</h4>
+
+
+
+            <div class="flex flex-column sm:flex-row">
+                <p-toggleButton
+                    [(ngModel)]="idFrozen"
+                    [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
+                    [onLabel]="'Descongelar Nombre'" offLabel="Congelar Nombre"
+                    [style]="{'width': '12rem', 'margin': '10px'}">
+                </p-toggleButton>
+                <span class="p-float-label m-3">
+                    <p-dropdown [options]="selectionsData"
+                                [(ngModel)]="dataSelected"
+                                placeholder="Seleccione"
+                                optionLabel="name" inputId="float-label"
+                                (onChange)="eventSelect($event)"></p-dropdown>
+                    <label for="float-label">Seleccione</label>
+                </span>
+            </div>
+
+            <p-table #dt1
+                    [value]="docenteLicencias" dataKey="idDocenteLicencia"
+                    [loading]="loading" [rows]="10"
+                    [rowHover]="true" styleClass="p-datatable-gridlines"
+                    [paginator]="true" [lazy]="true"
+                    (onLazyLoad)="loadData($event)"
+                    responsiveLayout="scroll"
+                    [rowsPerPageOptions]="[10, 25, 50]"
+                    selectionMode="single" [(selection)]="docenteLicenciaSelected"
+                    [scrollable]="true" scrollHeight="400px"
+                    [tableStyle]="{'min-width': '50rem'}"
+                    [totalRecords]="totalRecords"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Mostrando del  {first} al {last} de {totalRecords} entradas"
+                    >
+
+
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Limpiar Filtros"
+                                class="p-button-outlined mb-2"
+                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"
+                                    #filter (input)="onGlobalFilter(dt1, $event)"
+                                    placeholder="Buscar" class="w-full"/>
+                        </span>
+                    </div>
+                </ng-template>
+
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width: 10rem" pSortableColumn="docente.fotografia"  pFrozenColumn >
+                            <div class="flex justify-content-between align-items-center">
+                                Fotografia
+                                <p-sortIcon field="docente.fotografia"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem" pSortableColumn="docente.nombre" pFrozenColumn [frozen]="idFrozen" >
+                            <div class="flex justify-content-between align-items-center">
+                                Nombre
+                                <p-sortIcon field="docente.nombre"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 14rem" pSortableColumn="docente.apellido">
+                            <div class="flex justify-content-between align-items-center">
+                                Apellido
+                                <p-sortIcon field="docente.apellido"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem" pSortableColumn="docente.ci" >
+                            <div class="flex justify-content-between align-items-center">
+                                C.I.
+                                <p-sortIcon field="docente.ci"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 10rem" pSortableColumn="licencia.fechaInicio">
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha Inicio
+                                <p-sortIcon field="licencia.fechaInicio"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem" pSortableColumn="licencia.fechaFinal" >
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha Final
+                                <p-sortIcon field="licencia.fechaFinal"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem" pSortableColumn="licencia.descripcion">
+                            <div class="flex justify-content-between align-items-center">
+                                Descripcion
+                                <p-sortIcon field="licencia.descripcion"></p-sortIcon>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+
+                <ng-template pTemplate="body" let-docenteLicencia>
+                    <tr  [pSelectableRow]="docenteLicencia" >
+                        <td pFrozenColumn  >
+                            <img style="margin: 3px;"
+                                 [src]="'data:image/png;base64,' + docenteLicencia.base64Image"
+                                 width="55" height="56" >
+                        </td>
+                        <td pFrozenColumn [frozen]="idFrozen">
+                            {{docenteLicencia.nombreDocente}}
+                        </td>
+                        <td>
+                            {{docenteLicencia.apellidoDocente}}
+                        </td>
+                        <td >
+                            {{docenteLicencia.ciDocente}}
+                        </td>
+                        <td>
+                            {{docenteLicencia.fechaInicio}}
+                        </td>
+                        <td>
+                            {{docenteLicencia.fechaFinal}}
+                        </td>
+                        <td>
+                            {{docenteLicencia.descripcion}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron Licencias.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando datos de Licencias. Espere por favor.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
+
     </div>
+
 </div>
+
+<p-toast></p-toast>

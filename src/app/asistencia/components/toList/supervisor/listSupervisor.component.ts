@@ -28,6 +28,10 @@ export class ListSupervisorComponent {
             tap((result: any) => {
                 this.supervisores = result.data;
                 this.loading = !result.view;
+            }),
+            catchError((error) => {
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                throw error;
             })
         ).subscribe();
     }
