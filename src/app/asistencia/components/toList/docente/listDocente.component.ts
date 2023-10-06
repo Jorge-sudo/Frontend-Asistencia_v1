@@ -50,6 +50,7 @@ export class ListDocenteComponent implements OnInit{
         this.loadInit();
     }
 
+
     loadData(event:LazyLoadEvent) {
         this.first = Number(event.first);
         this.rows = Number(event.rows);
@@ -73,6 +74,10 @@ export class ListDocenteComponent implements OnInit{
                     throw error;
                 })
             ).subscribe();
+        }else{
+            // Calculamos la página actual
+            this.page = Math.floor(this.first / this.rows);
+            this.loadDataGlobalFilter().subscribe();
         }
     }
 
@@ -82,21 +87,24 @@ export class ListDocenteComponent implements OnInit{
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
         this.globalFilter = (event.target as HTMLInputElement).value;
 
-        this.docenteService.getDocentesFilter(this.order , this.page,
-                                              this.rows, this.sortField,
-                                              this.globalFilter).pipe(
-            tap((result: any) => {
-                this.docentes = result.data.content;
-                this.numberOfElements = result.data.numberOfElements;
-                this.totalRecords = result.data.totalElements;
-                this.totalPages = result.data.totalPages;
-                this.loading = !result.view;
-            }),
-            catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
-                throw error;
-            })
-        ).subscribe();
+        this.loadDataGlobalFilter().subscribe();
+    }
+
+    loadDataGlobalFilter(): Observable<any> {
+        return this.docenteService.getDocentesFilter(this.order , this.page,this.rows,
+                                                    this.sortField,this.globalFilter).pipe(
+                map((result: any) => {
+                    this.docentes = result.data.content;
+                    this.numberOfElements = result.data.numberOfElements;
+                    this.totalRecords = result.data.totalElements;
+                    this.totalPages = result.data.totalPages;
+                    this.loading = !result.view;
+                }),
+                catchError((error) => {
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                    throw error;
+                })
+        );
     }
 
     confirmChangeState(event:InputSwitchOnChangeEvent , docente:Docente ){

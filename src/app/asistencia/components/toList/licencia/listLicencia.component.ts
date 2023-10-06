@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Observable, catchError, map, tap } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { DocenteLicencia } from 'src/app/asistencia/api/docenteLicencia';
 import { DocenteLicenciaService } from 'src/app/asistencia/service/docente-licencia.service';
 
@@ -67,6 +67,10 @@ export class ListLicenciaComponent implements OnInit{
             this.page = Math.floor(this.first / this.rows);
             // llamar el servicio pasando page y rows
             this.initData();
+        }else{
+            // Calculamos la página actual
+            this.page = Math.floor(this.first / this.rows);
+            this.loadDataGlobalFilter().subscribe();
         }
     }
 
@@ -76,10 +80,14 @@ export class ListLicenciaComponent implements OnInit{
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
         this.globalFilter = (event.target as HTMLInputElement).value;
 
-        this.docenteLicenciaService.getDocenteLicenciasFilterGlobal(this.order , this.page,
-                                              this.rows, this.sortField,
-                                              this.globalFilter).pipe(
-            tap((result: any) => {
+        this.loadDataGlobalFilter().subscribe();
+    }
+
+    loadDataGlobalFilter(): Observable<any> {
+        return this.docenteLicenciaService.getDocenteLicenciasFilterGlobal(this.order , this.page,
+                                            this.rows, this.sortField,
+                                                this.globalFilter).pipe(
+            map((result: any) => {
                 this.docenteLicencias = result.data.content;
                 this.numberOfElements = result.data.numberOfElements;
                 this.totalRecords = result.data.totalElements;
@@ -90,7 +98,7 @@ export class ListLicenciaComponent implements OnInit{
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
                 throw error;
             })
-        ).subscribe();
+        );
     }
 
     loadDocenteLicenciaActive(): Observable<any> {
@@ -127,7 +135,6 @@ export class ListLicenciaComponent implements OnInit{
 
 
     eventSelect(event: any){
-        console.log(event);
         this.initData();
     }
 

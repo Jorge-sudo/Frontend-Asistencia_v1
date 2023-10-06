@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ListLicenciaComponent } from './listAsistencia.component';
+import { ListAsistenciaComponent } from './listAsistencia.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: ListLicenciaComponent }
+        { path: '', component: ListAsistenciaComponent }
     ])],
     exports: [RouterModule]
 })
-export class ListLicenciaRoutingModule { }
+export class ListAsistenciaRoutingModule { }

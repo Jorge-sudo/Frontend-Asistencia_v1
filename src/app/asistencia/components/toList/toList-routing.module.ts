@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
     imports: [RouterModule.forChild([
         { path: 'asistencia', loadChildren: () => import('./asistencia/listAsistencia.module').then(m => m.ListLicenciaModule) },
-        { path: 'asignarMateria', loadChildren: () => import('./assignMateria/listAssignMateria.module').then(m => m.ListAssignMateriaModule) },
+        { path: 'asignatura', loadChildren: () => import('./asignatura/listAsignatura.module').then(m => m.ListAsignaturaModule) },
         { path: 'docente', loadChildren: () => import('./docente/listDocente.module').then(m => m.ListDocenteModule) },
         { path: 'licencia', loadChildren: () => import('./licencia/listLicencia.module').then(m => m.ListLicenciaModule) },
         { path: 'materia', loadChildren: () => import('./materia/listMateria.module').then(m => m.ListMateriaModule) },

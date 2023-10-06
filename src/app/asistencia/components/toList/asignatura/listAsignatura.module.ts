@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListAsistenciaRoutingModule } from './listAsistencia-routing.module';
-import { ListAsistenciaComponent } from './listAsistencia.component';
+import { AsignaturaRoutingModule } from './listAsignatura-routing.module';
+import { ListAsignaturaComponent } from './listAsignatura.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,12 +14,11 @@ import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     imports: [
         CommonModule,
-        ListAsistenciaRoutingModule,
+        AsignaturaRoutingModule,
         FormsModule,
 		TableModule,
 		RatingModule,
@@ -31,9 +30,8 @@ import { CalendarModule } from 'primeng/calendar';
 		MultiSelectModule,
 		DropdownModule,
 		ProgressBarModule,
-		ToastModule,
-        CalendarModule
+		ToastModule
     ],
-    declarations: [ListAsistenciaComponent]
+    declarations: [ListAsignaturaComponent]
 })
-export class ListAsistenciaModule { }
+export class ListAsignaturaModule { }

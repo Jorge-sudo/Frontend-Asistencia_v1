@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ListAssignMateriaComponent } from './listAssignMateria.component';
+import { ListAsignaturaComponent } from './listAsignatura.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: ListAssignMateriaComponent }
+        { path: '', component: ListAsignaturaComponent }
     ])],
     exports: [RouterModule]
 })
-export class AssignMateriaRoutingModule { }
+export class AsignaturaRoutingModule { }
