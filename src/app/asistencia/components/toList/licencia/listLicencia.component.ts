@@ -135,6 +135,7 @@ export class ListLicenciaComponent implements OnInit{
 
 
     eventSelect(event: any){
+        this.dataSelected = event.value;
         this.initData();
     }
 

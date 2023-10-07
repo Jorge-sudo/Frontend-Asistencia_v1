@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: 'asistencia', loadChildren: () => import('./asistencia/listAsistencia.module').then(m => m.ListLicenciaModule) },
+        { path: 'asistencia', loadChildren: () => import('./asistencia/listAsistencia.module').then(m => m.ListAsistenciaModule) },
         { path: 'asignatura', loadChildren: () => import('./asignatura/listAsignatura.module').then(m => m.ListAsignaturaModule) },
         { path: 'docente', loadChildren: () => import('./docente/listDocente.module').then(m => m.ListDocenteModule) },
         { path: 'licencia', loadChildren: () => import('./licencia/listLicencia.module').then(m => m.ListLicenciaModule) },

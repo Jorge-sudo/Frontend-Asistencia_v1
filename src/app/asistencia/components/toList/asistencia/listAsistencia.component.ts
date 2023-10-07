@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable, catchError, tap } from 'rxjs';
@@ -9,7 +9,9 @@ import { AsistenciaService } from 'src/app/asistencia/service/asistencia.service
     templateUrl: './listAsistencia.component.html',
     providers: [MessageService]
 })
-export class ListAsistenciaComponent {
+export class ListAsistenciaComponent implements OnInit{
+
+    es: any;
 
     dateSearch: Date | undefined;
 
@@ -30,7 +32,7 @@ export class ListAsistenciaComponent {
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(public asistenciaService: AsistenciaService ,
-                private messageService: MessageService) {}
+                private messageService: MessageService ) {}
 
     loadInit(date: string){
         this.asistenciaService.getAsistenciasFindAllByDate(this.order, this.page,
@@ -47,6 +49,15 @@ export class ListAsistenciaComponent {
     }
 
     ngOnInit(): void {
+        this.es = {
+            //date
+            dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+            monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            // Otros valores opcionales
+            monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May",
+            "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"], // Nombres cortos de los meses
+          };
         this.loadInit(this.getDateToday());
     }
 

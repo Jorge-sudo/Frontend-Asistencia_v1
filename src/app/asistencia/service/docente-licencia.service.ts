@@ -16,6 +16,7 @@ export class DocenteLicenciaService {
 
     public getDocenteLicenciasInactive( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
+                            
         return this.http.get<any>(this.apiUrl + 'page/inactive/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short);
@@ -23,6 +24,7 @@ export class DocenteLicenciaService {
 
     public getDocenteLicenciasActive( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
+
         return this.http.get<any>(this.apiUrl + 'page/active/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short);
@@ -31,6 +33,7 @@ export class DocenteLicenciaService {
     public getDocenteLicenciasFilterGlobal( order:number ,page:number,
                               limit: number, short: string,
                               globalFilter: string ): Observable<any> {
+
         return this.http.get<any>(this.apiUrl + 'page/search/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short + '?globalFilter=' + globalFilter);
