@@ -2,13 +2,13 @@
 	<div class="col-12">
 		<div class="card">
 			<h5>Tree</h5>
-			<p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"></p-tree>
+			<p-tree [value]="files1" selectionMode="checkbox" ></p-tree>
 		</div>
 	</div>
 	<div class="col-12">
 		<div class="card">
 			<h5>TreeTable</h5>
-			<p-treeTable [value]="files2" [columns]="cols" selectionMode="checkbox" [(selection)]="selectedFiles2">
+			<p-treeTable [value]="files2" [columns]="cols" selectionMode="checkbox">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
 						<th *ngFor="let col of columns">
@@ -31,7 +31,7 @@
 	<div class="col-12">
 		<div class="card">
 			<h5>Horizontal Tree</h5>
-			<p-tree [value]="files3" layout="horizontal" selectionMode="single" [(selection)]="selectedFiles3"></p-tree>
+			<p-tree [value]="files3" layout="horizontal" selectionMode="single"></p-tree>
 		</div>
 	</div>
 </div>

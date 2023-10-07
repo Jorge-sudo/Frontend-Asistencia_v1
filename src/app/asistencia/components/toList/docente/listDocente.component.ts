@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService, LazyLoadEvent, ConfirmEventType } from 'primeng/api';
+import { MessageService, ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { Observable, catchError, map, tap } from 'rxjs';
 import { Docente } from 'src/app/asistencia/api/docente';
@@ -51,7 +51,7 @@ export class ListDocenteComponent implements OnInit{
     }
 
 
-    loadData(event:LazyLoadEvent) {
+    loadData(event:any) {
         this.first = Number(event.first);
         this.rows = Number(event.rows);
         this.order = event.sortOrder === undefined ? 1 : event.sortOrder;

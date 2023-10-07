@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable, catchError, tap } from 'rxjs';
 import { Asistencia } from 'src/app/asistencia/api/asistencia';
@@ -61,7 +61,7 @@ export class ListAsistenciaComponent implements OnInit{
         this.loadInit(this.getDateToday());
     }
 
-    loadData(event:LazyLoadEvent) {
+    loadData(event:any) {
         this.first = Number(event.first);
         this.rows = Number(event.rows);
         this.order = event.sortOrder === undefined ? 1 : event.sortOrder;
@@ -124,7 +124,7 @@ export class ListAsistenciaComponent implements OnInit{
     }
 
 
-    onSelect(event: Event){
+    onSelect(event: any){
         console.log('focus ' + this.dateSearch);
         this.loadInit(this.getDateSearchFormat(this.dateSearch!));
         console.log(event);

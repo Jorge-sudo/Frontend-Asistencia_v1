@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable, catchError, map } from 'rxjs';
 import { DocenteLicencia } from 'src/app/asistencia/api/docenteLicencia';
@@ -56,7 +56,7 @@ export class ListLicenciaComponent implements OnInit{
     }
 
 
-    loadData(event:LazyLoadEvent) {
+    loadData(event:any) {
         this.first = Number(event.first);
         this.rows = Number(event.rows);
         this.order = event.sortOrder === undefined ? 1 : event.sortOrder;

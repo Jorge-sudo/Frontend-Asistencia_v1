@@ -52,7 +52,7 @@ export class ListMateriaComponent implements OnInit{
         this.loadInit();
     }
 
-    loadData(event:LazyLoadEvent) {
+    loadData(event:any) {
         this.first = Number(event.first);
         this.rows = Number(event.rows);
         this.order = event.sortOrder === undefined ? 1 : event.sortOrder;
