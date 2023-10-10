@@ -14,13 +14,27 @@ import { PhotoService } from './asistencia/service/photo.service';
 import { DocenteService } from './asistencia/service/docente.service';
 import { AuthService } from './asistencia/components/auth/service/auth.service';
 import { authInterceptorProvider } from './asistencia/components/interceptors/AuthInterceptor';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent
     ],
     imports: [
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         AppLayoutModule,
         AppRoutingModule
     ],

@@ -1,68 +1,59 @@
 {
   "primeng": {
-    "dayNames": [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado"
-    ],
-    "dayNamesShort": [
-      "Dom",
-      "Lun",
-      "Mar",
-      "Mié",
-      "Jue",
-      "Vie",
-      "Sáb"
-    ],
-    "dayNamesMin": [
-      "Do",
-      "Lu",
-      "Ma",
-      "Mi",
-      "Ju",
-      "Vi",
-      "Sa"
-    ],
-    "monthNames": [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre"
-    ],
-    "monthNamesShort": [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dic"
-    ],
-    "today": "Hoy",
-    "weekHeader": "Semana"
+    "startsWith": "Comienza con",
+    "contains": "Contiene",
+    "notContains": "No contiene",
+    "endsWith": "Termina con",
+    "equals": "Igual a",
+    "notEquals": "No es igual a",
+    "noFilter": "Sin filtro",
+    "lt": "Menor que",
+    "lte": "Menor o igual que",
+    "gt": "Mayor que",
+    "gte": "Mayor o igual que",
+    "is": "Es",
+    "isNot": "No es",
+    "before": "Antes",
+    "after": "Después",
+    "dateIs": "La fecha es",
+    "dateIsNot": "La fecha no es",
+    "dateBefore": "La fecha es antes",
+    "dateAfter": "La fecha es después",
+    "clear": "Limpiar",
+    "apply": "Aplicar",
+    "matchAll": "Coincide con todo",
+    "matchAny": "Coincide con cualquiera",
+    "addRule": "Agregar regla",
+    "removeRule": "Eliminar regla",
+    "accept": "Sí",
+    "reject": "No",
+    "choose": "Elegir",
+    "upload": "Subir",
+    "cancel": "Cancelar",
+    "dayNames": ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
+    "dayNamesShort": ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],
+    "dayNamesMin": ["Do","Lu","Ma","Mi","Ju","Vi","Sá"],
+    "monthNames": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+    "monthNamesShort": ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
+    "emptyMessage": "No se encontraron resultados",
+    "emptyFilterMessage": "No se encontraron resultados"
   },
-  "project-asistencia": {
+  "asistencia": {
     "languages": {
       "es": "Español",
       "en": "Inglés"
     },
-    "hello": "Hola"
+    "menu": {
+      "initiation": "Inicio",
+      "dashboard": "Panel",
+      "table": "Tabla",
+      "form": "Formulario",
+      "docente": "Docente",
+      "supervisor": "Supervisor",
+      "asignatura": "Asignatura",
+      "materia": "Materia",
+      "asistencia": "Asistencia",
+      "licencia": "Licencia"
+    }
   }
 }

@@ -1,9 +1,12 @@
-<div class="layout-footer">
-    <img src="assets/layout/images/logoSalesiana.png" alt="Logo" height="20" class="mr-2"/>
-    by
-    <span class="font-medium ml-2">PrimeNG</span>
-    <p-button label="{{'project-asistencia.languages.es' | translate }}" (onClick)="es()" styleClass="p-button-link"></p-button>
-    <strong>|</strong>
-    <p-button label="{{'project-asistencia.languages.en' | translate }}" (onClick)="en()" styleClass="p-button-link"></p-button>
-    <span>{{ 'project-asistencia.hello' | translate }}</span>
+<div class="flex align-content-between flex-wrap layout-footer">
+    <div class="flex align-items-center justify-content-center" >
+      <img src="assets/layout/images/logoSalesiana.png" alt="Logo" height="20" class="mr-2"/>
+      <span class="font-medium ml-2">Salesiana</span>
+    </div>
+    <div class="flex align-items-center justify-content-center" >
+      <p-button label="{{'asistencia.languages.es' | translate }}"
+                (onClick)="es()"
+                styleClass="p-button-link"></p-button><strong>|</strong>
+      <p-button label="{{'asistencia.languages.en' | translate }}" (onClick)="en()" styleClass="p-button-link"></p-button>
+    </div>
 </div>
