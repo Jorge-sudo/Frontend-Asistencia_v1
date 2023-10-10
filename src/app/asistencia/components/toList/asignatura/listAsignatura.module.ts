@@ -20,17 +20,17 @@ import { FormsModule } from '@angular/forms';
         CommonModule,
         AsignaturaRoutingModule,
         FormsModule,
-		TableModule,
-		RatingModule,
-		ButtonModule,
-		SliderModule,
-		InputTextModule,
-		ToggleButtonModule,
-		RippleModule,
-		MultiSelectModule,
-		DropdownModule,
-		ProgressBarModule,
-		ToastModule
+        TableModule,
+        RatingModule,
+        ButtonModule,
+        SliderModule,
+        InputTextModule,
+        ToggleButtonModule,
+        RippleModule,
+        MultiSelectModule,
+        DropdownModule,
+        ProgressBarModule,
+        ToastModule
     ],
     declarations: [ListAsignaturaComponent]
 })
