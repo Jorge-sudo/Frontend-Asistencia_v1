@@ -19,7 +19,6 @@ export class AppFooterComponent implements OnInit{
     this.translate.setDefaultLang('en');
     this.translate.onLangChange.subscribe((event) => {
       const newLang = event.lang;
-      console.log(newLang)
       // hacer algo con el nuevo idioma
       this.translate.get('primeng').subscribe(res => this.config.setTranslation(res));
     });

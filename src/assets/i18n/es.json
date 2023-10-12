@@ -30,15 +30,89 @@
     "choose": "Elegir",
     "upload": "Subir",
     "cancel": "Cancelar",
-    "dayNames": ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
-    "dayNamesShort": ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],
-    "dayNamesMin": ["Do","Lu","Ma","Mi","Ju","Vi","Sá"],
-    "monthNames": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
-    "monthNamesShort": ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
+    "dayNames": [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado"
+    ],
+    "dayNamesShort": [
+      "Dom",
+      "Lun",
+      "Mar",
+      "Mié",
+      "Jue",
+      "Vie",
+      "Sáb"
+    ],
+    "dayNamesMin": [
+      "Do",
+      "Lu",
+      "Ma",
+      "Mi",
+      "Ju",
+      "Vi",
+      "Sá"
+    ],
+    "monthNames": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    "monthNamesShort": [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic"
+    ],
     "emptyMessage": "No se encontraron resultados",
     "emptyFilterMessage": "No se encontraron resultados"
   },
   "asistencia": {
+    "message": {
+      "updateTitle": "Actualizar",
+      "updated": "Actualizado",
+      "updatedMessage": "Se ha actualizado el dato.",
+      "updateErrorMessage": "No se ha podido actualizar el dato.",
+      "errorTitle": "Error",
+      "infoTitle": "Información",
+      "warningTitle": "Advertencia",
+      "errorDataMesage": "No se ha podido cargar los datos.",
+      "errorDataMesageUpdate": "No se ha podido actualizar.",
+      "errorDataMesageDelete": "No se ha podido eliminar.",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar",
+      "confirmMessageQuestion": "¿Está seguro de que quieres ",
+      "confirmHeader": "Confirmación",
+      "confirmTitle": "Confirmación",
+      "confirmMessage": "se aceptado",
+      "rejectTitle": "Rechazado",
+      "rejectMessage": "se rechazado",
+      "cancelTitle": "Cancelado",
+      "cancelMessage": "se cancelado",
+      "labelClearFilter": "Limpiar Filtros",
+      "search": "Buscar"
+    },
     "languages": {
       "es": "Español",
       "en": "Inglés"
@@ -54,6 +128,102 @@
       "materia": "Materia",
       "asistencia": "Asistencia",
       "licencia": "Licencia"
+    },
+    "toList": {
+      "currentPageReportTemplate": "Mostrando {first} a {last} de {totalRecords} registros",
+      "docente": {
+        "title": "Lista de Docentes",
+        "offToggleLabel": "Congelar Nombre",
+        "onToggleLabel": "Descongelar Nombre",
+        "emptyMessage": "No se encontraron Docentes.",
+        "loadingMessage": "Cargando datos de Docentes. Espere por favor.",
+        "table": {
+          "photography": "Fotografía",
+          "name": "Nombre",
+          "lastName": "Apellido",
+          "ci": "C.I.",
+          "email": "Email",
+          "gender": "Género",
+          "institutionalEmail": "Correo Institucional",
+          "active": "Activo"
+        }
+      },
+      "supervisor": {
+        "title": "Lista de Supervisores",
+        "offToggleLabel": "Congelar Nombre",
+        "onToggleLabel": "Descongelar Nombre",
+        "emptyMessage": "No se encontraron Supervisores.",
+        "loadingMessage": "Cargando datos de Supervisores. Espere por favor.",
+        "table": {
+          "photography": "Fotografía",
+          "name": "Nombre",
+          "lastName": "Apellido",
+          "ci": "C.I.",
+          "email": "Email",
+          "gender": "Género",
+          "institutionalEmail": "Correo Institucional",
+          "reportEmail": "Reporte Email",
+          "reportEmailInstitutional": "Reporte Email Institucional",
+          "active": "Activo"
+        }
+      },
+      "asignatura": {
+        "title": "Lista de Asignaturas",
+        "offToggleLabel": "Congelar Materia",
+        "onToggleLabel": "Descongelar Materia",
+        "initInfo": "Selecciona carrera, dia, semestre y turno.",
+        "emptyMessage": "No se encontraron Asignaturas.",
+        "loadingMessage": "Cargando datos de las Asignaturas. Espere por favor.",
+        "buttonLoadData": "Cargar Datos",
+        "searchTime": "Buscar por hora",
+        "placeholder": {
+          "carrera": "Seleccione la carrera",
+          "semestre": "Seleccione el semestre",
+          "dia": "Seleccione el dia",
+          "turno": "Seleccione el turno"
+        },
+        "valid": {
+          "messageCarrera": "Selecciona la carrera.",
+          "messageSemestre": "Selecciona el semestre.",
+          "messageDia": "Selecciona el dia.",
+          "messageTurno": "Selecciona el turno."
+        },
+        "error": {
+          "messageCarrera": "No se ha podido cargar las carreras.",
+          "messageSemestre": "No se ha podido cargar los semestres.",
+          "messageDia": "No se ha podido cargar los dias.",
+          "messageTurno": "No se ha podido cargar los turnos."
+        },
+        "table": {
+          "photography": "Fotografía",
+          "matter": "Materia",
+          "initials": "Sigla",
+          "active": "Activo",
+          "career": "Carrera",
+          "classroom": "Aula",
+          "day": "Día",
+          "classSchedule": "Horario",
+          "shift": "Turno",
+          "laboratory": "Laboratorio",
+          "semester": "Semestre",
+          "teacherName": "Nombre Docente",
+          "teacherLastName": "Apellido Docente"
+        }
+      },
+      "materia": {
+        "title": "Lista de Materias",
+        "offToggleLabel": "Congelar Materia",
+        "onToggleLabel": "Descongelar Materia",
+        "emptyMessage": "No se encontraron Materias.",
+        "loadingMessage": "Cargando datos de las Materias. Espere por favor.",
+        "table": {
+          "initials": "Sigla",
+          "matter": "Materia",
+          "career": "Carrera",
+          "semester": "Semestre",
+          "active": "Active"
+        }
+      }
     }
   }
 }

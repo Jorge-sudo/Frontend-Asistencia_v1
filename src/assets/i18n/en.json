@@ -30,11 +30,61 @@
     "choose": "Choose",
     "upload": "Upload",
     "cancel": "Cancel",
-    "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    "dayNamesMin": ["Su","Mo","Tu","We","Th","Fr","Sa"],
-    "monthNames": ["January","February","March","April","May","June","July","August","September","October","November","December"],
-    "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "dayNames": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "dayNamesShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
+    "dayNamesMin": [
+      "Su",
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa"
+    ],
+    "monthNames": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
     "dateFormat": "mm/dd/yy",
     "firstDayOfWeek": 0,
     "today": "Today",
@@ -47,6 +97,30 @@
     "emptyFilterMessage": "No results found"
   },
   "asistencia": {
+    "message": {
+      "updateTitle": "Update",
+      "updated": "Updated",
+      "updatedMessage": "The data has been updated.",
+      "updateErrorMessage": "Failed to update the data.",
+      "errorTitle": "Error",
+      "infoTitle": "Information",
+      "warningTitle": "Warning",
+      "errorDataMesage": "Data could not be loaded.",
+      "errorDataMesageUpdate": "Update failed.",
+      "errorDataMesageDelete": "Deletion failed.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "confirmMessageQuestion": "Are you sure you want to ",
+      "confirmHeader": "Confirmation",
+      "confirmTitle": "Confirmation",
+      "confirmMessage": "has been accepted",
+      "rejectTitle": "Rejected",
+      "rejectMessage": "has been rejected",
+      "cancelTitle": "Cancelled",
+      "cancelMessage": "has been cancelled",
+      "labelClearFilter": "Clear Filters",
+      "search": "Search"
+    },
     "languages": {
       "es": "Spanish",
       "en": "English"
@@ -62,6 +136,103 @@
       "materia": "Matter",
       "asistencia": "Assistance",
       "licencia": "License"
+    },
+    "toList": {
+      "currentPageReportTemplate": "Showing {first} to {last} of {totalRecords} records",
+      "docente": {
+        "title": "List of Teachers",
+        "offToggleLabel": "Freeze Name",
+        "onToggleLabel": "Unfreeze Name",
+        "emptyMessage": "No Teachers found.",
+        "loadingMessage": "Loading Teacher data. Please wait.",
+        "table": {
+          "photography": "Photograph",
+          "name": "Name",
+          "lastName": "Last Name",
+          "ci": "C.I.",
+          "email": "Email",
+          "gender": "Gender",
+          "institutionalEmail": "Institutional Email",
+          "active": "Active"
+        }
+      },
+      "supervisor": {
+        "title": "List of Supervisors",
+        "offToggleLabel": "Freeze Name",
+        "onToggleLabel": "Unfreeze Name",
+        "emptyMessage": "No Supervisors found.",
+        "loadingMessage": "Loading Supervisor data. Please wait.",
+        "table": {
+          "photography": "Photograph",
+          "name": "Name",
+          "lastName": "Last Name",
+          "ci": "C.I.",
+          "email": "Email",
+          "gender": "Gender",
+          "institutionalEmail": "Institutional Email",
+          "reportEmail": "Report Email",
+          "reportEmailInstitutional": "Institutional Report Email",
+          "active": "Active"
+        }
+      },
+      "asignatura": {
+        "title": "List of Subjects",
+        "offToggleLabel": "Freeze Subject",
+        "onToggleLabel": "Unfreeze Subject",
+        "initInfo": "Select career, day, semester, and shift.",
+        "emptyMessage": "No Subjects found.",
+        "loadingMessage": "Loading Subject data. Please wait.",
+        "buttonLoadData": "Load data",
+        "searchTime": "Search by hour",
+        "placeholder": {
+          "carrera": "Select career",
+          "semestre": "Select semester",
+          "dia": "Select day",
+          "turno": "Select shift"
+        },
+        "valid": {
+          "messageCarrera": "Select career.",
+          "messageSemestre": "Select semester.",
+          "messageDia": "Select day.",
+          "messageTurno": "Select shift."
+        },
+        "error": {
+          "messageCarrera": "Failed to load careers.",
+          "messageSemestre": "Failed to load semesters.",
+          "messageDia": "Failed to load days.",
+          "messageTurno": "Failed to load shifts."
+        },
+        "table": {
+          "photography": "Photograph",
+          "matter": "Subject",
+          "initials": "Acronym",
+          "active": "Active",
+          "career": "Career",
+          "classroom": "Classroom",
+          "day": "Day",
+          "classSchedule": "Schedule",
+          "shift": "Shift",
+          "laboratory": "Laboratory",
+          "semester": "Semester",
+          "teacherName": "Teacher Name",
+          "teacherLastName": "Teacher Last Name"
+        }
+      },
+      "materia": {
+        "title": "List of Subjects",
+        "offToggleLabel": "Freeze Subject",
+        "onToggleLabel": "Unfreeze Subject",
+        "emptyMessage": "No Subjects found.",
+        "loadingMessage": "Loading Subject data. Please wait.",
+        "table": {
+          "initials": "Acronym",
+          "matter": "Subject",
+          "career": "Career",
+          "semester": "Semester",
+          "active": "Active"
+        }
+      }
+
     }
   }
 }

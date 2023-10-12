@@ -12,202 +12,276 @@ import { SemestreService } from 'src/app/asistencia/service/semestre.service';
 import { CarreraService } from '../../../service/carrera.service';
 import { DiaService } from 'src/app/asistencia/service/dia.service';
 import { TurnoService } from 'src/app/asistencia/service/turno.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: './listAsignatura.component.html',
-    providers: [MessageService]
+  templateUrl: './listAsignatura.component.html',
+  providers: [MessageService],
 })
-export class ListAsignaturaComponent implements OnInit{
+export class ListAsignaturaComponent implements OnInit {
+  loadingButton: boolean = false;
+  loading: boolean = false;
+  asignaturas: Asignatura[] = [];
+  carreras: Carrera[] = [];
+  idCarreraSelected: number = 0;
+  semestres: Semestre[] = [];
+  idSemestreSelected: number = 0;
+  diasSemana: DiaSemana[] = [];
+  idDiaSemanaSelected: number = 0;
+  turnos: Turno[] = [];
+  idTurnoSelected: number = 0;
+  rows: number = 10;
+  numberOfElements: number = 0;
+  totalRecords: number = 0;
+  totalPages: number = 0;
+  order: number = 1;
+  sortField: string = 'materia';
+  globalFilter: string = '';
+  first: number = 0;
+  page: number = 0;
+  asignaturaSelected: Asignatura = {};
+  idFrozen: boolean = false;
 
-    loadingButton: boolean = false;
-    loading: boolean = true;
-    asignaturas: Asignatura[] = [];
-    carreras: Carrera[] = [];
-    idCarreraSelected: number = 0;
-    semestres: Semestre[] = [];
-    idSemestreSelected: number = 0;
-    diasSemana: DiaSemana[] = [];
-    idDiaSemanaSelected: number = 0;
-    turnos: Turno[] = [];
-    idTurnoSelected: number = 0;
-    rows: number = 10;
-    numberOfElements: number = 0;
-    totalRecords: number = 0;
-    totalPages: number = 0;
-    order: number = 1;
-    sortField: string = 'materia';
-    globalFilter: string = '';
-    first: number = 0;
-    page: number = 0;
-    asignaturaSelected: Asignatura = {};
-    idFrozen: boolean = false;
+  @ViewChild('filter') filter!: ElementRef;
 
-    @ViewChild('filter') filter!: ElementRef;
+  constructor(
+    private asignaturaService: AsignaturaService,
+    private semestreService: SemestreService,
+    private CarreraService: CarreraService,
+    private diaSemanaService: DiaService,
+    private turnoService: TurnoService,
+    private messageService: MessageService,
+    private translate: TranslateService
+  ) {}
 
-    constructor(private asignaturaService: AsignaturaService ,
-                private semestreService: SemestreService,
-                private CarreraService: CarreraService,
-                private diaSemanaService: DiaService,
-                private turnoService: TurnoService,
-                private messageService: MessageService) {}
+  initData(): void {
+    this.loadCarreras()
+      .pipe(
+        concatMap(() => this.loadDiaSemana()),
+        concatMap(() => this.loadSemestres()),
+        concatMap(() => this.loadTurnos()),
+        finalize(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: this.translate.instant('asistencia.message.infoTitle'),
+            detail: this.translate.instant(
+              'asistencia.toList.asignatura.initInfo'
+            ),
+          });
+        })
+      )
+      .subscribe();
+  }
 
+  ngOnInit(): void {
+    this.initData();
+  }
 
-    initData(): void{
-        this.loadCarreras().pipe(
-            concatMap(() => this.loadDiaSemana()),
-            concatMap(() => this.loadSemestres()),
-            concatMap(() => this.loadTurnos()),
-            finalize(() => {
-                this.messageService.add({ severity: 'info', summary: 'Informacion', detail: 'Selecciona carrera, dia, semestre y turno. '})
-            })
-        ).subscribe();
-    }
+  loadDataAsignatura(): void {
+    this.loadingButton = true;
+    this.loadAsignatura().subscribe();
+  }
 
-
-    ngOnInit(): void {
-        this.initData();
-    }
-
-    loadDataAsignatura(): void{
-        this.loadingButton = true;
-        this.loadAsignatura().subscribe();
-    }
-
-
-    loadAsignatura(): Observable<any> {
-        if(this.idCarreraSelected !== 0 && this.idSemestreSelected !== 0
-            && this.idDiaSemanaSelected !== 0 && this.idTurnoSelected !== 0){
-
-                return this.asignaturaService.getAsignaturas(this.order , this.page, this.rows, this.sortField,
-                                                            this.idCarreraSelected, this.idDiaSemanaSelected,
-                                                            this.idSemestreSelected, this.idTurnoSelected,
-                                                            this.globalFilter).pipe(
-                    map((result: any) => {
-                        this.asignaturas = result.data.content;
-                        this.numberOfElements = result.data.numberOfElements;
-                        this.totalRecords = result.data.totalElements;
-                        this.totalPages = result.data.totalPages;
-                        this.loading = !result.view;
-                    }),
-                    catchError((error) => {
-                        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
-                        throw error;
-                    }),
-                    finalize(() => {
-                        this.loadingButton = false;
-                    })
-            );
-        }else{
-            if(this.idCarreraSelected === 0 ){
-                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Selecciona la carrera. '});
-            }
-            if(this.idSemestreSelected === 0 ){
-                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Selecciona el semestre. '});
-            }
-            if(this.idDiaSemanaSelected === 0 ){
-                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Selecciona el dia. '});
-            }
-            if(this.idTurnoSelected === 0 ){
-                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Selecciona el turno. '});
-            }
-        }
-        this.loadingButton = false;
-        return of(null);
-    }
-
-
-    loadData(event:any) {
-        this.first = Number(event.first);
-        this.rows = Number(event.rows);
-        this.order = event.sortOrder === undefined ? 1 : event.sortOrder;
-        this.sortField = event.sortField === undefined || event.sortField === null ? 'materia' : event.sortField;
-        this.page = this.first / this.rows;
-        this.loadAsignatura().subscribe();
-    }
-
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-        this.globalFilter = (event.target as HTMLInputElement).value;
-    }
-
-    loadSemestres(): Observable<any>{
-        return this.semestreService.getSemestres().pipe(
-            map((result: any) => {
-                this.semestres = result.data;
-            }),
-            catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los semestres. '});
-                throw error;
-            })
+  loadAsignatura(): Observable<any> {
+    if (
+      this.idCarreraSelected !== 0 &&
+      this.idSemestreSelected !== 0 &&
+      this.idDiaSemanaSelected !== 0 &&
+      this.idTurnoSelected !== 0
+    ) {
+      return this.asignaturaService
+        .getAsignaturas(
+          this.order,
+          this.page,
+          this.rows,
+          this.sortField,
+          this.idCarreraSelected,
+          this.idDiaSemanaSelected,
+          this.idSemestreSelected,
+          this.idTurnoSelected,
+          this.globalFilter
+        )
+        .pipe(
+          map((result: any) => {
+            this.asignaturas = result.data.content;
+            this.numberOfElements = result.data.numberOfElements;
+            this.totalRecords = result.data.totalElements;
+            this.totalPages = result.data.totalPages;
+            this.loading = !result.view;
+          }),
+          catchError((error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: this.translate.instant('asistencia.message.errorTitle'),
+              detail: this.translate.instant(
+                'asistencia.message.errorDataMesage'
+              ),
+            });
+            throw error;
+          }),
+          finalize(() => {
+            this.loadingButton = false;
+          })
         );
+    } else {
+      if (this.idCarreraSelected === 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: this.translate.instant('asistencia.message.warningTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.valid.messageCarrera'
+          ),
+        });
+      }
+      if (this.idSemestreSelected === 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: this.translate.instant('asistencia.message.warningTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.valid.messageSemestre'
+          ),
+        });
+      }
+      if (this.idDiaSemanaSelected === 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: this.translate.instant('asistencia.message.warningTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.valid.messageDia'
+          ),
+        });
+      }
+      if (this.idTurnoSelected === 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: this.translate.instant('asistencia.message.warningTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.valid.messageTurno'
+          ),
+        });
+      }
     }
+    this.loadingButton = false;
+    return of(null);
+  }
 
-    loadCarreras(): Observable<any>{
-        return this.CarreraService.getCarreras().pipe(
-            map((result: any) => {
-                this.carreras = result.data;
-            }),
-            catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar las carreras. '});
-                throw error;
-            })
-        );
-    }
+  loadData(event: any) {
+    this.first = Number(event.first);
+    this.rows = Number(event.rows);
+    this.order = event.sortOrder === undefined ? 1 : event.sortOrder;
+    this.sortField =
+      event.sortField === undefined || event.sortField === null
+        ? 'materia'
+        : event.sortField;
+    this.page = this.first / this.rows;
+    this.loadAsignatura().subscribe();
+  }
 
-    loadDiaSemana(): Observable<any>{
-        return this.diaSemanaService.getDias().pipe(
-            map((result: any) => {
-                this.diasSemana = result.data;
-            }),
-            catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los días de la semana. '});
-                throw error;
-            })
-        );
-    }
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    this.globalFilter = (event.target as HTMLInputElement).value;
+  }
 
-    loadTurnos(): Observable<any>{
-        return this.turnoService.getTurnos().pipe(
-            map((result: any) => {
-                this.turnos = result.data;
-            }),
-            catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los turnos. '});
-                throw error;
-            })
-        );
-    }
+  loadSemestres(): Observable<any> {
+    return this.semestreService.getSemestres().pipe(
+      map((result: any) => {
+        this.semestres = result.data;
+      }),
+      catchError((error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('asistencia.message.errorTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.error.messageSemestre'
+          ),
+        });
+        throw error;
+      })
+    );
+  }
 
+  loadCarreras(): Observable<any> {
+    return this.CarreraService.getCarreras().pipe(
+      map((result: any) => {
+        this.carreras = result.data;
+      }),
+      catchError((error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('asistencia.message.errorTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.error.messageCarrera'
+          ),
+        });
+        throw error;
+      })
+    );
+  }
 
-    eventSelectCarrera(event: any){
-        console.log(event)
-        this.idCarreraSelected = event.value.id;
-    }
+  loadDiaSemana(): Observable<any> {
+    return this.diaSemanaService.getDias().pipe(
+      map((result: any) => {
+        this.diasSemana = result.data;
+      }),
+      catchError((error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('asistencia.message.errorTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.error.messageDia'
+          ),
+        });
+        throw error;
+      })
+    );
+  }
 
-    eventSelectSemestre(event: any){
-        console.log(event)
-        this.idSemestreSelected = event.value.id;
-    }
+  loadTurnos(): Observable<any> {
+    return this.turnoService.getTurnos().pipe(
+      map((result: any) => {
+        this.turnos = result.data;
+      }),
+      catchError((error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('asistencia.message.errorTitle'),
+          detail: this.translate.instant(
+            'asistencia.toList.asignatura.error.messageTurno'
+          ),
+        });
+        throw error;
+      })
+    );
+  }
 
-    eventSelectDiaSemana(event: any){
-        console.log(event)
-        this.idDiaSemanaSelected = event.value.id;
-    }
+  eventSelectCarrera(event: any) {
+    console.log(event);
+    this.idCarreraSelected = event.value.id;
+  }
 
-    eventSelectTurno(event: any){
-        console.log(event)
-        this.idTurnoSelected = event.value.id;
-    }
+  eventSelectSemestre(event: any) {
+    console.log(event);
+    this.idSemestreSelected = event.value.id;
+  }
 
-    clear(table: Table) {
-        this.globalFilter = '';
-        this.sortField = 'materia';
-        this.order = 1;
-        this.page = 0;
-        this.rows = 10;
-        this.first = 0;
-        this.filter.nativeElement.value = '';
-        table.clear();
-    }
- }
+  eventSelectDiaSemana(event: any) {
+    console.log(event);
+    this.idDiaSemanaSelected = event.value.id;
+  }
+
+  eventSelectTurno(event: any) {
+    console.log(event);
+    this.idTurnoSelected = event.value.id;
+  }
+
+  clear(table: Table) {
+    this.globalFilter = '';
+    this.sortField = 'materia';
+    this.order = 1;
+    this.page = 0;
+    this.rows = 10;
+    this.first = 0;
+    this.filter.nativeElement.value = '';
+    table.clear();
+  }
+}

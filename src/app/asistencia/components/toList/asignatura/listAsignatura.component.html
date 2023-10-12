@@ -1,231 +1,322 @@
-<div class="grid" >
-    <div class="col-12">
-        <div class="card">
-            <h4>Lista Asignaturas</h4>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h4>{{ "asistencia.toList.asignatura.title" | translate }}</h4>
 
+      <div class="flex flex-wrap flex-direction-row">
+        <p-toggleButton
+          [(ngModel)]="idFrozen"
+          [onIcon]="'pi pi-lock'"
+          offIcon="pi pi-lock-open"
+          onLabel="{{
+            'asistencia.toList.asignatura.onToggleLabel' | translate
+          }}"
+          offLabel="{{
+            'asistencia.toList.asignatura.offToggleLabel' | translate
+          }}"
+          [style]="{ width: '12rem', margin: '10px' }"
+        >
+        </p-toggleButton>
+        <span class="p-float-label m-2">
+          <p-dropdown
+            [options]="carreras"
+            placeholder="{{
+              'asistencia.toList.asignatura.placeholder.carrera' | translate
+            }}"
+            optionLabel="nombre"
+            inputId="float-label"
+            (onChange)="eventSelectCarrera($event)"
+          ></p-dropdown>
+          <label for="float-label">{{
+            "asistencia.toList.asignatura.placeholder.carrera" | translate
+          }}</label>
+        </span>
+        <span class="p-float-label m-2">
+          <p-dropdown
+            [options]="diasSemana"
+            placeholder="{{
+              'asistencia.toList.asignatura.placeholder.dia' | translate
+            }}"
+            optionLabel="nombre"
+            inputId="float-label"
+            (onChange)="eventSelectDiaSemana($event)"
+          ></p-dropdown>
+          <label for="float-label">{{
+            "asistencia.toList.asignatura.placeholder.dia" | translate
+          }}</label>
+        </span>
+        <span class="p-float-label m-2">
+          <p-dropdown
+            [options]="semestres"
+            placeholder="{{
+              'asistencia.toList.asignatura.placeholder.semestre' | translate
+            }}"
+            optionLabel="nombre"
+            inputId="float-label"
+            (onChange)="eventSelectSemestre($event)"
+          ></p-dropdown>
+          <label for="float-label">{{
+            "asistencia.toList.asignatura.placeholder.semestre" | translate
+          }}</label>
+        </span>
+        <span class="p-float-label m-2">
+          <p-dropdown
+            [options]="turnos"
+            placeholder="{{
+              'asistencia.toList.asignatura.placeholder.turno' | translate
+            }}"
+            optionLabel="nombre"
+            inputId="float-label"
+            (onChange)="eventSelectTurno($event)"
+          ></p-dropdown>
+          <label for="float-label">{{
+            "asistencia.toList.asignatura.placeholder.turno" | translate
+          }}</label>
+        </span>
+        <p-button
+          class="m-2"
+          label="{{
+            'asistencia.toList.asignatura.buttonLoadData' | translate
+          }}"
+          [loading]="loadingButton"
+          (onClick)="loadDataAsignatura()"
+        ></p-button>
+      </div>
 
+      <p-table
+        #dt1
+        [value]="asignaturas"
+        dataKey="id"
+        [loading]="loading"
+        [rows]="10"
+        [rowHover]="true"
+        styleClass="p-datatable-gridlines"
+        [paginator]="true"
+        [lazy]="true"
+        (onLazyLoad)="loadData($event)"
+        responsiveLayout="scroll"
+        [rowsPerPageOptions]="[10, 25, 50, 100]"
+        selectionMode="single"
+        [(selection)]="asignaturaSelected"
+        [scrollable]="true"
+        scrollHeight="400px"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [totalRecords]="totalRecords"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{{
+          'asistencia.toList.currentPageReportTemplate' | translate
+        }}"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button
+              pButton
+              label="{{ 'asistencia.message.labelClearFilter' | translate }}"
+              class="p-button-outlined mb-2"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
 
-            <div class="flex flex-wrap flex-direction-row">
-                <p-toggleButton
-                    [(ngModel)]="idFrozen"
-                    [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
-                    [onLabel]="'Descongelar Materia'" offLabel="Congelar Materia"
-                    [style]="{'width': '12rem', 'margin': '10px'}">
-                </p-toggleButton>
-                <span class="p-float-label m-2">
-                    <p-dropdown [options]="carreras"
-                                placeholder="Seleccione carrera"
-                                optionLabel="nombre" inputId="float-label"
-                                (onChange)="eventSelectCarrera($event)"></p-dropdown>
-                    <label for="float-label">Seleccione carrera</label>
-                </span>
-                <span class="p-float-label m-2">
-                    <p-dropdown [options]="diasSemana"
-                                placeholder="Seleccione dia"
-                                optionLabel="nombre" inputId="float-label"
-                                (onChange)="eventSelectDiaSemana($event)"></p-dropdown>
-                    <label for="float-label">Seleccione dia</label>
-                </span>
-                <span class="p-float-label m-2">
-                    <p-dropdown [options]="semestres"
-                                placeholder="Seleccione semestre"
-                                optionLabel="nombre" inputId="float-label"
-                                (onChange)="eventSelectSemestre($event)"></p-dropdown>
-                    <label for="float-label">Seleccione semestre</label>
-                </span>
-                <span class="p-float-label m-2">
-                    <p-dropdown [options]="turnos"
-                                placeholder="Seleccione turno"
-                                optionLabel="nombre" inputId="float-label"
-                                (onChange)="eventSelectTurno($event)"></p-dropdown>
-                    <label for="float-label">Seleccione turno</label>
-                </span>
-                <p-button class="m-2" label="Cargar Datos" [loading]="loadingButton" (onClick)="loadDataAsignatura()"></p-button>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #filter
+                (input)="onGlobalFilter(dt1, $event)"
+                placeholder="{{ 'asistencia.toList.asignatura.searchTime' | translate }}"
+                class="w-full"
+              />
+            </span>
+          </div>
+        </ng-template>
 
-            </div>
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              style="min-width: 10rem"
+              pSortableColumn="fotografia"
+              pFrozenColumn
+            >
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.asignatura.table.photography" | translate
+                }}
+                <p-sortIcon field="fotografia"></p-sortIcon>
+              </div>
+            </th>
+            <th
+              style="min-width: 12rem"
+              pSortableColumn="materia"
+              pFrozenColumn
+              [frozen]="idFrozen"
+            >
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.matter" | translate }}
+                <p-sortIcon field="materia"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 14rem" pSortableColumn="sigla">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.initials" | translate }}
+                <p-sortIcon field="sigla"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="activo">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.active" | translate }}
+                <p-sortIcon field="activo"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 10rem" pSortableColumn="carrera">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.career" | translate }}
+                <p-sortIcon field="carrera"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="aula">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.classroom" | translate }}
+                <p-sortIcon field="aula"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="dia">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.day" | translate }}
+                <p-sortIcon field="dia"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="horario">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.asignatura.table.classSchedule" | translate
+                }}
+                <p-sortIcon field="horario"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="turno">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.shift" | translate }}
+                <p-sortIcon field="turno"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="laboratorio">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.asignatura.table.laboratory" | translate
+                }}
+                <p-sortIcon field="laboratorio"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="semestre">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.asignatura.table.semester" | translate }}
+                <p-sortIcon field="semestre"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="nombreDocente">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.asignatura.table.teacherName" | translate
+                }}
+                <p-sortIcon field="nombreDocente"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="apellidoDocente">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.asignatura.table.teacherLastName"
+                    | translate
+                }}
+                <p-sortIcon field="apellidoDocente"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
 
-            <p-table #dt1
-                    [value]="asignaturas" dataKey="id"
-                    [loading]="loading" [rows]="10"
-                    [rowHover]="true" styleClass="p-datatable-gridlines"
-                    [paginator]="true" [lazy]="true"
-                    (onLazyLoad)="loadData($event)"
-                    responsiveLayout="scroll"
-                    [rowsPerPageOptions]="[10, 25, 50, 100]"
-                    selectionMode="single" [(selection)]="asignaturaSelected"
-                    [scrollable]="true" scrollHeight="400px"
-                    [tableStyle]="{'min-width': '50rem'}"
-                    [totalRecords]="totalRecords"
-                    [showCurrentPageReport]="true"
-                    currentPageReportTemplate="Mostrando del  {first} al {last} de {totalRecords} entradas"
-                    >
+        <ng-template pTemplate="body" let-asignatura>
+          <tr [pSelectableRow]="asignatura">
+            <td pFrozenColumn>
+              <img
+                style="margin: 3px"
+                [src]="'data:image/png;base64,' + asignatura.base64Image"
+                width="55"
+                height="56"
+              />
+            </td>
+            <td pFrozenColumn [frozen]="idFrozen">
+              {{ asignatura.materia }}
+            </td>
+            <td>
+              {{ asignatura.sigla }}
+            </td>
+            <td>
+              <i
+                class="pi"
+                [ngClass]="{
+                  'true-icon pi-check-circle text-green-500': asignatura.activo,
+                  'false-icon pi-times-circle text-pink-500': !asignatura.activo
+                }"
+              ></i>
+            </td>
+            <td>
+              {{ asignatura.carrera }}
+            </td>
+            <td>
+              {{ asignatura.aula }}
+            </td>
+            <td>
+              {{ asignatura.dia }}
+            </td>
+            <td>
+              {{ asignatura.horario }}
+            </td>
+            <td>
+              {{ asignatura.turno }}
+            </td>
+            <td>
+              <i
+                class="pi"
+                [ngClass]="{
+                  'true-icon pi-check-circle text-green-500':
+                    asignatura.laboratorio,
+                  'false-icon pi-times-circle text-pink-500':
+                    !asignatura.laboratorio
+                }"
+              ></i>
+              <span *ngIf="asignatura.laboratorio">
+                - {{ asignatura.nroLaboratorio }}
+              </span>
+            </td>
+            <td>
+              {{ asignatura.semestre }}
+            </td>
+            <td>
+              {{ asignatura.nombreDocente }}
+            </td>
+            <td>
+              {{ asignatura.apellidoDocente }}
+            </td>
+          </tr>
+        </ng-template>
 
-
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar Filtros"
-                                class="p-button-outlined mb-2"
-                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text"
-                                    #filter (input)="onGlobalFilter(dt1, $event)"
-                                    placeholder="Buscar" class="w-full"/>
-                        </span>
-                    </div>
-                </ng-template>
-
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="min-width: 10rem" pSortableColumn="fotografia"  pFrozenColumn >
-                            <div class="flex justify-content-between align-items-center">
-                                Fotografia
-                                <p-sortIcon field="fotografia"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="materia" pFrozenColumn [frozen]="idFrozen" >
-                            <div class="flex justify-content-between align-items-center">
-                                Materia
-                                <p-sortIcon field="materia"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 14rem" pSortableColumn="sigla">
-                            <div class="flex justify-content-between align-items-center">
-                                Sigla
-                                <p-sortIcon field="sigla"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="activo" >
-                            <div class="flex justify-content-between align-items-center">
-                                Activo
-                                <p-sortIcon field="activo"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 10rem" pSortableColumn="carrera">
-                            <div class="flex justify-content-between align-items-center">
-                                Carrera
-                                <p-sortIcon field="carrera"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="aula" >
-                            <div class="flex justify-content-between align-items-center">
-                                Aula
-                                <p-sortIcon field="aula"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="dia">
-                            <div class="flex justify-content-between align-items-center">
-                                Dia
-                                <p-sortIcon field="dia"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="horario">
-                            <div class="flex justify-content-between align-items-center">
-                                Horario
-                                <p-sortIcon field="horario"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="turno">
-                            <div class="flex justify-content-between align-items-center">
-                                Turno
-                                <p-sortIcon field="turno"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="laboratorio">
-                            <div class="flex justify-content-between align-items-center">
-                                Laboratorio
-                                <p-sortIcon field="laboratorio"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="semestre">
-                            <div class="flex justify-content-between align-items-center">
-                                Semestre
-                                <p-sortIcon field="semestre"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="nombreDocente">
-                            <div class="flex justify-content-between align-items-center">
-                                Nombre Docente
-                                <p-sortIcon field="nombreDocente"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="apellidoDocente">
-                            <div class="flex justify-content-between align-items-center">
-                                Apellido Docente
-                                <p-sortIcon field="apellidoDocente"></p-sortIcon>
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-
-
-
-                <ng-template pTemplate="body" let-asignatura>
-                    <tr  [pSelectableRow]="asignatura" >
-                        <td pFrozenColumn  >
-                            <img style="margin: 3px;"
-                                 [src]="'data:image/png;base64,' + asignatura.base64Image"
-                                 width="55" height="56" >
-                        </td>
-                        <td pFrozenColumn [frozen]="idFrozen">
-                            {{asignatura.materia}}
-                        </td>
-                        <td>
-                            {{asignatura.sigla}}
-                        </td>
-                        <td >
-                            <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': asignatura.activo, 'false-icon pi-times-circle text-pink-500': !asignatura.activo}"></i>
-                        </td>
-                        <td>
-                            {{asignatura.carrera}}
-                        </td>
-                        <td>
-                            {{asignatura.aula}}
-                        </td>
-                        <td>
-                            {{asignatura.dia}}
-                        </td>
-                        <td>
-                            {{asignatura.horario}}
-                        </td>
-                        <td>
-                            {{asignatura.turno}}
-                        </td>
-                        <td>
-                            <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': asignatura.laboratorio, 'false-icon pi-times-circle text-pink-500': !asignatura.laboratorio}"></i>
-                            <span *ngIf="asignatura.laboratorio" >
-                                - {{asignatura.nroLaboratorio}}
-                            </span>
-                        </td>
-                        <td>
-                            {{asignatura.semestre}}
-                        </td>
-                        <td>
-                            {{asignatura.nombreDocente}}
-                        </td>
-                        <td>
-                            {{asignatura.apellidoDocente}}
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No se encontraron Asignaturas.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="8">Cargando datos de Asignaturas. Espere por favor.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.asignatura.emptyMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.asignatura.loadingMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
-
+  </div>
 </div>
 
 <p-toast></p-toast>

@@ -1,151 +1,184 @@
-<div class="grid" >
-    <div class="col-12">
-        <div class="card">
-            <h4>Lista Docentes</h4>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h4>{{ "asistencia.toList.docente.title" | translate }}</h4>
 
-            <p-toggleButton
-                    [(ngModel)]="idFrozen"
-                    [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
-                    [onLabel]="'Descongelar Nombre'" offLabel="Congelar Nombre"
-                    [style]="{'width': '12rem', 'margin': '10px'}">
-            </p-toggleButton>
+      <p-toggleButton
+        [(ngModel)]="idFrozen"
+        [onIcon]="'pi pi-lock'"
+        offIcon="pi pi-lock-open"
+        onLabel="{{ 'asistencia.toList.docente.onToggleLabel' | translate }}"
+        offLabel="{{ 'asistencia.toList.docente.offToggleLabel' | translate }}"
+        [style]="{ width: '12rem', margin: '10px' }"
+      >
+      </p-toggleButton>
 
-            <p-table #dt1
-                    [value]="docentes" dataKey="ci"
-                    [loading]="loading" [rows]="10"
-                    [rowHover]="true" styleClass="p-datatable-gridlines"
-                    [paginator]="true" [lazy]="true"
-                    (onLazyLoad)="loadData($event)"
-                    responsiveLayout="scroll"
-                    [rowsPerPageOptions]="[10, 25, 50]"
-                    selectionMode="single" [(selection)]="docenteSelected"
-                    [scrollable]="true" scrollHeight="400px"
-                    [tableStyle]="{'min-width': '50rem'}"
-                    [totalRecords]="totalRecords"
-                    [showCurrentPageReport]="true"
-                    currentPageReportTemplate="Mostrando del  {first} al {last} de {totalRecords} entradas"
-                    >
+      <p-table
+        #dt1
+        [value]="docentes"
+        dataKey="ci"
+        [loading]="loading"
+        [rows]="10"
+        [rowHover]="true"
+        styleClass="p-datatable-gridlines"
+        [paginator]="true"
+        [lazy]="true"
+        (onLazyLoad)="loadData($event)"
+        responsiveLayout="scroll"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        selectionMode="single"
+        [(selection)]="docenteSelected"
+        [scrollable]="true"
+        scrollHeight="400px"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [totalRecords]="totalRecords"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{{
+          'asistencia.toList.currentPageReportTemplate' | translate
+        }}"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button
+              pButton
+              label="{{ 'asistencia.message.labelClearFilter' | translate }}"
+              class="p-button-outlined mb-2"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
 
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #filter
+                (input)="onGlobalFilter(dt1, $event)"
+                placeholder="{{
+                  'asistencia.message.search' | translate
+                }}"
+                class="w-full"
+              />
+            </span>
+          </div>
+        </ng-template>
 
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar Filtros"
-                                class="p-button-outlined mb-2"
-                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="fotografia" pFrozenColumn>
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.photography" | translate }}
+                <p-sortIcon field="fotografia"></p-sortIcon>
+              </div>
+            </th>
+            <th
+              style="min-width: 12rem"
+              pSortableColumn="nombre"
+              pFrozenColumn
+              [frozen]="idFrozen"
+            >
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.name" | translate }}
+                <p-sortIcon field="nombre"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 14rem" pSortableColumn="apellido">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.lastName" | translate }}
+                <p-sortIcon field="apellido"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="ci">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.ci" | translate }}
+                <p-sortIcon field="ci"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 10rem" pSortableColumn="email">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.email" | translate }}
+                <p-sortIcon field="email"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="genero">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.gender" | translate }}
+                <p-sortIcon field="genero"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="correoInstitucional">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                  "asistencia.toList.docente.table.institutionalEmail"
+                    | translate
+                }}
+                <p-sortIcon field="correoInstitucional"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 8rem" pSortableColumn="activo">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.docente.table.active" | translate }}
+                <p-sortIcon field="activo"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
 
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text"
-                                    #filter (input)="onGlobalFilter(dt1, $event)"
-                                    placeholder="Buscar" class="w-full"/>
-                        </span>
-                    </div>
-                </ng-template>
+        <ng-template pTemplate="body" let-docente>
+          <tr [pSelectableRow]="docente">
+            <td pFrozenColumn>
+              <img
+                style="margin: 3px"
+                [src]="'data:image/png;base64,' + docente.base64Image"
+                width="55"
+                height="56"
+              />
+            </td>
+            <td pFrozenColumn [frozen]="idFrozen">
+              {{ docente.nombre }}
+            </td>
+            <td>
+              {{ docente.apellido }}
+            </td>
+            <td>
+              {{ docente.ci }}
+            </td>
+            <td>
+              {{ docente.email }}
+            </td>
+            <td>
+              {{ docente.genero }}
+            </td>
+            <td>
+              {{ docente.correoInstitucional }}
+            </td>
+            <td class="text-center">
+              <p-inputSwitch
+                [(ngModel)]="docente.activo"
+                (onChange)="confirmChangeState($event, docente)"
+              ></p-inputSwitch>
+            </td>
+          </tr>
+        </ng-template>
 
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="min-width: 10rem" pSortableColumn="fotografia"  pFrozenColumn >
-                            <div class="flex justify-content-between align-items-center">
-                                Fotografia
-                                <p-sortIcon field="fotografia"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="nombre" pFrozenColumn [frozen]="idFrozen" >
-                            <div class="flex justify-content-between align-items-center">
-                                Nombre
-                                <p-sortIcon field="nombre"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 14rem" pSortableColumn="apellido">
-                            <div class="flex justify-content-between align-items-center">
-                                Apellido
-                                <p-sortIcon field="apellido"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="ci" >
-                            <div class="flex justify-content-between align-items-center">
-                                C.I.
-                                <p-sortIcon field="ci"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 10rem" pSortableColumn="email">
-                            <div class="flex justify-content-between align-items-center">
-                                Email
-                                <p-sortIcon field="email"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="genero" >
-                            <div class="flex justify-content-between align-items-center">
-                                Genero
-                                <p-sortIcon field="genero"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="correoInstitucional">
-                            <div class="flex justify-content-between align-items-center">
-                                Correo Institucional
-                                <p-sortIcon field="correoInstitucional"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 8rem" pSortableColumn="activo" >
-                            <div class="flex justify-content-between align-items-center">
-                                Activo
-                                <p-sortIcon field="activo"></p-sortIcon>
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-
-
-
-                <ng-template pTemplate="body" let-docente>
-                    <tr  [pSelectableRow]="docente" >
-                        <td pFrozenColumn  >
-                            <img style="margin: 3px;"
-                                 [src]="'data:image/png;base64,' + docente.base64Image"
-                                 width="55" height="56" >
-                        </td>
-                        <td pFrozenColumn [frozen]="idFrozen">
-                            {{docente.nombre}}
-                        </td>
-                        <td>
-                            {{docente.apellido}}
-                        </td>
-                        <td >
-                            {{docente.ci}}
-                        </td>
-                        <td>
-                            {{docente.email}}
-                        </td>
-                        <td>
-                            {{docente.genero}}
-                        </td>
-                        <td>
-                            {{docente.correoInstitucional}}
-                        </td>
-                        <td class="text-center" >
-                            <p-inputSwitch [(ngModel)]="docente.activo"
-                            (onChange)="confirmChangeState($event, docente)" ></p-inputSwitch>
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No se encontraron Docentes.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="8">Cargando datos de Docentes. Espere por favor.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.docente.emptyMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.docente.loadingMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
-
+  </div>
 </div>
 
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

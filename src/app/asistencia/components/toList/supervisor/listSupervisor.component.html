@@ -1,136 +1,146 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <h4>Lista de Supervisores</h4>
-            <p-toggleButton
-                    [(ngModel)]="idFrozen"
-                    [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
-                    [onLabel]="'Descongelar Nombre'" offLabel="Congelar Nombre"
-                    [style]="{'width': '12rem', 'margin': '10px'}">
-            </p-toggleButton>
+  <div class="col-12">
+    <div class="card">
+      <h4>{{ "asistencia.toList.supervisor.title" | translate }}</h4>
+      <p-toggleButton [(ngModel)]="idFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
+        onLabel="{{ 'asistencia.toList.supervisor.onToggleLabel' | translate }}"
+        offLabel="{{ 'asistencia.toList.supervisor.offToggleLabel' | translate }}"
+        [style]="{ width: '12rem', margin: '10px' }">
+      </p-toggleButton>
 
-            <p-table #dt1
-                    [value]="supervisores" dataKey="ci"
-                    [loading]="loading" [rows]="10"
-                    [rowHover]="true" styleClass="p-datatable-gridlines"
-                    [lazy]="true"
-                    responsiveLayout="scroll"
-                    selectionMode="single" [(selection)]="supervisorSelected"
-                    [scrollable]="true" scrollHeight="400px"
-                    [tableStyle]="{'min-width': '50rem'}"
-                    [showCurrentPageReport]="true"
-                    >
+      <p-table #dt1 [value]="supervisores" dataKey="ci" [loading]="loading" [rows]="10" [rowHover]="true"
+        styleClass="p-datatable-gridlines" [lazy]="true" responsiveLayout="scroll" selectionMode="single"
+        [(selection)]="supervisorSelected" [scrollable]="true" scrollHeight="400px"
+        [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width: 10rem" pSortableColumn="fotografia" pFrozenColumn>
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.photography" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="nombre" pFrozenColumn [frozen]="idFrozen">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.name" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 14rem" pSortableColumn="apellido">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.lastName" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="ci">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.ci" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 10rem" pSortableColumn="email">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.email" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="genero">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.gender" | translate }}
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="correoInstitucional">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                "asistencia.toList.supervisor.table.institutionalEmail"
+                | translate
+                }}
+              </div>
+            </th>
+            <th style="min-width: 8rem" pSortableColumn="reporteEmail">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                "asistencia.toList.supervisor.table.reportEmail"
+                | translate
+                }}
+              </div>
+            </th>
+            <th style="min-width: 8rem" pSortableColumn="reporteInstitucional">
+              <div class="flex justify-content-between align-items-center">
+                {{
+                "asistencia.toList.supervisor.table.reportEmailInstitutional"
+                | translate
+                }}
+              </div>
+            </th>
+            <th style="min-width: 8rem" pSortableColumn="activo">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.supervisor.table.active" | translate }}
+              </div>
+            </th>
+          </tr>
+        </ng-template>
 
+        <ng-template pTemplate="body" let-supervisor>
+          <tr [pSelectableRow]="supervisor">
+            <td pFrozenColumn>
+              <img style="margin: 3px" [src]="'data:image/png;base64,' + supervisor.base64Image" width="55"
+                height="56" />
+            </td>
+            <td pFrozenColumn [frozen]="idFrozen">
+              {{ supervisor.nombre }}
+            </td>
+            <td>
+              {{ supervisor.apellido }}
+            </td>
+            <td>
+              {{ supervisor.ci }}
+            </td>
+            <td>
+              {{ supervisor.email }}
+            </td>
+            <td>
+              {{ supervisor.genero }}
+            </td>
+            <td>
+              {{ supervisor.correoInstitucional }}
+            </td>
+            <td class="text-center">
+              <i class="pi" [ngClass]="{
+                  'true-icon pi-check-circle text-green-500':
+                    supervisor.reporteEmail,
+                  'false-icon pi-times-circle text-pink-500':
+                    !supervisor.reporteEmail
+                }"></i>
+            </td>
+            <td class="text-center">
+              <i class="pi" [ngClass]="{
+                  'true-icon pi-check-circle text-green-500':
+                    supervisor.reporteInstitucional,
+                  'false-icon pi-times-circle text-pink-500':
+                    !supervisor.reporteInstitucional
+                }"></i>
+            </td>
+            <td class="text-center">
+              <p-inputSwitch [(ngModel)]="supervisor.activo"
+                (onChange)="confirmChangeState($event, supervisor)"></p-inputSwitch>
+            </td>
+          </tr>
+        </ng-template>
 
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="min-width: 10rem" pSortableColumn="fotografia"  pFrozenColumn >
-                            <div class="flex justify-content-between align-items-center">
-                                Fotografia
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="nombre" pFrozenColumn [frozen]="idFrozen" >
-                            <div class="flex justify-content-between align-items-center">
-                                Nombre
-                            </div>
-                        </th>
-                        <th style="min-width: 14rem" pSortableColumn="apellido">
-                            <div class="flex justify-content-between align-items-center">
-                                Apellido
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="ci" >
-                            <div class="flex justify-content-between align-items-center">
-                                C.I.
-                            </div>
-                        </th>
-                        <th style="min-width: 10rem" pSortableColumn="email">
-                            <div class="flex justify-content-between align-items-center">
-                                Email
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="genero" >
-                            <div class="flex justify-content-between align-items-center">
-                                Genero
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="correoInstitucional">
-                            <div class="flex justify-content-between align-items-center">
-                                Correo Institucional
-                            </div>
-                        </th>
-                        <th style="min-width: 8rem" pSortableColumn="reporteEmail" >
-                            <div class="flex justify-content-between align-items-center">
-                                Reporte Email
-                            </div>
-                        </th>
-                        <th style="min-width: 8rem" pSortableColumn="reporteInstitucional" >
-                            <div class="flex justify-content-between align-items-center">
-                                Reporte Institucional
-                            </div>
-                        </th>
-                        <th style="min-width: 8rem" pSortableColumn="activo" >
-                            <div class="flex justify-content-between align-items-center">
-                                Activo
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-
-
-
-                <ng-template pTemplate="body" let-supervisor>
-                    <tr  [pSelectableRow]="supervisor" >
-                        <td pFrozenColumn  >
-                            <img style="margin: 3px;"
-                                 [src]="'data:image/png;base64,' + supervisor.base64Image"
-                                 width="55" height="56" >
-                        </td>
-                        <td pFrozenColumn [frozen]="idFrozen">
-                            {{supervisor.nombre}}
-                        </td>
-                        <td>
-                            {{supervisor.apellido}}
-                        </td>
-                        <td >
-                            {{supervisor.ci}}
-                        </td>
-                        <td>
-                            {{supervisor.email}}
-                        </td>
-                        <td>
-                            {{supervisor.genero}}
-                        </td>
-                        <td>
-                            {{supervisor.correoInstitucional}}
-                        </td>
-                        <td class="text-center" >
-                            <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': supervisor.reporteEmail, 'false-icon pi-times-circle text-pink-500': !supervisor.reporteEmail}"></i>
-                        </td>
-                        <td class="text-center" >
-                            <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': supervisor.reporteInstitucional, 'false-icon pi-times-circle text-pink-500': !supervisor.reporteInstitucional}"></i>
-                        </td>
-                        <td class="text-center" >
-                            <p-inputSwitch [(ngModel)]="supervisor.activo"
-                            (onChange)="confirmChangeState($event, supervisor)" ></p-inputSwitch>
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No se encontraron Supervisores.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="8">Cargando datos de Supervisores. Espere por favor.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.supervisor.emptyMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">
+              {{ "asistencia.toList.supervisor.loadingMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div>
 </div>
 
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

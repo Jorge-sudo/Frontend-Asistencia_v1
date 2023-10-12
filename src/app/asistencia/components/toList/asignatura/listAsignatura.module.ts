@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { FormsModule } from '@angular/forms';
         MultiSelectModule,
         DropdownModule,
         ProgressBarModule,
-        ToastModule
+        ToastModule,
+        TranslateModule
     ],
     declarations: [ListAsignaturaComponent]
 })

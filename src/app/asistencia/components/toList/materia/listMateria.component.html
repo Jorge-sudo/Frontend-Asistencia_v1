@@ -1,119 +1,148 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <h4>Lista de Materias</h4>
-            <p-toggleButton
-                    [(ngModel)]="idFrozen"
-                    [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
-                    [onLabel]="'Descongelar Materia'" offLabel="Congelar Materia"
-                    [style]="{'width': '12rem', 'margin': '10px'}">
-            </p-toggleButton>
+  <div class="col-12">
+    <div class="card">
+      <h4>{{ "asistencia.toList.materia.title" | translate }}</h4>
+      <p-toggleButton
+        [(ngModel)]="idFrozen"
+        [onIcon]="'pi pi-lock'"
+        offIcon="pi pi-lock-open"
+        onLabel="{{ 'asistencia.toList.materia.onToggleLabel' | translate }}"
+        offLabel="{{ 'asistencia.toList.materia.offToggleLabel' | translate }}"
+        [style]="{ width: '12rem', margin: '10px' }"
+      >
+      </p-toggleButton>
 
-            <p-table #dt1
-                    [value]="materiaCarreraSemestres" dataKey="sigla"
-                    [loading]="loading" [rows]="10"
-                    [rowHover]="true" styleClass="p-datatable-gridlines"
-                    [paginator]="true" [lazy]="true"
-                    (onLazyLoad)="loadData($event)"
-                    responsiveLayout="scroll"
-                    [rowsPerPageOptions]="[10, 25, 50]"
-                    selectionMode="single" [(selection)]="materiaCarreraSemestreSelected"
-                    [scrollable]="true" scrollHeight="400px"
-                    [tableStyle]="{'min-width': '50rem'}"
-                    [totalRecords]="totalRecords"
-                    [showCurrentPageReport]="true"
-                    currentPageReportTemplate="Mostrando del  {first} al {last} de {totalRecords} entradas"
-                    >
+      <p-table
+        #dt1
+        [value]="materiaCarreraSemestres"
+        dataKey="sigla"
+        [loading]="loading"
+        [rows]="10"
+        [rowHover]="true"
+        styleClass="p-datatable-gridlines"
+        [paginator]="true"
+        [lazy]="true"
+        (onLazyLoad)="loadData($event)"
+        responsiveLayout="scroll"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        selectionMode="single"
+        [(selection)]="materiaCarreraSemestreSelected"
+        [scrollable]="true"
+        scrollHeight="400px"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [totalRecords]="totalRecords"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{{
+          'asistencia.toList.currentPageReportTemplate' | translate
+        }}"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button
+              pButton
+              label="{{ 'asistencia.message.labelClearFilter' | translate }}"
+              class="p-button-outlined mb-2"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
 
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #filter
+                (input)="onGlobalFilter(dt1, $event)"
+                placeholder="{{
+                  'asistencia.message.search' | translate
+                }}"
+                class="w-full"
+              />
+            </span>
+          </div>
+        </ng-template>
 
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar Filtros"
-                                class="p-button-outlined mb-2"
-                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              style="min-width: 10rem"
+              pSortableColumn="materia.sigla"
+              pFrozenColumn
+            >
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.materia.table.initials" | translate }}
+                <p-sortIcon field="materia.sigla"></p-sortIcon>
+              </div>
+            </th>
+            <th
+              style="min-width: 12rem"
+              pSortableColumn="materia.nombre"
+              pFrozenColumn
+              [frozen]="idFrozen"
+            >
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.materia.table.matter" | translate }}
+                <p-sortIcon field="materia.nombre"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="carrera.nombre">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.materia.table.career" | translate }}
+                <p-sortIcon field="carrera.nombre"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 12rem" pSortableColumn="semestre.nombre">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.materia.table.semester" | translate }}
+                <p-sortIcon field="semestre.nombre"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 8rem" pSortableColumn="activo">
+              <div class="flex justify-content-between align-items-center">
+                {{ "asistencia.toList.materia.table.active" | translate }}
+                <p-sortIcon field="activo"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
 
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text"
-                                    #filter (input)="onGlobalFilter(dt1, $event)"
-                                    placeholder="Buscar" class="w-full"/>
-                        </span>
-                    </div>
-                </ng-template>
+        <ng-template pTemplate="body" let-materiaCarreraSemestre>
+          <tr [pSelectableRow]="materiaCarreraSemestre">
+            <td pFrozenColumn>
+              {{ materiaCarreraSemestre.sigla }}
+            </td>
+            <td pFrozenColumn [frozen]="idFrozen">
+              {{ materiaCarreraSemestre.materia }}
+            </td>
+            <td>
+              {{ materiaCarreraSemestre.carrera }}
+            </td>
+            <td>
+              {{ materiaCarreraSemestre.semestre }}
+            </td>
+            <td class="text-center">
+              <p-inputSwitch
+                [(ngModel)]="materiaCarreraSemestre.activo"
+                (onChange)="confirmChangeState($event, materiaCarreraSemestre)"
+              ></p-inputSwitch>
+            </td>
+          </tr>
+        </ng-template>
 
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="min-width: 10rem" pSortableColumn="materia.sigla"  pFrozenColumn >
-                            <div class="flex justify-content-between align-items-center">
-                                Sigla
-                                <p-sortIcon field="materia.sigla"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="materia.nombre" pFrozenColumn [frozen]="idFrozen" >
-                            <div class="flex justify-content-between align-items-center">
-                                Materia
-                                <p-sortIcon field="materia.nombre"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="carrera.nombre">
-                            <div class="flex justify-content-between align-items-center">
-                                Carrera
-                                <p-sortIcon field="carrera.nombre"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 12rem" pSortableColumn="semestre.nombre" >
-                            <div class="flex justify-content-between align-items-center">
-                                Semestre
-                                <p-sortIcon field="semestre.nombre"></p-sortIcon>
-                            </div>
-                        </th>
-                        <th style="min-width: 8rem" pSortableColumn="activo" >
-                            <div class="flex justify-content-between align-items-center">
-                                Activo
-                                <p-sortIcon field="activo"></p-sortIcon>
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-
-
-
-                <ng-template pTemplate="body" let-materiaCarreraSemestre>
-                    <tr  [pSelectableRow]="materiaCarreraSemestre" >
-                        <td pFrozenColumn>
-                            {{materiaCarreraSemestre.sigla}}
-                        </td>
-                        <td pFrozenColumn [frozen]="idFrozen">
-                            {{materiaCarreraSemestre.materia}}
-                        </td>
-                        <td>
-                            {{materiaCarreraSemestre.carrera}}
-                        </td>
-                        <td >
-                            {{materiaCarreraSemestre.semestre}}
-                        </td>
-                        <td class="text-center" >
-                            <p-inputSwitch [(ngModel)]="materiaCarreraSemestre.activo"
-                            (onChange)="confirmChangeState($event, materiaCarreraSemestre)" ></p-inputSwitch>
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No se encontraron Materias.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="8">Cargando datos de Materias. Espere por favor.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">{{ "asistencia.toList.materia.emptyMessage" | translate }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">{{ "asistencia.toList.materia.loadingMessage" | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div>
 </div>
 
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

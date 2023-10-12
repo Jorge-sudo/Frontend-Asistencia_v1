@@ -6,7 +6,9 @@
     <div class="flex align-items-center justify-content-center" >
       <p-button label="{{'asistencia.languages.es' | translate }}"
                 (onClick)="es()"
-                styleClass="p-button-link"></p-button><strong>|</strong>
-      <p-button label="{{'asistencia.languages.en' | translate }}" (onClick)="en()" styleClass="p-button-link"></p-button>
+                [link]="true"></p-button><strong>|</strong>
+
+      <p-button label="{{'asistencia.languages.en' | translate }}"
+        (onClick)="en()" [link]="true"></p-button>
     </div>
 </div>
