@@ -14,23 +14,25 @@ import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
         ListLicenciaRoutingModule,
         FormsModule,
-		TableModule,
-		RatingModule,
-		ButtonModule,
-		SliderModule,
-		InputTextModule,
-		ToggleButtonModule,
-		RippleModule,
-		MultiSelectModule,
-		DropdownModule,
-		ProgressBarModule,
-		ToastModule
+    		TableModule,
+    		RatingModule,
+    		ButtonModule,
+    		SliderModule,
+    		InputTextModule,
+    		ToggleButtonModule,
+    		RippleModule,
+    		MultiSelectModule,
+    		DropdownModule,
+    		ProgressBarModule,
+    		ToastModule,
+    		TranslateModule
     ],
     declarations: [ListLicenciaComponent]
 })

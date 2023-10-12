@@ -15,25 +15,26 @@ import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
         ListAsistenciaRoutingModule,
         FormsModule,
-		TableModule,
-		RatingModule,
-		ButtonModule,
-		SliderModule,
-		InputTextModule,
-		ToggleButtonModule,
-		RippleModule,
-		MultiSelectModule,
-		DropdownModule,
-		ProgressBarModule,
-		ToastModule,
-        CalendarModule
+    		TableModule,
+    		RatingModule,
+    		ButtonModule,
+    		SliderModule,
+    		InputTextModule,
+    		ToggleButtonModule,
+    		RippleModule,
+    		MultiSelectModule,
+    		DropdownModule,
+    		ProgressBarModule,
+    		ToastModule,
+        CalendarModule,
+        TranslateModule
     ],
     declarations: [ListAsistenciaComponent]
 })

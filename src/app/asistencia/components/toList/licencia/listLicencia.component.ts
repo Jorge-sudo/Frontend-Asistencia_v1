@@ -4,15 +4,13 @@ import { Table } from 'primeng/table';
 import { Observable, catchError, map } from 'rxjs';
 import { DocenteLicencia } from 'src/app/asistencia/api/docenteLicencia';
 import { DocenteLicenciaService } from 'src/app/asistencia/service/docente-licencia.service';
-
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     templateUrl: './listLicencia.component.html',
     providers: [MessageService]
 })
 export class ListLicenciaComponent implements OnInit{
-
     selectionsData: any[] = [
         {name: 'Vigentes'},
         {name: 'Antiguos'}
@@ -37,7 +35,8 @@ export class ListLicenciaComponent implements OnInit{
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(public docenteLicenciaService: DocenteLicenciaService ,
-            private messageService: MessageService) {}
+            private messageService: MessageService,
+            private translate: TranslateService) {}
 
 
     initData(): void{
@@ -95,7 +94,11 @@ export class ListLicenciaComponent implements OnInit{
                 this.loading = !result.view;
             }),
             catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                this.messageService.add({ severity: 'error',
+                  summary: this.translate.instant('asistencia.message.errorTitle'),
+                  detail: this.translate.instant(
+                'asistencia.message.errorDataMesage'
+              )});
                 throw error;
             })
         );
@@ -111,7 +114,12 @@ export class ListLicenciaComponent implements OnInit{
                 this.loading = !result.view;
             }),
             catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                this.messageService.add({ 
+                    severity: 'error',
+                  summary: this.translate.instant('asistencia.message.errorTitle'),
+                  detail: this.translate.instant(
+                'asistencia.message.errorDataMesage')                
+                });
                 throw error;
             })
         );
@@ -127,7 +135,12 @@ export class ListLicenciaComponent implements OnInit{
                 this.loading = !result.view;
             }),
             catchError((error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ha podido cargar los datos. '});
+                this.messageService.add({ 
+                  severity: 'error',
+                  summary: this.translate.instant('asistencia.message.errorTitle'),
+                  detail: this.translate.instant(
+                'asistencia.message.errorDataMesage')
+                });
                 throw error;
             })
         );

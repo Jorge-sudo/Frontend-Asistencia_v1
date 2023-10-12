@@ -223,6 +223,44 @@
           "semester": "Semestre",
           "active": "Active"
         }
+      },
+      "licencia": {
+        "title": "Lista de Licencias",
+        "offToggleLabel": "Congelar Nombre",
+        "onToggleLabel": "Descongelar Nombre",
+        "emptyMessage": "No se encontraron Licencias.",
+        "loadingMessage": "Cargando datos de las Licencias. Espere por favor.",
+        "selectedStatus": "Seleccione el estado",
+        "table": {
+          "photography": "Fotografía",
+          "name": "Nombre",
+          "lastName": "Apellido",
+          "ci": "C.I.",
+          "dateInit": "Fecha Inicio",
+          "dateEnd": "Fecha Final",
+          "description": "Descripcion"
+        }
+      },
+      "asistencia": {
+        "title": "Lista de Asistencias",
+        "offToggleLabel": "Congelar Nombre",
+        "onToggleLabel": "Descongelar Nombre",
+        "emptyMessage": "No se encontraron Asistencias.",
+        "loadingMessage": "Cargando datos de las Asistencias. Espere por favor.",
+        "dateSearch": "Ingrese fecha a buscar",
+        "table": {
+          "photography": "Fotografía",
+          "name": "Nombre",
+          "lastName": "Apellido",
+          "time": "Hora entrada",
+          "date": "Fecha",
+          "numberStudent": "Cantidad de Estudiantes",
+          "statusAsistencia": "Estado de Asistencia",
+          "classroom": "Aula",
+          "laboratory": "Laboratorio",
+          "classSchedule": "Horario",
+          "matter": "Materia",
+        }
       }
     }
   }
