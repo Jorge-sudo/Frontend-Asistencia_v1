@@ -231,8 +231,45 @@
           "semester": "Semester",
           "active": "Active"
         }
+      },
+      "licencia": {
+        "title": "License List",
+        "offToggleLabel": "Freeze Name",
+        "onToggleLabel": "Unfreeze Name",
+        "emptyMessage": "No licenses found.",
+        "loadingMessage": "Loading license data. Please wait.",
+        "selectedStatus": "Select status",
+        "table": {
+          "photography": "Photography",
+          "name": "Name",
+          "lastName": "Last Name",
+          "ci": "ID Card",
+          "dateInit": "Start Date",
+          "dateEnd": "End Date",
+          "description": "Description"
+        }
+      },
+      "asistencia": {
+        "title": "Attendance List",
+        "offToggleLabel": "Freeze Name",
+        "onToggleLabel": "Unfreeze Name",
+        "emptyMessage": "No attendance records found.",
+        "loadingMessage": "Loading attendance data. Please wait.",
+        "dateSearch": "Enter date to search",
+        "table": {
+          "photography": "Photography",
+          "name": "Name",
+          "lastName": "Last Name",
+          "entrytime": "Entry Time",
+          "date": "Date",
+          "numberStudent": "Number of Students",
+          "statusAsistencia": "Attendance Status",
+          "classroom": "Classroom",
+          "laboratory": "Laboratory",
+          "classSchedule": "Class Schedule",
+          "matter": "Subject"
+        }
       }
-
     }
   }
 }

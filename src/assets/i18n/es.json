@@ -252,14 +252,14 @@
           "photography": "Fotografía",
           "name": "Nombre",
           "lastName": "Apellido",
-          "time": "Hora entrada",
+          "entrytime": "Hora entrada",
           "date": "Fecha",
           "numberStudent": "Cantidad de Estudiantes",
           "statusAsistencia": "Estado de Asistencia",
           "classroom": "Aula",
           "laboratory": "Laboratorio",
           "classSchedule": "Horario",
-          "matter": "Materia",
+          "matter": "Materia"
         }
       }
     }
