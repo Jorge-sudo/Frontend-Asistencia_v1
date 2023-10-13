@@ -24,7 +24,7 @@ export class ListMateriaComponent implements OnInit {
   totalRecords: number = 0;
   totalPages: number = 0;
   order: number = 1;
-  sortField: string = 'materia.nombre';
+  sortField: string = 'materia';
   globalFilter: string = '';
   first: number = 0;
   page: number = 0;
@@ -80,7 +80,7 @@ export class ListMateriaComponent implements OnInit {
     this.order = event.sortOrder === undefined ? 1 : event.sortOrder;
     this.sortField =
       event.sortField === undefined || event.sortField === null
-        ? 'materia.nombre'
+        ? 'materia'
         : event.sortField;
 
     if (this.globalFilter === '' || this.globalFilter === undefined) {
@@ -237,7 +237,7 @@ export class ListMateriaComponent implements OnInit {
 
   clear(table: Table) {
     this.globalFilter = '';
-    this.sortField = 'materia.nombre';
+    this.sortField = 'materia';
     this.order = 1;
     this.page = 0;
     this.rows = 10;

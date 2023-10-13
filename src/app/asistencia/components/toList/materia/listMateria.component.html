@@ -66,35 +66,35 @@
           <tr>
             <th
               style="min-width: 10rem"
-              pSortableColumn="materia.sigla"
+              pSortableColumn="sigla"
               pFrozenColumn
             >
               <div class="flex justify-content-between align-items-center">
                 {{ "asistencia.toList.materia.table.initials" | translate }}
-                <p-sortIcon field="materia.sigla"></p-sortIcon>
+                <p-sortIcon field="sigla"></p-sortIcon>
               </div>
             </th>
             <th
               style="min-width: 12rem"
-              pSortableColumn="materia.nombre"
+              pSortableColumn="materia"
               pFrozenColumn
               [frozen]="idFrozen"
             >
               <div class="flex justify-content-between align-items-center">
                 {{ "asistencia.toList.materia.table.matter" | translate }}
-                <p-sortIcon field="materia.nombre"></p-sortIcon>
+                <p-sortIcon field="materia"></p-sortIcon>
               </div>
             </th>
-            <th style="min-width: 12rem" pSortableColumn="carrera.nombre">
+            <th style="min-width: 12rem" pSortableColumn="carrera">
               <div class="flex justify-content-between align-items-center">
                 {{ "asistencia.toList.materia.table.career" | translate }}
-                <p-sortIcon field="carrera.nombre"></p-sortIcon>
+                <p-sortIcon field="carrera"></p-sortIcon>
               </div>
             </th>
-            <th style="min-width: 12rem" pSortableColumn="semestre.nombre">
+            <th style="min-width: 12rem" pSortableColumn="semestre">
               <div class="flex justify-content-between align-items-center">
                 {{ "asistencia.toList.materia.table.semester" | translate }}
-                <p-sortIcon field="semestre.nombre"></p-sortIcon>
+                <p-sortIcon field="semestre"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 8rem" pSortableColumn="activo">
