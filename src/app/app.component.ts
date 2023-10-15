@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-root',

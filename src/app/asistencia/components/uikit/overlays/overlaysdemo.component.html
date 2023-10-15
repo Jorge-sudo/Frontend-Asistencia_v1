@@ -27,7 +27,7 @@
                 <div>
                     <button type="button" pButton label="Image" (click)="op1.toggle($event)" class="p-button-success"></button>
                     <p-overlayPanel #op1 [showCloseIcon]="true" [style]="{width: '450px'}">
-                        <img src="assets/demo/images/nature/nature1.jpg" alt="Nature 1" style="width:100%"/>
+                        <img src="../../../../../assets/asistencia/images/nature/nature1.jpg" alt="Nature 1" style="width:100%"/>
                     </p-overlayPanel>
                 </div>
                 <div>
@@ -45,7 +45,7 @@
                                 <ng-template pTemplate="body" let-rowData let-product>
                                     <tr [pSelectableRow]="rowData">
                                         <td>{{product.name}}</td>
-                                        <td><img src="assets/demo/images/product/{{product.image}}" [alt]="product.image" width="50" class="shadow-2"/></td>
+                                        <td><img src="../../../../../assets/asistencia/images/product/{{product.image}}" [alt]="product.image" width="50" class="shadow-2"/></td>
                                         <td>{{formatCurrency(product.price)}}</td>
                                     </tr>
                                 </ng-template>

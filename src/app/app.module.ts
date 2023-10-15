@@ -17,11 +17,21 @@ import { authInterceptorProvider } from './asistencia/components/interceptors/Au
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: '192.168.1.8',
+  port: 9001,
+  protocol: 'ws', // Utiliza 'wss' si tu broker soporta SSL/TLS, de lo contrario utiliza 'ws'
+  path: '',
+  username: 'jorge',
+  password: 'jor12*\"@#',
+};
 
 @NgModule({
     declarations: [
@@ -36,7 +46,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
             }
         }),
         AppLayoutModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

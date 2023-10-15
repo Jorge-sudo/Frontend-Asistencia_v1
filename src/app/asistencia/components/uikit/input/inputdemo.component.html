@@ -146,7 +146,7 @@
 			<p-multiSelect [options]="countries" [(ngModel)]="selectedMulti" placeholder="Select a Country" optionLabel="name" class="multiselect-custom" display="chip">
 				<ng-template let-country pTemplate="item">
 					<div class="flex align-items-center">
-						<img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width:21px"/>
+						<img src="../../../../../assets/asistencia/images/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width:21px"/>
 						<span class="ml-2">{{country.name}}</span>
 					</div>
 				</ng-template>
@@ -164,7 +164,7 @@
 			<p-selectButton [options]="paymentOptions" [(ngModel)]="valSelect2" [multiple]="true" optionLabel="name"></p-selectButton>
 		</div>
 	</div>
-	
+
 	<div class="col-12">
 		<div class="card">
 			<h5>InputGroup</h5>

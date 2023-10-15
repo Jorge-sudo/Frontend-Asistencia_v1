@@ -85,8 +85,24 @@
       "Nov",
       "Dic"
     ],
+    "dateFormat": "mm/dd/yy",
+    "firstDayOfWeek": 0,
+    "today": "Hoy",
+    "weekHeader": "Sem",
+    "weak": "Débil",
+    "medium": "Medio",
+    "strong": "Fuerte",
+    "passwordPrompt": "Ingresa una contraseña",
     "emptyMessage": "No se encontraron resultados",
     "emptyFilterMessage": "No se encontraron resultados"
+  },
+  "upload": {
+    "invalidFileLimitMessageSummary": "Límite de archivo inválido",
+    "invalidFileLimitMessageDetail": "El límite es {0} como máximo.",
+    "invalidFileTypeMessageDetail": "Tipos de archivos permitidos: {0}.",
+    "invalidFileTypeMessageResumary": "{0}: Tipo de archivo no válido,",
+    "invalidFileSizeMessageDetail": "El tamaño máximo de carga es {0}.",
+    "invalidFileSizeMensajeResumen": "{0}: Tamaño de archivo no válido,"
   },
   "asistencia": {
     "message": {
