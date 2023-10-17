@@ -6,13 +6,8 @@ import { NgxMqttService } from '../../../service/ngx-mqtt/ngx-mqtt.service';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
-const formatCorreoInstitucional: RegExp = /^[a-zA-Z]+\.[a-zA-Z]+$/;
+const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@servicios\.usalesiana\.edu\.bo$/;
 // Expresión regular que verifica si la contraseña tiene por lo menos debe tener 1 texto, 1 numero y 1 caracteres especial
-const formatContrasenia: RegExp =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,}$/;
-
-const correoIntitucionalForm: string = '@servicios.usalesiana.edu.bo';
-
 
 @Component({
   templateUrl: './registerDocente.component.html',
@@ -21,7 +16,10 @@ const correoIntitucionalForm: string = '@servicios.usalesiana.edu.bo';
 export class RegisterDocenteComponent implements OnInit {
 
   docente: FormGroup = new FormGroup({});
-  fileUpload: File = new File([], '');
+  loading: boolean = false;
+  fileUpload?: File ;
+  confirmPassword: FormControl = new FormControl('',[Validators.required]);
+  passwordEquals: boolean = true;
 
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
@@ -36,8 +34,8 @@ export class RegisterDocenteComponent implements OnInit {
       //creamos todos los atributos de docente dentro del from
       ci: new FormControl(0, [
         Validators.required,
-        Validators.minLength(7),
-        Validators.maxLength(11),
+        Validators.min(99999),
+        Validators.max(999999999),
       ]),
       nombre: new FormControl('', [
         Validators.required,
@@ -52,27 +50,27 @@ export class RegisterDocenteComponent implements OnInit {
       fotografia: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
       genero: new FormControl('', [Validators.required]),
-      correoInstitucional: new FormControl('' + correoIntitucionalForm, [
+      correoInstitucional: new FormControl('', [
         Validators.required,
         Validators.email,
         Validators.pattern(formatCorreoInstitucional),
       ]),
       contrasenia: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(20),
-        Validators.pattern(formatContrasenia),
+        Validators.minLength(7),
+        Validators.maxLength(20)
       ]),
       rol: new FormControl(0, [Validators.required]),
-      codRfid: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(20),
-      ]),
+      codRfid: new FormControl('', []),
     });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.loading = true;
+    setTimeout(() => {
+        this.loading = false
+    }, 2000);
+  }
 
   async onSelect(event:any) {
     if(event.currentFiles.length !== 0){
@@ -98,22 +96,14 @@ export class RegisterDocenteComponent implements OnInit {
     }
   }
 
+  comparePassword(){
+    this.passwordEquals = this.docente.get('contrasenia')?.value !== this.confirmPassword.value;
+  }
+
   onClear(event:any): void{
-    console.log(event)
-    this.fileUpload = new File([], '');
+    this.fileUpload = undefined;
   }
 
-  estatusMqttRfidCard(){
-    if(this.ngxMqttService.messageDocenteRegister.codigoRfid != ''){
-      this.ngxMqttService.tarjetaRfidCargado = true;
-      this.docente.controls['codRfid']
-            .setValue(
-              this.ngxMqttService.messageDocenteRegister.codigoRfid
-            );
-    }
-
-    this.ngxMqttService.tarjetaRfidCargado = false;
-  }
 
   clearMqttRegistrarDocente(){
     this.ngxMqttService.messageDocenteRegister.codigoRfid = '';

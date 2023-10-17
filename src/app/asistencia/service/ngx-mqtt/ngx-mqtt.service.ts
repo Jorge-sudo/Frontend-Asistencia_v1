@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, map, tap } from 'rxjs';
 import { MqttMessage } from '../../api/mqtt/mqttMessage';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { AulaService } from '../aula.service';
+import { Aula } from '../../api/aula';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +11,33 @@ import { IMqttMessage, MqttService } from 'ngx-mqtt';
 export class NgxMqttService {
 
   subscriptionDocenteRegister: Subscription;
-  messageDocenteRegister: MqttMessage = {codigoRfid: 'Vacio'};
+  messageDocenteRegister: MqttMessage = {};
   docenteRegistrar = 'rfid/registrar/docente';
-  tarjetaRfidCargado: boolean = false;
+  cardRfidLoad: boolean = false;
+  aula: Aula = {};
 
-  constructor(private _mqttService: MqttService) {
-    this.subscriptionDocenteRegister = this._mqttService.observe(this.docenteRegistrar).subscribe((message: IMqttMessage) => {
+  constructor(private _mqttService: MqttService,
+             private aulaService: AulaService) {
+
+    this.subscriptionDocenteRegister = this._mqttService.observe(this.docenteRegistrar).subscribe(async (message: IMqttMessage) => {
       this.messageDocenteRegister = JSON.parse(message.payload.toString());
-      console.log(this.messageDocenteRegister.idAula);
-      console.log(this.messageDocenteRegister.codigoRfid);
-      this.tarjetaRfidCargado = true;
+      if(this.messageDocenteRegister.idAula !== undefined){
+        this.getAulaById(this.messageDocenteRegister.idAula);
+        this.cardRfidLoad = true;
+      }
+
     });
   }
-  public publicar(topic: string, message: string): void {
+
+  getAulaById(id: number){
+    this.aulaService.getAulaById(id).pipe(
+      tap((aula: any) => {
+        this.aula = aula.data;
+      })
+    ).subscribe();
+  }
+
+  public publish(topic: string, message: string): void {
     this._mqttService.unsafePublish(topic, message, {qos: 1, retain: true});
   }
 

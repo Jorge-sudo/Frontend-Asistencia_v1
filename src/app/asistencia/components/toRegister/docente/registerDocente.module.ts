@@ -11,6 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
+import { MessageModule } from 'primeng/message';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { ChipModule } from 'primeng/chip';
         PasswordModule,
         FileUploadModule,
         ButtonModule,
-        ChipModule
+        ChipModule,
+        MessageModule
+
     ],
     declarations: [RegisterDocenteComponent]
 })
