@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { MessageModule } from 'primeng/message';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MessageModule } from 'primeng/message';
         FileUploadModule,
         ButtonModule,
         ChipModule,
-        MessageModule
+        MessageModule,
+        DropdownModule
 
     ],
     declarations: [RegisterDocenteComponent]

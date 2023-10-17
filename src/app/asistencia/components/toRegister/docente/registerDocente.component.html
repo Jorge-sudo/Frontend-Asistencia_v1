@@ -222,6 +222,24 @@
               ></p-chip>
             </div>
           </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+                *ngIf="
+                  docente.get('rol')?.invalid
+                "
+                severity="warn"
+                text="Por favor, ingrese su rol"
+              ></p-message>
+            <label for="m-3 float-label ">Ingrese sus Roles</label>
+            <p-dropdown
+              [options]="roles"
+              placeholder="Ingrese sus Roles"
+              optionLabel="nombre"
+              inputId="float-label"
+              (onChange)="eventSelectRol($event)"
+            ></p-dropdown>
+          </div>
         </div>
 
         <div class="field col-12 md:col-4">

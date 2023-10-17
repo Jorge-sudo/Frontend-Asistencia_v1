@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ImageCompressService } from 'src/app/util/image-compress.service';
 import { NgxMqttService } from '../../../service/ngx-mqtt/ngx-mqtt.service';
+import { RolService } from 'src/app/asistencia/service/rol.service';
+import { Rol } from 'src/app/asistencia/api/rol';
+import { tap } from 'rxjs';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
@@ -20,13 +23,24 @@ export class RegisterDocenteComponent implements OnInit {
   fileUpload?: File ;
   confirmPassword: FormControl = new FormControl('',[Validators.required]);
   passwordEquals: boolean = true;
+  roles: Rol[] = [];
 
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
-              public ngxMqttService: NgxMqttService) { }
+              public ngxMqttService: NgxMqttService,
+              private rolService: RolService) { }
 
   ngOnInit(): void {
+    this.initRoles();
     this.initForm();
+  }
+
+  initRoles(){
+    this.rolService.getRoles().pipe(
+      tap((data: any) => {
+        this.roles = data.data;
+      })
+    ).subscribe();
   }
 
   initForm(): void {
@@ -60,7 +74,7 @@ export class RegisterDocenteComponent implements OnInit {
         Validators.minLength(7),
         Validators.maxLength(20)
       ]),
-      rol: new FormControl(0, [Validators.required]),
+      rol: new FormControl(0, [Validators.required, Validators.min(1)]),
       codRfid: new FormControl('', []),
     });
   }
@@ -94,6 +108,10 @@ export class RegisterDocenteComponent implements OnInit {
         }
       );
     }
+  }
+
+  eventSelectRol(event:any){
+    this.docente.get('rol')?.setValue(event.value.id);
   }
 
   comparePassword(){
