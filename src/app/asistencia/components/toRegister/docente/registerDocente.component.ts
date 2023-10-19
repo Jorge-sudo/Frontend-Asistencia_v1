@@ -5,7 +5,10 @@ import { ImageCompressService } from 'src/app/util/image-compress.service';
 import { NgxMqttService } from '../../../service/ngx-mqtt/ngx-mqtt.service';
 import { RolService } from 'src/app/asistencia/service/rol.service';
 import { Rol } from 'src/app/asistencia/api/rol';
-import { tap } from 'rxjs';
+import { Observable, catchError, concatMap, finalize, tap, throwError } from 'rxjs';
+import { DocenteService } from 'src/app/asistencia/service/docente.service';
+import { PersonaService } from 'src/app/asistencia/service/persona.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
@@ -19,7 +22,10 @@ const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@servicios\.usalesiana\.
 export class RegisterDocenteComponent implements OnInit {
 
   docente: FormGroup = new FormGroup({});
+  progress: number = 0;
   loading: boolean = false;
+  loadingDocente: boolean = false;
+  loadingImage: boolean = false;
   fileUpload?: File ;
   confirmPassword: FormControl = new FormControl('',[Validators.required]);
   passwordEquals: boolean = true;
@@ -28,7 +34,9 @@ export class RegisterDocenteComponent implements OnInit {
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
               public ngxMqttService: NgxMqttService,
-              private rolService: RolService) { }
+              private rolService: RolService,
+              private docenteService: DocenteService,
+              private personaService: PersonaService) { }
 
   ngOnInit(): void {
     this.initRoles();
@@ -74,6 +82,7 @@ export class RegisterDocenteComponent implements OnInit {
         Validators.minLength(7),
         Validators.maxLength(20)
       ]),
+      activo: new FormControl(true, [Validators.required]),
       rol: new FormControl(0, [Validators.required, Validators.min(1)]),
       codRfid: new FormControl('', []),
     });
@@ -81,9 +90,55 @@ export class RegisterDocenteComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
-    setTimeout(() => {
+    this.docente.get('codRfid')?.setValue(this.ngxMqttService.messageDocenteRegister.codigoRfid);
+    this.saveDocente().pipe(
+      concatMap(() => {
+        return this.saveImageDocente();
+      }),
+      finalize(() => {
+        if(this.loadingDocente && this.loadingImage){
+          this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Sus datos se guardaron correctamente.'});
+        }
         this.loading = false
-    }, 2000);
+      })
+    ).subscribe();
+  }
+
+  saveDocente(): Observable<any>{
+    return this.docenteService.saveDocente(this.docente.value).pipe(
+      tap(data => {
+        this.loadingDocente = data.save;
+        this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Docente guardado correctamente.'});
+      }),
+      catchError(error => {
+        // Aquí puedes agregar el código que se ejecutará cuando ocurra un error al insertar el docente
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo guardar el docente.'});
+        return throwError(() => error);
+      }));
+  }
+
+  saveImageDocente(): Observable<any>{
+    let result = new Observable<HttpEvent<any>>();
+    if(this.fileUpload !== undefined){
+      result = this.personaService.saveImagePersona(this.fileUpload, this.docente.get('ci')?.value).pipe(
+        tap((event: HttpEvent<any>) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // El archivo se está subiendo, puedes mostrar el progreso aquí
+            this.progress = Math.round(100 * (event.loaded / (event.total ?? event.loaded)));
+            console.log(`Archivo subido: ${this.progress}%`);
+            this.loadingImage = true;
+            this.messageService.add({ severity: 'info', summary: 'Cargando', detail: `Archivo subido: ${this.progress}%`});
+          }
+          return event;
+        }),
+        catchError((error: any) => {
+          // Manejar el error aquí
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo guardar la imagen.'});
+          this.loadingImage = false;
+          return throwError(() => error);
+        }));
+    }
+    return result;
   }
 
   async onSelect(event:any) {

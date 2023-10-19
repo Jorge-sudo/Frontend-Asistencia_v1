@@ -13,12 +13,12 @@ export class DocenteService {
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' , } );
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/docentes/';
+        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/docentes';
     }
 
     public getDocentes( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
-        return this.http.get<any>(this.apiUrl + 'page/' +page + '/' +
+        return this.http.get<any>(this.apiUrl + '/page/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short);
     }
@@ -26,14 +26,17 @@ export class DocenteService {
     public getDocentesFilter( order:number ,page:number,
                               limit: number, short: string,
                               globalFilter: string ): Observable<any> {
-        return this.http.get<any>(this.apiUrl + 'page/' +page + '/' +
+        return this.http.get<any>(this.apiUrl + '/page/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short + '?globalFilter=' + globalFilter);
     }
 
     public updateDocenteActivo(command: CommandDocenteAndSupervisorActivo) {
-        return this.http.post<any>(this.apiUrl + 'activo', command, {headers: this.httpHeaders});
+        return this.http.post<any>(this.apiUrl + '/activo', command, {headers: this.httpHeaders});
     }
 
+    public saveDocente(command: any){
+        return this.http.post<any>(this.apiUrl, command, {headers: this.httpHeaders});
+    }
 
 }

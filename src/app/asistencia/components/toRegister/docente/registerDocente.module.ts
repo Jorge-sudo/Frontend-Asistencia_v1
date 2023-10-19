@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { MessageModule } from 'primeng/message';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
@@ -29,8 +30,8 @@ import { DropdownModule } from 'primeng/dropdown';
         ButtonModule,
         ChipModule,
         MessageModule,
-        DropdownModule
-
+        DropdownModule,
+        InputSwitchModule
     ],
     declarations: [RegisterDocenteComponent]
 })
