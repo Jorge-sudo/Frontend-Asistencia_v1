@@ -1,8 +1,191 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <h4>Asignar Materia</h4>
-            <p>formulario</p>
+  <div class="col-12">
+    <div class="card">
+      <h4>Asignatura - Ingrese sus datos</h4>
+      <form [formGroup]="data" (ngSubmit)="onSubmit()" method="POST">
+        <div class="p-fluid p-formgrid grid">
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="sigla">Sigla para filtrar la materia</label>
+            <input
+              pInputText
+              id="sigla"
+              type="text"
+              placeholder="MAT-112"
+            />
+            <div class="flex justify-content-center" style="margin: 10px;">
+              <p-button label="Buscar Materia" severity="info"></p-button>
+            </div>
+
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="materia">Materia</label>
+            <p-dropdown
+              [options]="materias"
+              optionLabel="name"
+              placeholder="Seleccione la materia"
+            >
+            </p-dropdown>
+            <div class="flex justify-content-center" style="margin: 10px;">
+              <p-button label="Agregar Materia" severity="info"></p-button>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="ci" >C.I. del docente que dictara la materia</label>
+            <input
+              pInputText
+              id="ci"
+              type="text"
+              placeholder="12345678"
+            />
+            <div class="flex justify-content-center" style="margin: 10px;">
+              <p-button label="Buscar Docente" severity="info"></p-button>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="aula">Aula</label>
+            <p-dropdown
+              [options]="aulas"
+              optionLabel="aula"
+              [filter]="true"
+              filterBy="aula"
+              [showClear]="true"
+              placeholder="Seleccione la aula"
+            >
+              <ng-template pTemplate="selectedItem">
+                <div
+                  class="flex align-items-center gap-2"
+                  *ngIf="aulaSelected"
+                >
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-country pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <div class="flex justify-content-center" style="margin: 10px;">
+              <p-button label="Agregar Aula" severity="info"></p-button>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label htmlFor="cantidadHorarios">Horario:</label>
+            <div class="flex justify-content-center" style="margin: 10px;">
+              <p-button label="Agregar Horario" severity="info"></p-button>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="cantidadHorarios">Cantidad de Horarios</label>
+            <p-dropdown
+              [options]="options"
+              placeholder="Seleccione la cantidad de horarios"
+            >
+            </p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="horario1">Horario 1:</label>
+            <p-inputSwitch ></p-inputSwitch>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="aula">Horario 1:</label>
+            <p-dropdown
+              [options]="aulas"
+              optionLabel="aula"
+              [filter]="true"
+              filterBy="aula"
+              [showClear]="true"
+              placeholder="Seleccione el horario 1"
+            >
+              <ng-template pTemplate="selectedItem">
+                <div
+                  class="flex align-items-center gap-2"
+                  *ngIf="aulaSelected"
+                >
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-country pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="horario1">Horario 2:</label>
+            <p-inputSwitch ></p-inputSwitch>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <label htmlFor="horario2">Horario 2:</label>
+            <p-dropdown
+              [options]="aulas"
+              optionLabel="aula"
+              [filter]="true"
+              filterBy="aula"
+              [showClear]="true"
+              placeholder="Seleccione la aula"
+            >
+              <ng-template pTemplate="selectedItem">
+                <div
+                  class="flex align-items-center gap-2"
+                  *ngIf="aulaSelected"
+                >
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-country pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <div>
+                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
+                    {{ aulaSelected.piso }} -
+                    {{ aulaSelected.bloque }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+
         </div>
+      </form>
     </div>
+  </div>
 </div>

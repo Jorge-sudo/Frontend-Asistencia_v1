@@ -17,7 +17,7 @@ import { authInterceptorProvider } from './asistencia/components/interceptors/Au
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
+import { IMqttMessage, IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -32,6 +32,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   username: 'jorge',
   password: 'jor12*\"@#',
 };
+
 
 @NgModule({
     declarations: [

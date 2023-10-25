@@ -124,9 +124,7 @@ export class ListAsistenciaComponent implements OnInit{
 
 
     onSelect(event: any){
-        console.log('focus ' + this.dateSearch);
         this.loadInit(this.getDateSearchFormat(this.dateSearch!));
-        console.log(event);
     }
 
 

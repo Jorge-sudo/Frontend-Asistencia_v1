@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subscription, map, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { MqttMessage } from '../../api/mqtt/mqttMessage';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { AulaService } from '../aula.service';
@@ -19,7 +19,8 @@ export class NgxMqttService {
   constructor(private _mqttService: MqttService,
              private aulaService: AulaService) {
 
-    this.subscriptionDocenteRegister = this._mqttService.observe(this.docenteRegistrar).subscribe(async (message: IMqttMessage) => {
+    this.subscriptionDocenteRegister = this._mqttService.observe(this.docenteRegistrar)
+      .subscribe(async (message: IMqttMessage) => {
       this.messageDocenteRegister = JSON.parse(message.payload.toString());
       if(this.messageDocenteRegister.idAula !== undefined){
         this.getAulaById(this.messageDocenteRegister.idAula);

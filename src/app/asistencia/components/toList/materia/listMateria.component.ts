@@ -209,7 +209,6 @@ export class ListMateriaComponent implements OnInit {
     this.materiaCarreraSemestreActivo.idMateriaCarreraSemestre =
       materiaCarreraSemestre.idMateriaCarreraSemestre;
     this.materiaCarreraSemestreActivo.activo = materiaCarreraSemestre.activo;
-    console.log(this.materiaCarreraSemestreActivo);
     return this.materiaCarreraSemestreService
       .updateMateriaCarreraSemestreActivo(this.materiaCarreraSemestreActivo)
       .pipe(

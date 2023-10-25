@@ -255,22 +255,18 @@ export class ListAsignaturaComponent implements OnInit {
   }
 
   eventSelectCarrera(event: any) {
-    console.log(event);
     this.idCarreraSelected = event.value.id;
   }
 
   eventSelectSemestre(event: any) {
-    console.log(event);
     this.idSemestreSelected = event.value.id;
   }
 
   eventSelectDiaSemana(event: any) {
-    console.log(event);
     this.idDiaSemanaSelected = event.value.id;
   }
 
   eventSelectTurno(event: any) {
-    console.log(event);
     this.idTurnoSelected = event.value.id;
   }
 

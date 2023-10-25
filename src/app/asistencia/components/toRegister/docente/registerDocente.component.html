@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <h5>Ingrese sus datos</h5>
+      <h5>Docente - Ingrese sus datos</h5>
       <div class="field col-12 md:col-8">
         <p-message
               *ngIf="fileUpload == undefined"
@@ -12,7 +12,7 @@
           name="imageDocente"
           (onSelect)="onSelect($event)"
           (onClear)="onClear($event)"
-          accept="image/*"
+          accept="image/jpeg"
           [maxFileSize]="1000000"
           [showUploadButton]="false"
           invalidFileLimitMessageSummary="Límite de archivo inválido"
@@ -46,7 +46,7 @@
               [min]="99999"
               [max]="999999999"
               [useGrouping]="false"
-              placeholder="Ingrese su CI"
+              placeholder="12345678"
             >
             </p-inputNumber>
           </div>
@@ -65,7 +65,7 @@
               id="nombre"
               formControlName="nombre"
               type="text"
-              placeholder="Ingrese su nombre"
+              placeholder="Jose Luis"
             />
           </div>
 
@@ -84,7 +84,7 @@
               id="apellido"
               formControlName="apellido"
               type="text"
-              placeholder="Ingrese su apellido"
+              placeholder="Quispe Mamani"
             />
           </div>
 
@@ -102,7 +102,7 @@
               id="email"
               formControlName="email"
               type="text"
-              placeholder="Ingrese su email"
+              placeholder="text@text.com"
             />
           </div>
 
@@ -149,7 +149,7 @@
               id="correoInstitucional"
               formControlName="correoInstitucional"
               type="text"
-              placeholder="Ingrese su correo institucional"
+              placeholder="text.text@servicios.usalesiana.edu.bo"
             />
           </div>
 
@@ -170,7 +170,7 @@
             <label htmlFor="password">Contraseña</label>
             <p-password
               id="password"
-              placeholder="Ingrese su contraseña"
+              placeholder="MMmm@1234\*?!"
               formControlName="contrasenia"
               required
             ></p-password>
@@ -255,8 +255,7 @@
 
         </div>
 
-        <div class="field col-12 md:col-4">
-          <p-button
+        <p-button
             label="Enviar"
             [loading]="loading"
             type="submit"
@@ -266,7 +265,7 @@
                 ngxMqttService.cardRfidLoad &&
                 fileUpload !== undefined)"
           ></p-button>
-        </div>
+        <p-button [ngStyle]="{ 'margin': '10px' }" label="Resetear" (onClick)="clearForm()" severity="secondary"></p-button>
       </form>
     </div>
   </div>

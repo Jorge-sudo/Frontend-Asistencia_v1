@@ -99,9 +99,19 @@ export class RegisterDocenteComponent implements OnInit {
         if(this.loadingDocente && this.loadingImage){
           this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Sus datos se guardaron correctamente.'});
         }
-        this.loading = false
+        this.loading = false;
+        this.clearForm();
       })
     ).subscribe();
+  }
+
+  clearForm(){
+    this.docente.reset();
+    this.confirmPassword.reset();
+    this.fileUpload = undefined;
+    this.passwordEquals = true;
+    this.progress = 0;
+    this.clearMqttRegistrarDocente();
   }
 
   saveDocente(): Observable<any>{

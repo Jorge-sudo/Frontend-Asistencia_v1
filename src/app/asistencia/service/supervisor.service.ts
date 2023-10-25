@@ -23,4 +23,8 @@ export class SupervisorService {
     public updateSupervisorActivo(command: CommandDocenteAndSupervisorActivo) {
         return this.http.post<any>(this.apiUrl + '/activo', command, {headers: this.httpHeaders});
     }
+
+    public saveSupervisor(command: any){
+      return this.http.post<any>(this.apiUrl, command, {headers: this.httpHeaders});
+    }
 }
