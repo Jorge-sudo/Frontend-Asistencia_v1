@@ -4,188 +4,213 @@
       <h4>Asignatura - Ingrese sus datos</h4>
       <form [formGroup]="data" (ngSubmit)="onSubmit()" method="POST">
         <div class="p-fluid p-formgrid grid">
+
           <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <p-message
+                *ngIf="sigla.invalid && sigla.touched"
+                severity="warn"
+                text="Ingrese la sigla para filtrar las materias."></p-message>
+
             <label htmlFor="sigla">Sigla para filtrar la materia</label>
             <input
               pInputText
               id="sigla"
               type="text"
               placeholder="MAT-112"
+              [formControl]="sigla"
             />
             <div class="flex justify-content-center" style="margin: 10px;">
-              <p-button label="Buscar Materia" severity="info"></p-button>
+              <p-button
+                  label="Buscar Materia"
+                  (onClick)="searchMaterias()"
+                  severity="info"
+                  [disabled]="sigla.invalid">
+              </p-button>
             </div>
 
           </div>
 
-          <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
+          <div class="field col-12 md:col-4" >
+            <p-message
+                *ngIf="data.get('materiaDocente')?.get('idMateriaCarreraSemestre')?.invalid"
+                severity="warn"
+                text="Seleccione la materia"></p-message>
+
             <label htmlFor="materia">Materia</label>
             <p-dropdown
-              [options]="materias"
-              optionLabel="name"
+              [options]="optionsMateriaCarreraSemestre"
               placeholder="Seleccione la materia"
+              (onChange)="eventSelectMateria($event)"
+              optionLabel="name"
             >
             </p-dropdown>
-            <div class="flex justify-content-center" style="margin: 10px;">
-              <p-button label="Agregar Materia" severity="info"></p-button>
-            </div>
           </div>
 
-          <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
+          <div formGroupName="materiaDocente" class="field col-12 md:col-4" >
+            <p-message
+                *ngIf="data.get('materiaDocente')?.get('ci')?.invalid &&
+                       data.get('materiaDocente')?.get('ci')?.touched"
+                severity="warn"
+                text="Ingrese el C.I. del docente "></p-message>
+
+            <p-message
+                *ngIf="successDocente && data.get('materiaDocente')?.get('ci')?.valid"
+                severity="success"
+                text="Docente cargado."></p-message>
+
             <label htmlFor="ci" >C.I. del docente que dictara la materia</label>
             <input
               pInputText
               id="ci"
               type="text"
               placeholder="12345678"
+              formControlName="ci"
             />
             <div class="flex justify-content-center" style="margin: 10px;">
-              <p-button label="Buscar Docente" severity="info"></p-button>
+              <p-button
+                  label="Buscar Docente"
+                  (onClick)="searchDocente()"
+                  severity="info"
+                  [disabled]="data.get('materiaDocente')?.get('ci')?.invalid" >
+                </p-button>
             </div>
           </div>
 
           <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
+            <p-message
+                *ngIf="data.get('aulaMateriaDocente')?.get('idAula')?.invalid"
+                severity="warn"
+                text="Seleccione la aula" >
+            </p-message>
             <label htmlFor="aula">Aula</label>
             <p-dropdown
-              [options]="aulas"
-              optionLabel="aula"
+              [options]="optionsAula"
+              optionLabel="name"
               [filter]="true"
-              filterBy="aula"
-              [showClear]="true"
+              filterBy="name"
               placeholder="Seleccione la aula"
-            >
-              <ng-template pTemplate="selectedItem">
-                <div
-                  class="flex align-items-center gap-2"
-                  *ngIf="aulaSelected"
-                >
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template let-country pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-            <div class="flex justify-content-center" style="margin: 10px;">
-              <p-button label="Agregar Aula" severity="info"></p-button>
-            </div>
-          </div>
-
-          <div class="field col-12 md:col-4">
-            <label htmlFor="cantidadHorarios">Horario:</label>
-            <div class="flex justify-content-center" style="margin: 10px;">
-              <p-button label="Agregar Horario" severity="info"></p-button>
-            </div>
-          </div>
-
-          <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
-            <label htmlFor="cantidadHorarios">Cantidad de Horarios</label>
-            <p-dropdown
-              [options]="options"
-              placeholder="Seleccione la cantidad de horarios"
+              (onChange)="eventSelectAula($event)"
             >
             </p-dropdown>
           </div>
 
-          <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
-            <label htmlFor="horario1">Horario 1:</label>
-            <p-inputSwitch ></p-inputSwitch>
+
+
+          <div [formGroup]="horarioMateriaDocente1"
+               class="field col-12 md:col-4">
+
+               <label htmlFor="horario1">Horario 1: Laboratorio </label>
+               <p-inputSwitch
+                 formControlName="laboratorio"
+                 (onChange)="eventSwitchLaboratorio1($event)"
+               ></p-inputSwitch>
+
+               <p-message
+                   *ngIf="this.horarioMateriaDocente1.get('nroLaboratorio')?.invalid"
+                   severity="warn"
+                   text="Ingrese el numero de laboratorio" >
+               </p-message>
+               <label
+                   htmlFor="nroLaboratorio"
+                   *ngIf="this.horarioMateriaDocente1.get('laboratorio')?.value" >
+                   Nro de laboratorio 1</label>
+               <p-inputNumber
+                 *ngIf="this.horarioMateriaDocente1.get('laboratorio')?.value"
+                 formControlName="nroLaboratorio"
+                 inputId="nroLaboratorio"
+                 mode="decimal"
+                 [min]="0"
+                 [max]="100"
+                 [useGrouping]="false"
+                 placeholder="Numero de laboratorio"
+               >
+               </p-inputNumber>
+
           </div>
 
           <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
-            <label htmlFor="aula">Horario 1:</label>
+            <p-message
+                *ngIf="this.horarioMateriaDocente1.get('idHorario')?.invalid"
+                severity="warn"
+                text="Seleccione el horario 1" >
+            </p-message>
+            <label htmlFor="horario1">Horario 1: Seleccione Horario</label>
             <p-dropdown
-              [options]="aulas"
-              optionLabel="aula"
+              [options]="optionsHorario"
+              optionLabel="name"
               [filter]="true"
-              filterBy="aula"
-              [showClear]="true"
+              filterBy="name"
               placeholder="Seleccione el horario 1"
+              (onChange)="eventSelectHorario1($event)"
             >
-              <ng-template pTemplate="selectedItem">
-                <div
-                  class="flex align-items-center gap-2"
-                  *ngIf="aulaSelected"
-                >
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template let-country pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
             </p-dropdown>
           </div>
 
-          <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
-            <label htmlFor="horario1">Horario 2:</label>
-            <p-inputSwitch ></p-inputSwitch>
+          <div [formGroup]="horarioMateriaDocente2"  class="field col-12 md:col-4">
+            <label htmlFor="horario2">Horario 2: Laboratorio</label>
+              <p-inputSwitch
+                id="horario2"
+                formControlName="laboratorio"
+                (onChange)="eventSwitchLaboratorio2($event)"
+              ></p-inputSwitch>
+
+              <p-message
+                  *ngIf="this.horarioMateriaDocente2.get('nroLaboratorio')?.invalid "
+                  severity="warn"
+                  text="Ingrese el numero de laboratorio " >
+              </p-message>
+              <label
+                  *ngIf="this.horarioMateriaDocente2.get('laboratorio')?.value"
+                  htmlFor="nroLaboratorio">Nro de laboratorio 2</label>
+              <p-inputNumber
+                *ngIf="this.horarioMateriaDocente2.get('laboratorio')?.value"
+                inputId="nroLaboratorio"
+                mode="decimal"
+                [min]="0"
+                [max]="100"
+                [useGrouping]="false"
+                placeholder="Numero de laboratorio"
+                formControlName="nroLaboratorio"
+              >
+              </p-inputNumber>
+
           </div>
 
           <div class="field col-12 md:col-4">
-            <p-message *ngIf="" severity="warn" text=""></p-message>
-            <label htmlFor="horario2">Horario 2:</label>
+            <p-message
+                *ngIf="this.horarioMateriaDocente2.get('idHorario')?.invalid"
+                severity="warn"
+                text="Seleccione el horario 2" >
+            </p-message>
+            <label htmlFor="horario2">Horario 2: Seleccione Horario</label>
             <p-dropdown
-              [options]="aulas"
-              optionLabel="aula"
+              [options]="optionsHorario"
+              optionLabel="name"
               [filter]="true"
-              filterBy="aula"
-              [showClear]="true"
-              placeholder="Seleccione la aula"
+              filterBy="name"
+              placeholder="Seleccione el horario 2"
+              (onChange)="eventSelectHorario2($event)"
             >
-              <ng-template pTemplate="selectedItem">
-                <div
-                  class="flex align-items-center gap-2"
-                  *ngIf="aulaSelected"
-                >
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template let-country pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                  <div>
-                    {{ aulaSelected.paralelo }} - {{ aulaSelected.aula }} -
-                    {{ aulaSelected.piso }} -
-                    {{ aulaSelected.bloque }}
-                  </div>
-                </div>
-              </ng-template>
             </p-dropdown>
           </div>
 
         </div>
+        <p-button
+            label="Enviar"
+            [loading]="loading"
+            type="submit"
+            [disabled]="
+                data.invalid || horarioMateriaDocente1.invalid || horarioMateriaDocente2.invalid"
+          ></p-button>
+        <p-button
+          [ngStyle]="{ 'margin': '10px' }"
+          label="Resetear"
+          (onClick)="clearForm()"
+          severity="secondary">
+        </p-button>
       </form>
     </div>
   </div>
 </div>
+
+<p-toast [life]="10000" ></p-toast>

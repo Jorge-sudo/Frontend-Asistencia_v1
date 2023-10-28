@@ -1,24 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AulaService {
+export class HorarioService {
 
   private readonly apiUrl: string;
 
   constructor(private http: HttpClient) {
-      this.apiUrl = environment.controlAsistenciaApiUrl + '/api/aulas';
+      this.apiUrl = environment.controlAsistenciaApiUrl + '/api/horarios';
   }
 
-  getAulaById(id:number) : Observable<any>{
-    return this.http.get<any>(this.apiUrl + '/' + id);
-  }
-
-  getAulas(): Observable<any> {
+  getHorarios(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
+
 }

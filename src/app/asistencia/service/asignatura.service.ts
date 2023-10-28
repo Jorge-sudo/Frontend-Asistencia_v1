@@ -25,5 +25,8 @@ export class AsignaturaService {
                                                 idSemestre + '/' + idTurno+ '?globalFilter=' + globalFilter);
     }
 
+    public saveAsignatura(asignatura: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, asignatura);
+    }
 
 }

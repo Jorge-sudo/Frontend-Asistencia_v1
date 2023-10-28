@@ -265,10 +265,15 @@
                 ngxMqttService.cardRfidLoad &&
                 fileUpload !== undefined)"
           ></p-button>
-        <p-button [ngStyle]="{ 'margin': '10px' }" label="Resetear" (onClick)="clearForm()" severity="secondary"></p-button>
+        <p-button
+          [ngStyle]="{ 'margin': '10px' }"
+          label="Resetear"
+          (onClick)="clearForm()"
+          severity="secondary">
+        </p-button>
       </form>
     </div>
   </div>
 </div>
 
-<p-toast></p-toast>
+<p-toast [life]="10000" ></p-toast>

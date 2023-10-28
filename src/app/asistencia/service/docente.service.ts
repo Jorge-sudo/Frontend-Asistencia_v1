@@ -23,6 +23,10 @@ export class DocenteService {
                                                 short);
     }
 
+    public getDocenteByCi(ci: number): Observable<any> {
+        return this.http.get<any>(this.apiUrl + '/' + ci);
+    }
+
     public getDocentesFilter( order:number ,page:number,
                               limit: number, short: string,
                               globalFilter: string ): Observable<any> {
@@ -38,5 +42,6 @@ export class DocenteService {
     public saveDocente(command: any){
         return this.http.post<any>(this.apiUrl, command, {headers: this.httpHeaders});
     }
+
 
 }

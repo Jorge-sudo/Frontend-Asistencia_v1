@@ -31,6 +31,10 @@ export class MateriaCarreraSemestreService {
                                                 short + '?globalFilter=' + globalFilter);
     }
 
+    public getMateriaCarreraSemestreBySigla(sigla: string): Observable<any> {
+        return this.http.get<any>(this.apiUrl + 'sigla/' + sigla);
+    }
+
     public updateMateriaCarreraSemestreActivo(command: CommandMateriaCarreraSemestre) {
         return this.http.post<any>(this.apiUrl + 'activo', command, {headers: this.httpHeaders});
     }

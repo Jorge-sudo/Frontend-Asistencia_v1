@@ -45,7 +45,7 @@ export class AppMenuComponent implements OnInit {
             items: [
                 { label: this.translate.instant('asistencia.menu.docente'), icon: 'pi pi-fw pi-users', routerLink: ['/registrar/docente'] },
                 { label: this.translate.instant('asistencia.menu.supervisor'), icon: 'pi pi-fw pi-users', routerLink: ['/registrar/supervisor'] },
-                { label: this.translate.instant('asistencia.menu.asignatura'), icon: 'pi pi-fw pi-calendar', routerLink: ['/registrar/asignarMateria'] },
+                { label: this.translate.instant('asistencia.menu.asignatura'), icon: 'pi pi-fw pi-calendar', routerLink: ['/registrar/asignar_materia'] },
                 { label: this.translate.instant('asistencia.menu.licencia'), icon: 'pi pi-fw pi-id-card', routerLink: ['/registrar/licencia'] },
             ]
         },

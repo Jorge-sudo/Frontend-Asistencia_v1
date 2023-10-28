@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RegisterAssignMateriaRoutingModule } from './registerAssignMateria-routing.module';
 import { RegisterAssignMateriaComponent } from './registerAssignMateria.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -22,8 +22,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         ButtonModule,
         InputTextModule,
         InputNumberModule,
-        InputSwitchModule
+        InputSwitchModule,
     ],
-    declarations: [RegisterAssignMateriaComponent]
+    declarations: [
+      RegisterAssignMateriaComponent
+    ]
 })
 export class RegisterAssignMateriaModule { }
