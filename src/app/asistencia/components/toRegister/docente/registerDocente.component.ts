@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ImageCompressService } from 'src/app/util/image-compress.service';
@@ -9,6 +9,7 @@ import { Observable, catchError, concatMap, finalize, tap, throwError } from 'rx
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { PersonaService } from 'src/app/asistencia/service/persona.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Dropdown } from 'primeng/dropdown';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
@@ -30,6 +31,8 @@ export class RegisterDocenteComponent implements OnInit {
   confirmPassword: FormControl = new FormControl('',[Validators.required]);
   passwordEquals: boolean = true;
   roles: Rol[] = [];
+
+  @ViewChild('selectRol') elementSelectRol!: Dropdown;
 
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
@@ -111,6 +114,7 @@ export class RegisterDocenteComponent implements OnInit {
     this.fileUpload = undefined;
     this.passwordEquals = true;
     this.progress = 0;
+    this.elementSelectRol.writeValue(null);
     this.clearMqttRegistrarDocente();
   }
 
@@ -186,7 +190,6 @@ export class RegisterDocenteComponent implements OnInit {
   onClear(event:any): void{
     this.fileUpload = undefined;
   }
-
 
   clearMqttRegistrarDocente(){
     this.ngxMqttService.messageDocenteRegister.codigoRfid = '';

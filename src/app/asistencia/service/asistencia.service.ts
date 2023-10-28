@@ -14,19 +14,15 @@ export class AsistenciaService {
         this.apiUrl = environment.controlAsistenciaApiUrl + '/api/asistencias/';
     }
 
-    public getAsistenciasFindAllByDate( order:number ,page:number,
-                        limit: number, short: string, dateSearch: string): Observable<any> {
-        return this.http.get<any>(this.apiUrl + 'page/date/' + page + '/' +
+    public getAsistenciasFindAll( order:number ,page:number,
+                                  limit: number, short: string,
+                                  idCarrera: number, idSemestre: number,
+                                  dateSearch: string, globalFilter: string): Observable<any> {
+        return this.http.get<any>(this.apiUrl + 'page/' + page + '/' +
                                                 limit + '/' + order + '/' +
-                                                short + '/' + dateSearch);
-    }
-
-    public getAsistenciasFilter( order:number ,page:number,
-                              limit: number, short: string,
-                              globalFilter: string ): Observable<any> {
-        return this.http.get<any>(this.apiUrl + 'page/search/' +page + '/' +
-                                                limit + '/' +order + '/' +
-                                                short + '?globalFilter=' + globalFilter);
+                                                short + '/' + idCarrera + '/' +
+                                                idSemestre + '/' + dateSearch +
+                                                '?globalFilter=' + globalFilter);
     }
 
 }

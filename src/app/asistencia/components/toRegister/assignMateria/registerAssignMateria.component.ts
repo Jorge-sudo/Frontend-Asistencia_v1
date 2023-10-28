@@ -1,9 +1,8 @@
 import { TransformRegisterAssignMateriaService } from './../../../../util/transform-register-assign-materia.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Aula } from 'src/app/asistencia/api/aula';
-import { MateriaCarreraSemestre } from 'src/app/asistencia/api/materiaCarreraSemestre';
 import { MateriaCarreraSemestreService } from '../../../service/materia-carrera-semestre.service';
 import { catchError, tap } from 'rxjs';
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
@@ -11,6 +10,7 @@ import { AulaService } from 'src/app/asistencia/service/aula.service';
 import { HorarioService } from 'src/app/asistencia/service/horario.service';
 import { Horario } from 'src/app/asistencia/api/horario';
 import { AsignaturaService } from 'src/app/asistencia/service/asignatura.service';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
     templateUrl: './registerAssignMateria.component.html',
@@ -34,6 +34,11 @@ export class RegisterAssignMateriaComponent implements OnInit{
   horario1Selected: Horario = {} ;
   horario2Selected: Horario = {} ;
   aulaSelected: Aula = {} ;
+
+  @ViewChild('selectAula') elementSelectAula!: Dropdown;
+  @ViewChild('selectMateria') elementSelectMateria!: Dropdown;
+  @ViewChild('selectHorario1') elementSelectHorario1!: Dropdown;
+  @ViewChild('selectHorario2') elementSelectHorario2!: Dropdown;
 
   constructor(private messageService: MessageService,
               private materiaCarreraSemestreService:MateriaCarreraSemestreService,
@@ -201,11 +206,9 @@ export class RegisterAssignMateriaComponent implements OnInit{
     this.data.get('aulaMateriaDocente')?.get('idAula')?.setValue(event.value.code);
   }
 
-
   eventSelectHorario1(event: any){
     this.horarioMateriaDocente1.get('idHorario')?.setValue(event.value.code);
   }
-
 
   eventSelectHorario2(event: any){
     this.horarioMateriaDocente2.get('idHorario')?.setValue(event.value.code);
@@ -214,6 +217,10 @@ export class RegisterAssignMateriaComponent implements OnInit{
   clearForm(){
     this.data.reset();
     this.sigla.reset();
+    this.elementSelectAula.writeValue(null);
+    this.elementSelectMateria.writeValue(null);
+    this.elementSelectHorario1.writeValue(null);
+    this.elementSelectHorario2.writeValue(null);
     this.successDocente = false;
   }
 

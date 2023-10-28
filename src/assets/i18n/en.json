@@ -255,7 +255,16 @@
         "onToggleLabel": "Unfreeze Name",
         "emptyMessage": "No attendance records found.",
         "loadingMessage": "Loading attendance data. Please wait.",
+        "initInfo": "Select major and semester.",
         "dateSearch": "Enter date to search",
+        "placeholder": {
+          "carrera": "Select career",
+          "semestre": "Select semester"
+        },
+        "valid": {
+          "messageCarrera": "Select career.",
+          "messageSemestre": "Select semester."
+        },
         "table": {
           "photography": "Photography",
           "name": "Name",

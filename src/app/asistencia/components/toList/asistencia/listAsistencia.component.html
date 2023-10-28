@@ -3,20 +3,52 @@
         <div class="card">
             <h4>{{ "asistencia.toList.asistencia.title" | translate }}</h4>
 
-            <div class="flex flex-column sm:flex-row">
+            <div class="flex flex-wrap flex-direction-row">
                 <p-toggleButton
                     [(ngModel)]="idFrozen"
                     [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
                     onLabel="{{ 'asistencia.toList.asistencia.onToggleLabel' | translate }}" offLabel="{{ 'asistencia.toList.asistencia.offToggleLabel' | translate }}"
                     [style]="{'width': '12rem', 'margin': '10px'}">
                 </p-toggleButton>
-                <p-calendar  class="m-3"
-                            [(ngModel)]="dateSearch"
-                            [showIcon]="true"
-                            dateFormat="yy-mm-dd"
-                            placeholder="{{ 'asistencia.toList.asistencia.dateSearch' | translate }}"
-                        (onSelect)="onSelect($event)"
-                        ></p-calendar>
+                <span class="p-float-label m-2">
+                  <p-dropdown
+                    [options]="carreras"
+                    placeholder="{{
+                      'asistencia.toList.asistencia.placeholder.carrera' | translate
+                    }}"
+                    optionLabel="nombre"
+                    inputId="float-label"
+                    (onChange)="eventSelectCarrera($event)"
+                    #selectCarrera
+                  ></p-dropdown>
+                  <label for="float-label">{{
+                    "asistencia.toList.asistencia.placeholder.carrera" | translate
+                  }}</label>
+                </span>
+                <span class="p-float-label m-2">
+                  <p-dropdown
+                    [options]="semestres"
+                    placeholder="{{
+                      'asistencia.toList.asistencia.placeholder.semestre' | translate
+                    }}"
+                    optionLabel="nombre"
+                    inputId="float-label"
+                    (onChange)="eventSelectSemestre($event)"
+                    #selectSemestre
+                  ></p-dropdown>
+                  <label for="float-label">{{
+                    "asistencia.toList.asistencia.placeholder.semestre" | translate
+                  }}</label>
+                </span>
+                <p-calendar
+                      class="m-3"
+                      [(ngModel)]="dateSearch"
+                      [showIcon]="true"
+                      dateFormat="yy-mm-dd"
+                      placeholder="{{ 'asistencia.toList.asistencia.dateSearch' | translate }}"
+                      (onSelect)="onSelect($event)"
+                      #inputDate
+                ></p-calendar>
             </div>
 
             <p-table #dt1

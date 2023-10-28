@@ -263,7 +263,16 @@
         "onToggleLabel": "Descongelar Nombre",
         "emptyMessage": "No se encontraron Asistencias.",
         "loadingMessage": "Cargando datos de las Asistencias. Espere por favor.",
+        "initInfo": "Selecciona carrera y semestre.",
         "dateSearch": "Ingrese fecha a buscar",
+        "placeholder": {
+          "carrera": "Seleccione la carrera",
+          "semestre": "Seleccione el semestre"
+        },
+        "valid": {
+          "messageCarrera": "Selecciona la carrera.",
+          "messageSemestre": "Selecciona el semestre."
+        },
         "table": {
           "photography": "Fotografía",
           "name": "Nombre",

@@ -42,6 +42,7 @@
               placeholder="Seleccione la materia"
               (onChange)="eventSelectMateria($event)"
               optionLabel="name"
+              #selectMateria
             >
             </p-dropdown>
           </div>
@@ -90,6 +91,7 @@
               filterBy="name"
               placeholder="Seleccione la aula"
               (onChange)="eventSelectAula($event)"
+              #selectAula
             >
             </p-dropdown>
           </div>
@@ -142,6 +144,7 @@
               filterBy="name"
               placeholder="Seleccione el horario 1"
               (onChange)="eventSelectHorario1($event)"
+              #selectHorario1
             >
             </p-dropdown>
           </div>
@@ -190,6 +193,7 @@
               filterBy="name"
               placeholder="Seleccione el horario 2"
               (onChange)="eventSelectHorario2($event)"
+              #selectHorario2
             >
             </p-dropdown>
           </div>

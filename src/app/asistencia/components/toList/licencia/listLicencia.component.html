@@ -20,7 +20,9 @@
                                 placeholder="{{
                                 'asistencia.toList.licencia.selectedStatus' | translate }}"
                                 optionLabel="name" inputId="float-label"
-                                (onChange)="eventSelect($event)"></p-dropdown>
+                                (onChange)="eventSelect($event)"
+                                #selectStatus
+                                ></p-dropdown>
                     <label for="float-label">{{"asistencia.toList.licencia.selectedStatus" | translate }}</label>
                 </span>
             </div>

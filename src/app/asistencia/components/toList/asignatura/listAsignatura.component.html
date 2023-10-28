@@ -26,6 +26,7 @@
             optionLabel="nombre"
             inputId="float-label"
             (onChange)="eventSelectCarrera($event)"
+            #selectCarrera
           ></p-dropdown>
           <label for="float-label">{{
             "asistencia.toList.asignatura.placeholder.carrera" | translate
@@ -40,6 +41,7 @@
             optionLabel="nombre"
             inputId="float-label"
             (onChange)="eventSelectDiaSemana($event)"
+            #selectDiaSemana
           ></p-dropdown>
           <label for="float-label">{{
             "asistencia.toList.asignatura.placeholder.dia" | translate
@@ -54,6 +56,7 @@
             optionLabel="nombre"
             inputId="float-label"
             (onChange)="eventSelectSemestre($event)"
+            #selectSemestre
           ></p-dropdown>
           <label for="float-label">{{
             "asistencia.toList.asignatura.placeholder.semestre" | translate
@@ -68,6 +71,7 @@
             optionLabel="nombre"
             inputId="float-label"
             (onChange)="eventSelectTurno($event)"
+            #selectTurno
           ></p-dropdown>
           <label for="float-label">{{
             "asistencia.toList.asignatura.placeholder.turno" | translate

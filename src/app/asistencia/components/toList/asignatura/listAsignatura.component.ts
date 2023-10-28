@@ -13,6 +13,7 @@ import { CarreraService } from '../../../service/carrera.service';
 import { DiaService } from 'src/app/asistencia/service/dia.service';
 import { TurnoService } from 'src/app/asistencia/service/turno.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   templateUrl: './listAsignatura.component.html',
@@ -43,11 +44,15 @@ export class ListAsignaturaComponent implements OnInit {
   idFrozen: boolean = false;
 
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('selectCarrera') elementSelectCarrera!: Dropdown;
+  @ViewChild('selectSemestre') elementSelectSemestre!: Dropdown;
+  @ViewChild('selectDiaSemana') elementSelectDiaSemana!: Dropdown;
+  @ViewChild('selectTurno') elementSelectTurno!: Dropdown;
 
   constructor(
     private asignaturaService: AsignaturaService,
     private semestreService: SemestreService,
-    private CarreraService: CarreraService,
+    private carreraService: CarreraService,
     private diaSemanaService: DiaService,
     private turnoService: TurnoService,
     private messageService: MessageService,
@@ -201,7 +206,7 @@ export class ListAsignaturaComponent implements OnInit {
   }
 
   loadCarreras(): Observable<any> {
-    return this.CarreraService.getCarreras().pipe(
+    return this.carreraService.getCarreras().pipe(
       map((result: any) => {
         this.carreras = result.data;
       }),
@@ -278,6 +283,10 @@ export class ListAsignaturaComponent implements OnInit {
     this.rows = 10;
     this.first = 0;
     this.filter.nativeElement.value = '';
+    this.elementSelectCarrera.writeValue(null);
+    this.elementSelectSemestre.writeValue(null);
+    this.elementSelectDiaSemana.writeValue(null);
+    this.elementSelectTurno.writeValue(null);
     table.clear();
   }
 }

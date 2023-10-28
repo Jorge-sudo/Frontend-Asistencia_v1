@@ -186,5 +186,4 @@ export class RegisterSupervisorComponent {
     this.fileUpload = undefined;
   }
 
-
 }
