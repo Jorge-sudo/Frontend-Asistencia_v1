@@ -135,7 +135,9 @@
       "asignatura": "Course",
       "materia": "Matter",
       "asistencia": "Assistance",
-      "licencia": "License"
+      "licencia": "License",
+      "horario": "Schedule",
+      "aula": "Classroom"
     },
     "toList": {
       "currentPageReportTemplate": "Showing {first} to {last} of {totalRecords} records",

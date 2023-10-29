@@ -21,4 +21,8 @@ export class AulaService {
   getAulas(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
+
+  saveAula(aula: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, aula);
+  }
 }

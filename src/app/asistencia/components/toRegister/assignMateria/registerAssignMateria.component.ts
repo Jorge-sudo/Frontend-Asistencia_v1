@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Aula } from 'src/app/asistencia/api/aula';
 import { MateriaCarreraSemestreService } from '../../../service/materia-carrera-semestre.service';
-import { catchError, tap } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs';
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { AulaService } from 'src/app/asistencia/service/aula.service';
 import { HorarioService } from 'src/app/asistencia/service/horario.service';
@@ -119,6 +119,7 @@ export class RegisterAssignMateriaComponent implements OnInit{
   }
 
   onSubmit(): void {
+    this.loading = true;
     (this.data.get('horarioMateriaDocentes') as FormArray).push(this.horarioMateriaDocente1);
     (this.data.get('horarioMateriaDocentes') as FormArray).push(this.horarioMateriaDocente2);
     this.asignaturaService.saveAsignatura(this.data.value).pipe(
@@ -137,7 +138,8 @@ export class RegisterAssignMateriaComponent implements OnInit{
           detail: 'No se pudo asignar la materia'
         });
         throw err;
-      })
+      }),
+      finalize(() => this.loading = false)
     ).subscribe();
   }
 

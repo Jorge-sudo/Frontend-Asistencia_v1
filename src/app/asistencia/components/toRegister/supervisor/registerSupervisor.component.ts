@@ -98,9 +98,9 @@ export class RegisterSupervisorComponent {
       finalize(() => {
         if(this.loadingSupervisor && this.loadingImage){
           this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Sus datos se guardaron correctamente.'});
+          this.clearForm();
         }
         this.loading = false;
-        this.clearForm();
       })
     ).subscribe();
   }

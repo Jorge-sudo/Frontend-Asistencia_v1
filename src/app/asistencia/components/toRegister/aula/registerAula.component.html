@@ -1,0 +1,85 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h4>Registrar Aula</h4>
+            <form [formGroup]="aula" (ngSubmit)="onSubmit()" method="POST">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="aula.get('aula')?.invalid && aula.get('aula')?.touched"
+                    severity="warn"
+                    text="El aula es requerida"
+                  ></p-message>
+                  <label htmlFor="aula">Aula</label>
+                  <input
+                    pInputText
+                    id="aula"
+                    formControlName="aula"
+                    type="text"
+                    placeholder="A12"
+                  />
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="aula.get('paralelo')?.invalid && aula.get('paralelo')?.touched"
+                    severity="warn"
+                    text="El paralelo es requerida"
+                  ></p-message>
+                  <label htmlFor="paralelo">Paralelo</label>
+                  <input
+                    pInputText
+                    id="paralelo"
+                    formControlName="paralelo"
+                    type="text"
+                    placeholder="111"
+                  />
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="aula.get('piso')?.invalid && aula.get('piso')?.touched"
+                    severity="warn"
+                    text="El piso es requerida"
+                  ></p-message>
+                  <label htmlFor="piso">Piso</label>
+                  <input
+                    pInputText
+                    id="piso"
+                    formControlName="piso"
+                    type="text"
+                    placeholder="P2"
+                  />
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="aula.get('bloque')?.invalid && aula.get('bloque')?.touched"
+                    severity="warn"
+                    text="El bloque es requerida"
+                  ></p-message>
+                  <label htmlFor="bloque">Bloque</label>
+                  <input
+                    pInputText
+                    id="bloque"
+                    formControlName="bloque"
+                    type="text"
+                    placeholder="A"
+                  />
+                </div>
+              </div>
+              <p-button
+                  label="Enviar"
+                  [loading]="loading"
+                  type="submit"
+                  [disabled]="aula.invalid"
+                ></p-button>
+              <p-button
+                [ngStyle]="{ 'margin': '10px' }"
+                label="Resetear"
+                (onClick)="clearForm()"
+                severity="secondary">
+              </p-button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p-toast [life]="10000" ></p-toast>

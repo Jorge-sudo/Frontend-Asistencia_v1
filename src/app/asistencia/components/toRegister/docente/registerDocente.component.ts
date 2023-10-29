@@ -101,9 +101,9 @@ export class RegisterDocenteComponent implements OnInit {
       finalize(() => {
         if(this.loadingDocente && this.loadingImage){
           this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Sus datos se guardaron correctamente.'});
+          this.clearForm();
         }
         this.loading = false;
-        this.clearForm();
       })
     ).subscribe();
   }

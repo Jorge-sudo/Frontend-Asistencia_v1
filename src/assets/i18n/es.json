@@ -143,7 +143,9 @@
       "asignatura": "Asignatura",
       "materia": "Materia",
       "asistencia": "Asistencia",
-      "licencia": "Licencia"
+      "licencia": "Licencia",
+      "horario": "Horario",
+      "aula": "Aula"
     },
     "toList": {
       "currentPageReportTemplate": "Mostrando {first} a {last} de {totalRecords} registros",
