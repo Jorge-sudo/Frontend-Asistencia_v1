@@ -11,13 +11,17 @@ export class DocenteLicenciaService {
     private readonly apiUrl: string;
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/docenteLicencias/';
+        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/docenteLicencias';
+    }
+
+    public saveDocenteLicencia(docenteLicencia: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, docenteLicencia);
     }
 
     public getDocenteLicenciasInactive( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
-                            
-        return this.http.get<any>(this.apiUrl + 'page/inactive/' +page + '/' +
+
+        return this.http.get<any>(this.apiUrl + '/page/inactive/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short);
     }
@@ -25,7 +29,7 @@ export class DocenteLicenciaService {
     public getDocenteLicenciasActive( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
 
-        return this.http.get<any>(this.apiUrl + 'page/active/' +page + '/' +
+        return this.http.get<any>(this.apiUrl + '/page/active/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short);
     }
@@ -34,7 +38,7 @@ export class DocenteLicenciaService {
                               limit: number, short: string,
                               globalFilter: string ): Observable<any> {
 
-        return this.http.get<any>(this.apiUrl + 'page/search/' +page + '/' +
+        return this.http.get<any>(this.apiUrl + '/page/search/' +page + '/' +
                                                 limit + '/' +order + '/' +
                                                 short + '?globalFilter=' + globalFilter);
     }

@@ -14,6 +14,7 @@
                   <p-calendar
                       [timeOnly]="true"
                       (onSelect)="eventSelectHoraInicio($event)"
+                      [readonlyInput]="true"
                       #horaInicio >
                   </p-calendar>
                 </div>
@@ -27,6 +28,7 @@
                   <p-calendar
                       [timeOnly]="true"
                       (onSelect)="eventSelectHoraFin($event)"
+                      [readonlyInput]="true"
                       #horaFin >
                   </p-calendar>
                 </div>
