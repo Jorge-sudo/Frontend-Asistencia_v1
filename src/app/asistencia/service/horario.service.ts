@@ -18,4 +18,8 @@ export class HorarioService {
     return this.http.get<any>(this.apiUrl);
   }
 
+  saveHorario(horario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, horario);
+  }
+
 }

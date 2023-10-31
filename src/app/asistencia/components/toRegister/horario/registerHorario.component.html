@@ -2,7 +2,82 @@
     <div class="col-12">
         <div class="card">
             <h4>Registrar Horario</h4>
-            <p>formulario</p>
+            <form [formGroup]="horario" (ngSubmit)="onSubmit()" method="POST">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="horario.get('horaInicio')?.invalid"
+                    severity="warn"
+                    text="La hora de inicio es requerida"
+                  ></p-message>
+                  <label htmlFor="horaInicio">Hora de Inicio: </label>
+                  <p-calendar
+                      [timeOnly]="true"
+                      (onSelect)="eventSelectHoraInicio($event)"
+                      #horaInicio >
+                  </p-calendar>
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="horario.get('horaFin')?.invalid"
+                    severity="warn"
+                    text="La hora de fin es requerida"
+                  ></p-message>
+                  <label htmlFor="horaFin">Hora Final: </label>
+                  <p-calendar
+                      [timeOnly]="true"
+                      (onSelect)="eventSelectHoraFin($event)"
+                      #horaFin >
+                  </p-calendar>
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="horario.controls['idDia'].invalid"
+                    severity="warn"
+                    text="El dia es requerido"
+                  ></p-message>
+                  <label htmlFor="dia">Dia: </label>
+                  <p-dropdown
+                    [options]="optionsDia"
+                    optionLabel="nombre"
+                    placeholder="Seleccione el dia"
+                    (onChange)="eventSelectDia($event)"
+                    #selectDia
+                  >
+                  </p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="horario.controls['idTurno'].invalid"
+                    severity="warn"
+                    text="El turno es requerido"
+                  ></p-message>
+                  <label htmlFor="turno">Turno: </label>
+                  <p-dropdown
+                    [options]="optionsTurno"
+                    optionLabel="nombre"
+                    placeholder="Seleccione el turno"
+                    (onChange)="eventSelectTurno($event)"
+                    #selectTurno
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+              <p-button
+                  label="Enviar"
+                  [loading]="loading"
+                  type="submit"
+                  [disabled]="horario.invalid"
+                ></p-button>
+              <p-button
+                [ngStyle]="{ 'margin': '10px' }"
+                label="Resetear"
+                (onClick)="clearForm()"
+                severity="secondary">
+              </p-button>
+            </form>
         </div>
     </div>
 </div>
+
+<p-toast [life]="10000" ></p-toast>

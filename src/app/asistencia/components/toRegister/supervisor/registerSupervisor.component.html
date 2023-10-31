@@ -38,7 +38,7 @@
               severity="warn"
               text="Por favor, ingrese su C.I."
             ></p-message>
-            <label htmlFor="ci">C.I.</label>
+            <label htmlFor="ci">C.I.: </label>
             <p-inputNumber
               formControlName="ci"
               inputId="ci"
@@ -59,7 +59,7 @@
               severity="warn"
               text="Por favor, ingrese su nombre"
             ></p-message>
-            <label htmlFor="nombre">Nombre</label>
+            <label htmlFor="nombre">Nombre: </label>
             <input
               pInputText
               id="nombre"
@@ -78,7 +78,7 @@
               severity="warn"
               text="Por favor, ingrese su Apellido"
             ></p-message>
-            <label htmlFor="apellido">Apellido</label>
+            <label htmlFor="apellido">Apellido: </label>
             <input
               pInputText
               id="apellido"
@@ -96,7 +96,7 @@
               severity="warn"
               text="Por favor, ingrese su Email Personal"
             ></p-message>
-            <label htmlFor="email">Email Personal</label>
+            <label htmlFor="email">Email Personal: </label>
             <input
               pInputText
               id="email"
@@ -120,7 +120,7 @@
                 formControlName="genero"
               >
               </p-radioButton>
-              <label for="masculino" class="ml-2">Masculino</label>
+              <label for="masculino" class="ml-2">Masculino: </label>
             </div>
 
             <div class="flex align-items-center">
@@ -130,7 +130,7 @@
                 inputId="femenino"
                 formControlName="genero"
               ></p-radioButton>
-              <label for="femenino" class="ml-2">Femenino</label>
+              <label for="femenino" class="ml-2">Femenino: </label>
             </div>
           </div>
 
@@ -143,13 +143,13 @@
               severity="warn"
               text="Por favor, ingrese su Correo Institucional"
             ></p-message>
-            <label htmlFor="correoInstitucional">Correo Institucional</label>
+            <label htmlFor="correoInstitucional">Correo Institucional: </label>
             <input
               pInputText
               id="correoInstitucional"
               formControlName="correoInstitucional"
               type="text"
-              placeholder="text.text@servicios.usalesiana.edu.bo"
+              placeholder="text.text@usalesiana.edu.bo"
             />
           </div>
 
@@ -167,7 +167,7 @@
                 Incluir al menos una letra minúscula.
                 Debe contener al menos un símbolo especial."
             ></p-message>
-            <label htmlFor="password">Contraseña</label>
+            <label htmlFor="password">Contraseña: </label>
             <p-password
               id="password"
               placeholder="MMmm@1234\*?!"
@@ -187,7 +187,7 @@
               severity="warn"
               text="Las contraseñas no coinciden."
             ></p-message>
-            <label htmlFor="password">Confirmar Contraseña</label>
+            <label htmlFor="password">Confirmar Contraseña: </label>
             <p-password
               [formControl]="confirmPassword"
               placeholder="Confirme su contraseña"
@@ -206,7 +206,7 @@
                 severity="warn"
                 text="Por favor, ingrese su rol"
               ></p-message>
-            <label for="m-3 float-label ">Ingrese sus Roles</label>
+            <label for="m-3 float-label ">Ingrese su Rol: </label>
             <p-dropdown
               [options]="roles"
               placeholder="Ingrese sus Roles"
@@ -243,7 +243,7 @@
           <div class="field col-12 md:col-4">
 
             <div class="flex justify-content-center">
-              <label for="m-3" htmlFor="reporteInstitucional" >Reporte Institucional</label>
+              <label for="m-3" htmlFor="reporteInstitucional" >Reporte Institucional: </label>
               <p-inputSwitch
               id="reporteInstitucional"
               formControlName="reporteInstitucional"

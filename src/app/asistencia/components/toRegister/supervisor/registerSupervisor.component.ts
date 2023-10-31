@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ImageCompressService } from 'src/app/util/image-compress.service';
-import { NgxMqttService } from '../../../service/ngx-mqtt/ngx-mqtt.service';
 import { RolService } from 'src/app/asistencia/service/rol.service';
 import { Rol } from 'src/app/asistencia/api/rol';
 import { Observable, catchError, concatMap, finalize, tap, throwError } from 'rxjs';
@@ -13,9 +12,8 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
-const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@servicios\.usalesiana\.edu\.bo$/;
+const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@usalesiana\.edu\.bo$/;
 // Expresión regular que verifica si la contraseña tiene por lo menos debe tener 1 texto, 1 numero y 1 caracteres especial
-
 
 @Component({
     templateUrl: './registerSupervisor.component.html',

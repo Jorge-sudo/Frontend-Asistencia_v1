@@ -41,12 +41,20 @@ export class RegisterAulaComponent implements OnInit {
   onSubmit():void {
     this.loading = true;
     this.aulaService.saveAula(this.aula.value).pipe(
-      tap((data: any) => {
-        this.messageService.add({ severity: 'success', summary: 'Registro exitoso', detail: data.message });
+      tap(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Registro exitoso',
+          detail: 'Se registró la aula correctamente'
+        });
         this.clearForm();
       }),
       catchError((err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo registrar la aula' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo registrar la aula'
+        });
         return err;
       }),
       finalize(() => this.loading = false)
