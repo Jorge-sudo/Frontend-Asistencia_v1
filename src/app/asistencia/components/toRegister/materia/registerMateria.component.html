@@ -1,8 +1,141 @@
 <div class="grid">
     <div class="col-12">
         <div class="card">
-            <h4>Registrar Materia</h4>
-            <p>formulario</p>
+            <h4>Registrar Materia - Ingrese sus datos</h4>
+            <form [formGroup]="materiaCarreraSemestre" (ngSubmit)="onSubmit()" method="POST">
+              <div class="p-fluid p-formgrid grid">
+
+                <div class="field col-12 md:col-4 flex flex-wrap gap-3">
+                  <div class="flex align-items-center">
+                    <p-radioButton
+                      name="genero"
+                      [value]="true"
+                      inputId="existente"
+                      [formControl]="exist"
+                    >
+                    </p-radioButton>
+                    <label for="existente" class="ml-2">Existente: </label>
+                  </div>
+
+                  <div  class="flex align-items-center">
+                    <p-radioButton
+                      name="genero"
+                      [value]="false"
+                      inputId="nuevo"
+                      [formControl]="exist"
+                    ></p-radioButton>
+                    <label for="nuevo" class="ml-2">Nuevo: </label>
+                  </div>
+                </div>
+
+                <div [formGroup]="materia" class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="materia.get('sigla')?.invalid && materia.get('sigla')?.touched"
+                    severity="warn"
+                    text="Ingrese la sigla de la materia"
+                  ></p-message>
+                  <p-message
+                    *ngIf="materiaNombre"
+                    severity="success"
+                    text="La materia cargada: {{materiaNombre}} "
+                  ></p-message>
+                  <label htmlFor="sigla">Sigla: </label>
+                  <input
+                    pInputText
+                    id="sigla"
+                    formControlName="sigla"
+                    type="text"
+                    placeholder="MAT-112"
+                  />
+                  <div *ngIf="exist.value" class="flex justify-content-center" style="margin: 10px;">
+                    <p-button
+                        label="Buscar Materia"
+                        (onClick)="searchMateria()"
+                        severity="info"
+                        [loading]="loadingMateria"
+                        [disabled]="materia.get('sigla')?.invalid">
+                    </p-button>
+                  </div>
+                </div>
+
+                <div *ngIf="!exist.value" [formGroup]="materia" class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="materia.get('nombre')?.invalid && materia.get('nombre')?.touched"
+                    severity="warn"
+                    text="Ingrese el nombre de la materia"
+                  ></p-message>
+                  <label htmlFor="nombreMateria">Nombre: </label>
+                  <input
+                    pInputText
+                    id="nombreMateria"
+                    formControlName="nombre"
+                    type="text"
+                    placeholder="Calculo I"
+                  />
+                </div>
+
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="materiaCarreraSemestre.get('idSemestre')?.invalid &&
+                           materiaCarreraSemestre.get('idSemestre')?.touched"
+                    severity="warn"
+                    text="Seleccione el semestre"
+                  ></p-message>
+                  <label htmlFor="semestre">Semestre: </label>
+                  <p-dropdown
+                    [options]="selectedSemestres"
+                    placeholder="Seleccione un semestre"
+                    optionLabel="nombre"
+                    (onChange)="eventSelectSemestre($event)"
+                    #selectSemestre
+                  ></p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="materiaCarreraSemestre.get('idCarrera')?.invalid &&
+                           materiaCarreraSemestre.get('idCarrera')?.touched"
+                    severity="warn"
+                    text="Seleccione la carrera"
+                  ></p-message>
+                  <label htmlFor="carrera">Carrera: </label>
+                  <p-dropdown
+                    [options]="selectedCarreras"
+                    placeholder="Seleccione una carrera"
+                    optionLabel="nombre"
+                    (onChange)="eventSelectCarrera($event)"
+                    #selectCarrera
+                  ></p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                  <div class="flex justify-content-center">
+                    <label for="m-3" htmlFor="activo" >Activo: </label>
+                    <p-inputSwitch
+                    id="activo"
+                    formControlName="activo"
+                    class="m-3"></p-inputSwitch>
+                  </div>
+                </div>
+
+              </div>
+              <p-button
+                label="Enviar"
+                [loading]="loading"
+                type="submit"
+                [disabled]="exist.value
+                            ? materiaCarreraSemestre.invalid || materiaNombre === ''
+                            : materia.invalid || materiaCarreraSemestre.invalid"
+              ></p-button>
+              <p-button
+                [ngStyle]="{ 'margin': '10px' }"
+                label="Resetear"
+                (onClick)="clearForm()"
+                severity="secondary">
+              </p-button>
+            </form>
         </div>
     </div>
 </div>
+
+<p-toast [life]="10000" ></p-toast>
