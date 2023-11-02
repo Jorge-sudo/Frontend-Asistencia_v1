@@ -1,0 +1,82 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h4>Asistencia - Ingrese sus datos</h4>
+            <form [formGroup]="data" (ngSubmit)="onSubmit()" method="POST">
+              <div class="p-fluid p-formgrid grid">
+
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf="data.get('ci')?.invalid && data.get('ci')?.touched"
+                    severity="warn"
+                    text="Por favor, ingrese su C.I. para registrar asistencia"
+                  ></p-message>
+                  <label htmlFor="ci">C.I.: </label>
+                  <p-inputNumber
+                      formControlName="ci"
+                      inputId="ci"
+                      mode="decimal"
+                      [min]="99999"
+                      [max]="999999999"
+                      [useGrouping]="false"
+                      placeholder="12345678"
+                  >
+                  </p-inputNumber>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                  <p-message
+                      *ngIf="data.get('idAula')?.invalid"
+                      severity="warn"
+                      text="Seleccione la aula" >
+                  </p-message>
+                  <label htmlFor="aula">Aula: </label>
+                  <p-dropdown
+                    [options]="optionsAula"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name"
+                    placeholder="Seleccione la aula"
+                    (onChange)="eventSelectAula($event)"
+                    #selectAula
+                  >
+                  </p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                  <p-message
+                    *ngIf=""
+                    severity="warn"
+                    text=""
+                  ></p-message>
+                  <label htmlFor="numberStudents">Cantidad de estudiantes: </label>
+                  <p-inputNumber
+                      formControlName="cantidadEstudiantes"
+                      inputId="numberStudents"
+                      mode="decimal"
+                      [min]="1"
+                      [max]="200"
+                      [useGrouping]="false"
+                      placeholder="Cant. de estudiantes"
+                  >
+                  </p-inputNumber>
+                </div>
+              </div>
+              <p-button
+                label="Enviar"
+                [loading]="loading"
+                type="submit"
+                [disabled]="data.invalid"
+              ></p-button>
+              <p-button
+                [ngStyle]="{ 'margin': '10px' }"
+                label="Resetear"
+                (onClick)="clearForm()"
+                severity="secondary">
+              </p-button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p-toast [life]="20000" ></p-toast>

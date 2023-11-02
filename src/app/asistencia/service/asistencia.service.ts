@@ -11,18 +11,22 @@ export class AsistenciaService {
     private readonly apiUrl: string;
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/asistencias/';
+        this.apiUrl = environment.controlAsistenciaApiUrl + '/api/asistencias';
     }
 
     public getAsistenciasFindAll( order:number ,page:number,
                                   limit: number, short: string,
                                   idCarrera: number, idSemestre: number,
                                   dateSearch: string, globalFilter: string): Observable<any> {
-        return this.http.get<any>(this.apiUrl + 'page/' + page + '/' +
+        return this.http.get<any>(this.apiUrl + '/page/' + page + '/' +
                                                 limit + '/' + order + '/' +
                                                 short + '/' + idCarrera + '/' +
                                                 idSemestre + '/' + dateSearch +
                                                 '?globalFilter=' + globalFilter);
+    }
+
+    public saveAsistencia(data: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, data);
     }
 
 }

@@ -1,18 +1,40 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from "../service/app.layout.service";
 import { MenuService } from "../app.menu.service";
+import { TranslateService } from '@ngx-translate/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
     selector: 'app-config',
     templateUrl: './app.config.component.html'
 })
-export class AppConfigComponent {
+export class AppConfigComponent implements OnInit{
 
     @Input() minimal: boolean = false;
 
     scales: number[] = [12, 13, 14, 15, 16];
 
-    constructor(public layoutService: LayoutService, public menuService: MenuService) { }
+    constructor(public layoutService: LayoutService,
+                public menuService: MenuService,
+                public translate: TranslateService,
+                private config: PrimeNGConfig) { }
+
+    ngOnInit(): void {
+      this.translate.setDefaultLang('en');
+      this.translate.onLangChange.subscribe((event) => {
+        const newLang = event.lang;
+        // hacer algo con el nuevo idioma
+        this.translate.get('primeng').subscribe(res => this.config.setTranslation(res));
+      });
+    }
+
+    en() {
+      this.translate.use('en');
+    }
+
+    es() {
+      this.translate.use('es');
+    }
 
     get visible(): boolean {
         return this.layoutService.state.configSidebarVisible;
