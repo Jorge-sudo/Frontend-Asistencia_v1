@@ -9,10 +9,14 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class AppFooterComponent implements OnInit{
 
+  anio: number = 0;
+
   constructor(public layoutService: LayoutService) {
   }
 
   ngOnInit(): void {
+    let fecha = new Date();
+    this.anio = fecha.getFullYear();
   }
 
 

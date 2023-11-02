@@ -16,11 +16,11 @@
         <i class="pi pi-user"></i>
         <span>Perfil</span>
       </button>
-      <button class="p-link layout-topbar-button">
+      <button  (click)="onConfigButtonClick()" class="p-link layout-topbar-button">
           <i class="pi pi-cog"></i>
           <span>Configuracion</span>
       </button>
-      <button class="p-link layout-topbar-button" [routerLink]="'/'">
+      <button (click)="goOut()" class="p-link layout-topbar-button">
           <i class="pi pi-sign-out"></i>
           <span>Salir</span>
       </button>

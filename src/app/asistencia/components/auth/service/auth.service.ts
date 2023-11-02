@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   public completarIniciarSesión = (signInPayload: any): void => {
-    Generic.localStorageSetItem('token', signInPayload)
+    Generic.localStorageSetItem('token', signInPayload);
     this.decodedToken = this.obtenerTokenDecodificado();
   }
 

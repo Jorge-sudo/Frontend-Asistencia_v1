@@ -1,124 +1,156 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LayoutService } from "../service/app.layout.service";
-import { MenuService } from "../app.menu.service";
+import { LayoutService } from '../service/app.layout.service';
+import { MenuService } from '../app.menu.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { Generic } from 'src/app/util/generic';
 
 @Component({
-    selector: 'app-config',
-    templateUrl: './app.config.component.html'
+  selector: 'app-config',
+  templateUrl: './app.config.component.html',
 })
-export class AppConfigComponent implements OnInit{
+export class AppConfigComponent implements OnInit {
 
-    @Input() minimal: boolean = false;
+  defectTheme: string = 'lara-light-blue';
+  defectColorScheme: string = 'light';
 
-    scales: number[] = [12, 13, 14, 15, 16];
+  @Input() minimal: boolean = false;
 
-    constructor(public layoutService: LayoutService,
-                public menuService: MenuService,
-                public translate: TranslateService,
-                private config: PrimeNGConfig) { }
+  scales: number[] = [12, 13, 14, 15, 16];
 
-    ngOnInit(): void {
-      this.translate.setDefaultLang('en');
-      this.translate.onLangChange.subscribe((event) => {
-        const newLang = event.lang;
-        // hacer algo con el nuevo idioma
-        this.translate.get('primeng').subscribe(res => this.config.setTranslation(res));
-      });
+  constructor(
+    public layoutService: LayoutService,
+    public menuService: MenuService,
+    public translate: TranslateService,
+    private config: PrimeNGConfig
+  ) {}
+
+  ngOnInit(): void {
+    this.translate.setDefaultLang('en');
+    this.translate.onLangChange.subscribe((event) => {
+      const newLang = event.lang;
+      // hacer algo con el nuevo idioma
+      this.translate
+        .get('primeng')
+        .subscribe((res) => this.config.setTranslation(res));
+    });
+    //this.themeLocalStorage();
+  }
+
+  themeLocalStorage(): void {
+    console.log(Generic.localStorageGetItem('theme'));
+    console.log(Generic.localStorageGetItem('colorScheme'));
+    if(Generic.localStorageGetItem('theme') === null){
+      Generic.localStorageSetItem('theme', this.defectTheme);
+      this.layoutService.config.theme = this.defectTheme;
+    } else{
+      this.layoutService.config.theme = Generic.localStorageGetItem('theme');
+      console.log(this.layoutService.config.theme)
     }
 
-    en() {
-      this.translate.use('en');
+    if(Generic.localStorageGetItem('colorScheme') === null){
+      Generic.localStorageSetItem('colorScheme', this.defectColorScheme);
+      this.layoutService.config.colorScheme = this.defectColorScheme;
+    }else{
+      this.layoutService.config.colorScheme = Generic.localStorageGetItem('colorScheme');
     }
+    this.layoutService.onConfigUpdate();
+  }
 
-    es() {
-      this.translate.use('es');
-    }
 
-    get visible(): boolean {
-        return this.layoutService.state.configSidebarVisible;
-    }
+  en() {
+    this.translate.use('en');
+  }
 
-    set visible(_val: boolean) {
-        this.layoutService.state.configSidebarVisible = _val;
-    }
+  es() {
+    this.translate.use('es');
+  }
 
-    get scale(): number {
-        return this.layoutService.config.scale;
-    }
+  get visible(): boolean {
+    return this.layoutService.state.configSidebarVisible;
+  }
 
-    set scale(_val: number) {
-        this.layoutService.config.scale = _val;
-    }
+  set visible(_val: boolean) {
+    this.layoutService.state.configSidebarVisible = _val;
+  }
 
-    get menuMode(): string {
-        return this.layoutService.config.menuMode;
-    }
+  get scale(): number {
+    return this.layoutService.config.scale;
+  }
 
-    set menuMode(_val: string) {
-        this.layoutService.config.menuMode = _val;
-    }
+  set scale(_val: number) {
+    this.layoutService.config.scale = _val;
+  }
 
-    get inputStyle(): string {
-        return this.layoutService.config.inputStyle;
-    }
+  get menuMode(): string {
+    return this.layoutService.config.menuMode;
+  }
 
-    set inputStyle(_val: string) {
-        this.layoutService.config.inputStyle = _val;
-    }
+  set menuMode(_val: string) {
+    this.layoutService.config.menuMode = _val;
+  }
 
-    get ripple(): boolean {
-        return this.layoutService.config.ripple;
-    }
+  get inputStyle(): string {
+    return this.layoutService.config.inputStyle;
+  }
 
-    set ripple(_val: boolean) {
-        this.layoutService.config.ripple = _val;
-    }
+  set inputStyle(_val: string) {
+    this.layoutService.config.inputStyle = _val;
+  }
 
-    onConfigButtonClick() {
-        this.layoutService.showConfigSidebar();
-    }
+  get ripple(): boolean {
+    return this.layoutService.config.ripple;
+  }
 
-    changeTheme(theme: string, colorScheme: string) {
-        const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-        const newHref = themeLink.getAttribute('href')!.replace(this.layoutService.config.theme, theme);
-        this.layoutService.config.colorScheme
-        this.replaceThemeLink(newHref, () => {
-            this.layoutService.config.theme = theme;
-            this.layoutService.config.colorScheme = colorScheme;
-            this.layoutService.onConfigUpdate();
-        });
-    }
+  set ripple(_val: boolean) {
+    this.layoutService.config.ripple = _val;
+  }
 
-    replaceThemeLink(href: string, onComplete: Function) {
-        const id = 'theme-css';
-        const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-        const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
+  onConfigButtonClick() {
+    this.layoutService.showConfigSidebar();
+  }
 
-        cloneLinkElement.setAttribute('href', href);
-        cloneLinkElement.setAttribute('id', id + '-clone');
+  changeTheme(theme: string, colorScheme: string) {
+    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
+    const newHref = themeLink
+      .getAttribute('href')!
+      .replace(this.layoutService.config.theme, theme);
+    this.layoutService.config.colorScheme;
+    this.replaceThemeLink(newHref, () => {
+      this.layoutService.config.theme = theme;
+      this.layoutService.config.colorScheme = colorScheme;
+      this.layoutService.onConfigUpdate();
+    });
+  }
 
-        themeLink.parentNode!.insertBefore(cloneLinkElement, themeLink.nextSibling);
+  replaceThemeLink(href: string, onComplete: Function) {
+    const id = 'theme-css';
+    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
+    const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
 
-        cloneLinkElement.addEventListener('load', () => {
-            themeLink.remove();
-            cloneLinkElement.setAttribute('id', id);
-            onComplete();
-        });
-    }
+    cloneLinkElement.setAttribute('href', href);
+    cloneLinkElement.setAttribute('id', id + '-clone');
 
-    decrementScale() {
-        this.scale--;
-        this.applyScale();
-    }
+    themeLink.parentNode!.insertBefore(cloneLinkElement, themeLink.nextSibling);
 
-    incrementScale() {
-        this.scale++;
-        this.applyScale();
-    }
+    cloneLinkElement.addEventListener('load', () => {
+      themeLink.remove();
+      cloneLinkElement.setAttribute('id', id);
+      onComplete();
+    });
+  }
 
-    applyScale() {
-        document.documentElement.style.fontSize = this.scale + 'px';
-    }
+  decrementScale() {
+    this.scale--;
+    this.applyScale();
+  }
+
+  incrementScale() {
+    this.scale++;
+    this.applyScale();
+  }
+
+  applyScale() {
+    document.documentElement.style.fontSize = this.scale + 'px';
+  }
 }

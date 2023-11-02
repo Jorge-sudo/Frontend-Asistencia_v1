@@ -1,15 +1,23 @@
-<div class="flex flex-column align-items-center justify-content-center">
-  <img src="assets/layout/images/logoSalesiana.png" alt="Sakai logo" class="m-5  w-10rem flex-shrink-0">
-  <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
-          <div class="text-center mb-5">
-              <div class="text-900 text-3xl font-medium mb-3">Bienvenido !</div>
-              <span class="text-600 font-medium">Inicia sesión para continuar</span>
-          </div>
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+      <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(0, 0, 0, 0) 30%);">
+          <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
 
-          <div>
-              <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-                  <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+              <div class="text-center mb-5">
+                  <img src="assets/layout/images/logoSalesiana.png" alt="Image" height="50" class="mb-3">
+                  <div class="text-900 text-3xl font-medium mb-3">Bienvenido</div>
+              <span class="text-600 font-medium">Inicia sesión para continuar</span>
+              </div>
+
+              <div>
+                <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+                  <p-message
+                    class="block text-900 text-xl font-medium mb-2"
+                    *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                    severity="warn"
+                    text="El email es requerido"
+                  ></p-message>
+                  <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                   <input
                       id="email"
                       type="text"
@@ -18,12 +26,18 @@
                       class="w-full md:w-30rem mb-5"
                       style="padding:1rem"
                       formControlName="email"
-                      required>
+                      required >
 
-                  <label for="password1" class="block text-900 font-medium text-xl mb-2">Contraseña</label>
+                  <p-message
+                    class="block text-900 text-xl font-medium mb-2"
+                    *ngIf="userForm.get('contrasenia')?.invalid && userForm.get('contrasenia')?.touched"
+                    severity="warn"
+                    text="La contraseña es requerida"
+                  >
+                  </p-message>
+                  <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
                   <p-password
                       id="password1"
-                      [(ngModel)]="password"
                       placeholder="Password"
                       [toggleMask]="true"
                       styleClass="mb-5"
@@ -31,9 +45,23 @@
                       formControlName="contrasenia"
                       required></p-password>
 
-                  <button pButton pRipple label="Iniciar Sessión" class="w-full p-3 text-xl"></button>
-              </form>
+                  <div class="flex align-items-center justify-content-between mb-5 gap-5">
+
+                  </div>
+
+                  <button
+                      pButton
+                      pRipple
+                      label="Iniciar Sessión"
+                      class="w-full p-3 text-xl"
+                      [disabled]="userForm.invalid"
+                      type="submit"
+                  ></button>
+                </form>
+              </div>
           </div>
       </div>
   </div>
 </div>
+
+<p-toast [life]="10000" ></p-toast>

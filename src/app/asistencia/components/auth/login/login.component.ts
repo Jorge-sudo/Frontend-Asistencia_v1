@@ -1,49 +1,65 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, lastValueFrom, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    providers: [MessageService]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  providers: [MessageService],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  
+  userForm: FormGroup = new FormGroup({});
 
-    userForm: FormGroup = {} as FormGroup;
-    isFormSubmitted = false;
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private messageService: MessageService
+  ) {}
 
-    valCheck: string[] = ['remember'];
+  ngOnInit(): void {
+    this.initForm();
+  }
 
-    password!: string;
+  private initForm(): void {
+    this.userForm = new FormGroup({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      contrasenia: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    });
+  }
 
-    constructor(private formBuilder: FormBuilder, private router: Router,
-                private authService: AuthService, private service: MessageService) {
-        this.initForm();
+  submitForm(): void {
+    if (this.userForm.valid) {
+      this.authService
+        .login(this.userForm.value).pipe(
+          tap((response: any) => {
+            this.authService.completarIniciarSesión(response.token);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Exito',
+              detail: 'Inicio de sesión correcto',
+            });
+            this.userForm.reset();
+            this.router.navigate(['/']);
+          }),
+          catchError((error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Usuario o contraseña incorrectos',
+            });
+            return error;
+          })
+        ).subscribe();
     }
-
-    private initForm(): void{
-        this.userForm = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            contrasenia: ['', Validators.required]
-        });
-    }
-
-    protected submitForm(): void {
-        if (this.userForm.valid) {
-            this.isFormSubmitted = true;
-            this.authService.login(this.userForm.value)
-                .pipe(
-                    tap((response: any) => {
-                        this.authService.completarIniciarSesión(response.token);
-                        this.userForm.reset();
-                        this.router.navigate(['/']);
-                    })
-                ).subscribe();
-        }
-    }
-
-
+  }
 }

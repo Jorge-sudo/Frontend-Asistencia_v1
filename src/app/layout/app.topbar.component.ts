@@ -1,20 +1,33 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { LayoutService } from "./service/app.layout.service";
+import { LayoutService } from './service/app.layout.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../asistencia/components/auth/service/auth.service';
 
 @Component({
-    selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+  selector: 'app-topbar',
+  templateUrl: './app.topbar.component.html',
 })
 export class AppTopBarComponent {
+  items!: MenuItem[];
 
-    items!: MenuItem[];
+  @ViewChild('menubutton') menuButton!: ElementRef;
 
-    @ViewChild('menubutton') menuButton!: ElementRef;
+  @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
-    @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
+  @ViewChild('topbarmenu') menu!: ElementRef;
 
-    @ViewChild('topbarmenu') menu!: ElementRef;
+  constructor(public layoutService: LayoutService,
+              private router: Router,
+              private authService: AuthService) {}
 
-    constructor(public layoutService: LayoutService) { }
+  onConfigButtonClick() {
+    this.layoutService.showConfigSidebar();
+  }
+
+  goOut(): void {
+    this.authService.borrarSesión();
+    this.router.navigate(['/auth/login']).then();
+  }
+
 }
