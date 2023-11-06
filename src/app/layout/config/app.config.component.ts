@@ -3,7 +3,6 @@ import { LayoutService } from '../service/app.layout.service';
 import { MenuService } from '../app.menu.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { Generic } from 'src/app/util/generic';
 
 @Component({
   selector: 'app-config',
@@ -34,27 +33,6 @@ export class AppConfigComponent implements OnInit {
         .get('primeng')
         .subscribe((res) => this.config.setTranslation(res));
     });
-    //this.themeLocalStorage();
-  }
-
-  themeLocalStorage(): void {
-    console.log(Generic.localStorageGetItem('theme'));
-    console.log(Generic.localStorageGetItem('colorScheme'));
-    if(Generic.localStorageGetItem('theme') === null){
-      Generic.localStorageSetItem('theme', this.defectTheme);
-      this.layoutService.config.theme = this.defectTheme;
-    } else{
-      this.layoutService.config.theme = Generic.localStorageGetItem('theme');
-      console.log(this.layoutService.config.theme)
-    }
-
-    if(Generic.localStorageGetItem('colorScheme') === null){
-      Generic.localStorageSetItem('colorScheme', this.defectColorScheme);
-      this.layoutService.config.colorScheme = this.defectColorScheme;
-    }else{
-      this.layoutService.config.colorScheme = Generic.localStorageGetItem('colorScheme');
-    }
-    this.layoutService.onConfigUpdate();
   }
 
 

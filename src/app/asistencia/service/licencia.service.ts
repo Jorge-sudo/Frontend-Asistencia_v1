@@ -10,10 +10,10 @@ export class LicenciaService {
   private readonly apiUrl: string;
 
   constructor(private http: HttpClient) {
-      this.apiUrl = environment.controlAsistenciaApiUrl + '/api/licencia';
+      this.apiUrl = environment.controlAsistenciaApiUrl + '/api/licencias';
   }
 
   saveLicencia(licencia: any): any {
-      return this.http.post<any>(this.apiUrl, licencia);
-  }
+    return this.http.post<any>(this.apiUrl, licencia);
+}
 }

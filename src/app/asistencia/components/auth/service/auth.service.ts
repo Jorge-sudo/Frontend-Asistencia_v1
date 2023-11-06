@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Generic } from 'src/app/util/generic';
+import { Router } from '@angular/router';
+import { UserWithToken } from '../api/UserWithToken';
 
 @Injectable({
   providedIn: 'root'
@@ -10,34 +12,37 @@ import { Generic } from 'src/app/util/generic';
 export class AuthService {
 
   private readonly url: string;
-  public decodedToken: any;
+  private user = new BehaviorSubject<UserWithToken | null>(null);
+  user$ = this.user.asObservable();
+  isLoggedIn$: Observable<boolean> = this.user$.pipe(map(Boolean));
+  role: string = '';
+
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' , } );
 
-  constructor( private httpClient: HttpClient) {
+  constructor( private httpClient: HttpClient, private router: Router) {
     this.url = environment.controlAsistenciaApiUrl + '/api/auth';
-    this.decodedToken = this.obtenerTokenDecodificado();
   }
 
   public login(user: any): Observable<any> {
-    return this.httpClient.post(this.url + '/login', user, { headers: this.httpHeaders });
+    return this.httpClient.post(this.url + '/login', user, { headers: this.httpHeaders }).pipe(
+      map((response: any) => {
+        this.role = response.role;
+        Generic.localStorageSetItem('token', response.token);
+        this.pushNewUser(response);
+        this.redirectToDashboard();
+      })
+    );
   }
 
-  public completarIniciarSesión = (signInPayload: any): void => {
-    Generic.localStorageSetItem('token', signInPayload);
-    this.decodedToken = this.obtenerTokenDecodificado();
+  private pushNewUser(response: any) {
+    this.user.next(response);
+    this.user$.subscribe(user => console.log(user));
   }
 
-  public verificarToken = (): Observable<any> => {
-    return this.httpClient.get<any>(this.url + '/verificarToken');
+  private redirectToDashboard(): void {
+    this.router.navigateByUrl('/');
   }
 
-  public verificarContrasenia(loginRequest: any){
-    return this.httpClient.post<any>(this.url + '/verificar/contrasenia', loginRequest, { headers: this.httpHeaders });
-  }
-
-  public getCiPersonaPorToken(): Observable<any> {
-    return this.httpClient.post(this.url + '/login/ci', { headers: this.httpHeaders } );
-  }
 
   public isValidToken = (): boolean => {
     const token = this.obtenerTokenDecodificado();
@@ -58,6 +63,7 @@ export class AuthService {
 
   public borrarSesión = (): void => {
     localStorage.clear();
-    this.decodedToken = null;
+    this.user.next(null);
+    this.router.navigateByUrl('/auth/login');
   }
 }

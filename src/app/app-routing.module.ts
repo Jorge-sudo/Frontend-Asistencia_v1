@@ -13,6 +13,11 @@ import { AuthGuard } from './asistencia/components/auth/guard/auth.guard';
                     {
                         path: '',
                         canActivate: [AuthGuard],
+                        redirectTo: 'panel',
+                    },
+                    {
+                        path: 'panel',
+                        canActivate: [AuthGuard],
                         loadChildren: () => import('./asistencia/components/dashboard/dashboard.module').then(m => m.DashboardModule)
                     },
                     {
