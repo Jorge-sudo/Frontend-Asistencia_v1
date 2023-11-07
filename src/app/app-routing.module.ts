@@ -21,7 +21,7 @@ import { AuthGuard } from './asistencia/components/auth/guard/auth.guard';
                         loadChildren: () => import('./asistencia/components/dashboard/dashboard.module').then(m => m.DashboardModule)
                     },
                     {
-                        path: 'paginas',
+                        path: 'pages',
                         canActivate: [AuthGuard],
                         loadChildren: () => import('./asistencia/components/pages/pages.module').then(m => m.PagesModule)
                     }
@@ -32,12 +32,12 @@ import { AuthGuard } from './asistencia/components/auth/guard/auth.guard';
                 loadChildren: () => import('./asistencia/components/auth/auth.module').then(m => m.AuthModule)
             },
             {
-                path: 'notfound',
+                path: 'not_found',
                 component: NotfoundComponent
             },
             {
                 path: '**',
-                redirectTo: '/notfound'
+                redirectTo: '/not_found'
             },
 
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

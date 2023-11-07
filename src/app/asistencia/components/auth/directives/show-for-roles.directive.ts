@@ -10,10 +10,10 @@ import { distinctUntilChanged, map, Observable, Subscription, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 
 @Directive({
-  selector: '[akoShowForRoles]',
+  selector: '[akoShowForRole]',
 })
 export class ShowForRolesDirective implements OnInit, OnDestroy {
-  @Input('akoShowForRoles') allowedRoles?: any[];
+  @Input('akoShowForRole') allowedRole?: string;
   private sub?: Subscription;
 
   constructor(private authService: AuthService,
@@ -23,13 +23,14 @@ export class ShowForRolesDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.authService.user$
       .pipe(
-        map((user) => Boolean(user && this.allowedRoles?.includes(user.role))),
+        map((user) => Boolean(user && this.allowedRole === user.role)),
         distinctUntilChanged(),
-        tap((hasRole) =>
+        tap((hasRole) => {
+          console.log('hasRole', hasRole);
           hasRole
             ? this.viewContainerRef.createEmbeddedView(this.templateRef)
             : this.viewContainerRef.clear()
-        )
+        })
       )
       .subscribe();
   }

@@ -115,7 +115,7 @@
                 <p-sortIcon field="correoInstitucional"></p-sortIcon>
               </div>
             </th>
-            <th style="min-width: 8rem" pSortableColumn="activo">
+            <th *akoShowForRole="ADMIN" style="min-width: 8rem" pSortableColumn="activo">
               <div class="flex justify-content-between align-items-center">
                 {{ "asistencia.toList.docente.table.active" | translate }}
                 <p-sortIcon field="activo"></p-sortIcon>
@@ -152,7 +152,7 @@
             <td>
               {{ docente.correoInstitucional }}
             </td>
-            <td class="text-center">
+            <td *akoShowForRole="ADMIN" class="text-center">
               <p-inputSwitch
                 [(ngModel)]="docente.activo"
                 (onChange)="confirmChangeState($event, docente)"
