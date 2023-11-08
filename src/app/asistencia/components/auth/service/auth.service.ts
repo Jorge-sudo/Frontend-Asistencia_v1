@@ -5,11 +5,12 @@ import { environment } from 'src/environments/environment';
 import { Generic } from 'src/app/util/generic';
 import { Router } from '@angular/router';
 import { UserWithToken } from '../api/UserWithToken';
+import { CookieService } from 'ngx-cookie-service';
 
-const USER_LOCAL_STORAGE_KEY = 'token';
+const USER_LOCAL_STORAGE_KEY = 'user_data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -18,23 +19,28 @@ export class AuthService {
   user$ = this.user.asObservable();
   isLoggedIn$: Observable<boolean> = this.user$.pipe(map(Boolean));
 
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' , } );
+  private httpHeaders = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true
+  };
 
   constructor( private httpClient: HttpClient,
-               private router: Router) {
+               private router: Router,
+               private cookieService: CookieService) {
     this.url = environment.controlAsistenciaApiUrl + '/api/auth';
     this.loadUserFromLocalStorage();
   }
 
   public login(user: any): Observable<any> {
-    return this.httpClient.post(this.url + '/login', user, { headers: this.httpHeaders }).pipe(
+    return this.httpClient.post(this.url + '/login', user, this.httpHeaders).pipe(
       map((response: any) => {
-        Generic.localStorageSetItem(USER_LOCAL_STORAGE_KEY, response.token);
+        Generic.localStorageSetItem(USER_LOCAL_STORAGE_KEY, response);
         this.pushNewUser(response);
         this.redirectToDashboard();
       })
     );
   }
+
 
   private pushNewUser(response: any) {
     this.user.next(response);
@@ -44,27 +50,20 @@ export class AuthService {
     this.router.navigateByUrl('/');
   }
 
-  public isValidToken = (): boolean => {
-    const token = this.obtenerTokenDecodificado();
-    if (!token) {
+  public isValidUser = (): boolean => {
+    const user_data = Generic.localStorageGetItem(USER_LOCAL_STORAGE_KEY);
+    if (!user_data) {
       return false;
     }
     return true;
   }
 
-  public obtenerTokenDecodificado = (): any => {
-    const token = Generic.localStorageGetItem(USER_LOCAL_STORAGE_KEY);
-    if (!token) {
-      return null;
-    }
-    const parts = token.split('.');
-    return JSON.parse(atob(parts[1]));
-  }
 
   private loadUserFromLocalStorage(): void {
     const userFromLocal = localStorage.getItem(USER_LOCAL_STORAGE_KEY);
-    console.log(userFromLocal);
-    userFromLocal && this.pushNewUser(userFromLocal);
+    if(userFromLocal){
+      this.pushNewUser(userFromLocal);
+    }
   }
 
   public isAdmin = (): Promise<boolean> => {
@@ -88,5 +87,8 @@ export class AuthService {
     localStorage.clear();
     this.user.next(null);
     this.router.navigateByUrl('/auth/login');
+    this.cookieService.delete('jwt_access_asistencia');
   }
+
+
 }

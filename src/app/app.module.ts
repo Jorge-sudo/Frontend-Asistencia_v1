@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
+import { CookieService } from 'ngx-cookie-service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -45,7 +46,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        DocenteService, AuthService, authInterceptorProvider
+        DocenteService,
+        AuthService,
+        authInterceptorProvider,
+        CookieService
     ],
     bootstrap: [AppComponent]
 })

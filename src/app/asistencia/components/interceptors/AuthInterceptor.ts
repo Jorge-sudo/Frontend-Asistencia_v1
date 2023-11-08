@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { Generic } from 'src/app/util/generic';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -12,13 +12,11 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = Generic.localStorageGetItem('token');
 
-    if (token) {
-      request = request.clone({
-        headers: request.headers.set('Authorization', 'Bearer ' + token)
-      });
-    }
+    request = request.clone({
+      withCredentials: true,
+    });
+
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -42,6 +40,8 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );
   }
+
+
 }
 
 export const authInterceptorProvider = {

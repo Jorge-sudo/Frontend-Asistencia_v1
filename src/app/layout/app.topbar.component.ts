@@ -18,7 +18,6 @@ export class AppTopBarComponent {
   @ViewChild('topbarmenu') menu!: ElementRef;
 
   constructor(public layoutService: LayoutService,
-              private router: Router,
               private authService: AuthService) {}
 
   onConfigButtonClick() {
@@ -27,7 +26,6 @@ export class AppTopBarComponent {
 
   goOut(): void {
     this.authService.borrarSesión();
-    this.router.navigate(['/auth/login']).then();
   }
 
 }

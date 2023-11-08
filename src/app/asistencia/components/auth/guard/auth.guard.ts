@@ -8,14 +8,15 @@ import { AuthService } from '../service/auth.service';
 })
 export class AuthGuard {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+              private router: Router) {
   }
 
   canActivate: CanActivateFn = (
     ruta: ActivatedRouteSnapshot,
     estado: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
     // Verifica si el usuario tiene un token válido
-    if(!this.authService.isValidToken()) {
+    if(!this.authService.isValidUser()) {
       // Si el token no es válido, redirige al usuario a la página de inicio de sesión
       this.router.navigate(['/auth/login']).then();
       // Retorna false para evitar que el usuario acceda a la ruta protegida
@@ -29,7 +30,7 @@ export class AuthGuard {
     rutaHija: ActivatedRouteSnapshot,
     estado: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
     // Verifica si el usuario tiene un token válido
-    if(!this.authService.isValidToken()) {
+    if(!this.authService.isValidUser()) {
       // Si el token no es válido, redirige al usuario a la página de inicio de sesión
       this.router.navigate(['/auth/login']).then();
       // Retorna false para evitar que el usuario acceda a la ruta protegida

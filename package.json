@@ -23,6 +23,7 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "chart.js": "^4.4.0",
+    "ngx-cookie-service": "^16.1.0",
     "ngx-image-compress": "^15.1.6",
     "ngx-mqtt": "^16.1.0",
     "primeflex": "^3.3.1",

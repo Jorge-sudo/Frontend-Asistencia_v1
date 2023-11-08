@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { MessageService } from 'primeng/api';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     if (this.userForm.valid) {
       this.authService
         .login(this.userForm.value).pipe(
-          tap((response: any) => {
+          tap((response :any ) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Exito',
@@ -58,4 +59,5 @@ export class LoginComponent implements OnInit {
         ).subscribe();
     }
   }
+
 }
