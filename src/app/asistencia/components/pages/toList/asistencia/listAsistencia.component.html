@@ -86,27 +86,7 @@
         }}"
       >
         <ng-template pTemplate="caption">
-          <div class="flex">
 
-            <button
-                type="button"
-                pButton pRipple
-                icon="pi pi-file-excel"
-                (click)="exportExcel()"
-                class="p-button-success mr-2"
-                pTooltip="XLS"
-                tooltipPosition="bottom"></button>
-
-            <button
-                type="button"
-                pButton pRipple
-                icon="pi pi-file-pdf"
-                (click)="exportPdf()"
-                class="p-button-warning mr-2"
-                pTooltip="PDF"
-                tooltipPosition="bottom"></button>
-
-          </div>
           <div class="flex justify-content-between flex-column sm:flex-row">
             <button
               pButton
@@ -128,6 +108,23 @@
               />
             </span>
           </div>
+          <button
+                type="button"
+                pButton pRipple
+                icon="pi pi-file-excel"
+                (click)="exportExcel()"
+                class="p-button-success mr-2"
+                pTooltip="XLS"
+                tooltipPosition="bottom"></button>
+
+            <button
+                type="button"
+                pButton pRipple
+                icon="pi pi-file-pdf"
+                (click)="exportPdf()"
+                class="p-button-warning mr-2"
+                pTooltip="PDF"
+                tooltipPosition="bottom"></button>
         </ng-template>
 
         <ng-template pTemplate="header">

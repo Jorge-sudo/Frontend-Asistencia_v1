@@ -215,7 +215,7 @@ export class ListAsistenciaComponent implements OnInit{
           // Agregar título centrado
           doc.text('Reporte de Asistencias', x1, 20);
 
-          doc.setFontSize(10);
+          doc.setFontSize(8);
           // Agregar fecha y hora
           doc.text(`Fecha de Reporte: ${date} `, x1, 30);
           doc.text(`Hora de Reporte: ${time}`, x1, 40);
@@ -230,10 +230,11 @@ export class ListAsistenciaComponent implements OnInit{
 
           (doc as any).autoTable({
             startY: 90,
-            FontSize: 6
+            columns: this.exportColumns,
+            body: data,
+            //agregamos el tamaño de texto
+            styles: { fontSize: 7 }
           });
-
-          (doc as any).autoTable(this.exportColumns, data);
 
           doc.save(`Asistencia_${this.carreraSelected.nombre}_${this.semestreSelected.nombre}_${dateSearch}.pdf`);
           });
@@ -241,12 +242,13 @@ export class ListAsistenciaComponent implements OnInit{
   }
 
   exportExcel() {
-      import('xlsx').then((xlsx) => {
-          const worksheet = xlsx.utils.json_to_sheet(this.asistencias);
-          const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-          const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-          this.saveAsExcelFile(excelBuffer, 'products');
-      });
+    const dateSearch = this.dateSearch?.toLocaleDateString();
+    import('xlsx').then((xlsx) => {
+        const worksheet = xlsx.utils.json_to_sheet(this.asistencias);
+        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, `Asistencia_${this.carreraSelected.nombre}_${this.semestreSelected.nombre}_${dateSearch}.pdf`);
+    });
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {

@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { MessageService } from 'primeng/api';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',

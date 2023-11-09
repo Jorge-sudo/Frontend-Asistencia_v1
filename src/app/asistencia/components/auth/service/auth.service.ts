@@ -21,7 +21,7 @@ export class AuthService {
 
   private httpHeaders = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    withCredentials: true
+    withCredentials: false
   };
 
   constructor( private httpClient: HttpClient,
@@ -88,6 +88,12 @@ export class AuthService {
     this.user.next(null);
     this.router.navigateByUrl('/auth/login');
     this.cookieService.delete('jwt_access_asistencia');
+    this.cookieService.deleteAll();
+  }
+
+  public logoutSession(): Observable<any> {
+    this.borrarSesión();
+    return this.httpClient.post(this.url + '/logout', null, this.httpHeaders);
   }
 
 
