@@ -4,18 +4,18 @@
     <div class="card mb-0">
       <div class="flex justify-content-between mb-3">
         <div>
-          <span class="block text-500 font-medium mb-3">Orders</span>
-          <div class="text-900 font-medium text-xl">152</div>
+          <span class="block text-500 font-medium mb-3">Materias | Total</span>
+          <div class="text-900 font-medium text-xl">{{dashboard.materias ? dashboard.materias : 0}}</div>
         </div>
         <div
           class="flex align-items-center justify-content-center bg-blue-100 border-round"
           [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
         >
-          <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+          <i class="pi pi-fw pi-book text-blue-500 text-xl"></i>
         </div>
       </div>
-      <span class="text-green-500 font-medium">24 new </span>
-      <span class="text-500">since last visit</span>
+      <span class="text-green-500 font-medium">{{dashboard.materiasActivas ? dashboard.materiasActivas : 0}} </span>
+      <span class="text-500">Activas</span>
     </div>
   </div>
 
@@ -23,18 +23,18 @@
     <div class="card mb-0">
       <div class="flex justify-content-between mb-3">
         <div>
-          <span class="block text-500 font-medium mb-3">Revenue</span>
-          <div class="text-900 font-medium text-xl">$2.100</div>
+          <span class="block text-500 font-medium mb-3">Asistencias | Este mes</span>
+          <div class="text-900 font-medium text-xl">{{dashboard.asistenciasMes ? dashboard.asistenciasMes : 0}}</div>
         </div>
         <div
           class="flex align-items-center justify-content-center bg-orange-100 border-round"
           [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
         >
-          <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+          <i class="pi pi-fw pi-check-square text-orange-500 text-xl"></i>
         </div>
       </div>
-      <span class="text-green-500 font-medium">%52+ </span>
-      <span class="text-500">since last week</span>
+      <span class="text-green-500 font-medium">{{dashboard.asistenciasPuntualesMes ? dashboard.asistenciasPuntualesMes : 0}} </span>
+      <span class="text-500">Puntuales</span>
     </div>
   </div>
 
@@ -42,18 +42,18 @@
     <div class="card mb-0">
       <div class="flex justify-content-between mb-3">
         <div>
-          <span class="block text-500 font-medium mb-3">Customers</span>
-          <div class="text-900 font-medium text-xl">28441</div>
+          <span class="block text-500 font-medium mb-3">Asistencias | Hoy</span>
+          <div class="text-900 font-medium text-xl">{{dashboard.asistenciasHoy ? dashboard.asistenciasHoy : 0}}</div>
         </div>
         <div
           class="flex align-items-center justify-content-center bg-cyan-100 border-round"
           [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
         >
-          <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+          <i class="pi pi-fw pi-check-square text-cyan-500 text-xl"></i>
         </div>
       </div>
-      <span class="text-green-500 font-medium">520 </span>
-      <span class="text-500">newly registered</span>
+      <span class="text-green-500 font-medium">{{dashboard.asistenciasPuntualesHoy ? dashboard.asistenciasPuntualesHoy : 0}} </span>
+      <span class="text-500">Puntuales</span>
     </div>
   </div>
 
@@ -61,19 +61,21 @@
     <div class="card mb-0">
       <div class="flex justify-content-between mb-3">
         <div>
-          <span class="block text-500 font-medium mb-3">Comments</span>
-          <div class="text-900 font-medium text-xl">152 Unread</div>
+          <span class="block text-500 font-medium mb-3">Docentes | Total</span>
+          <div class="text-900 font-medium text-xl">{{dashboard.docentes ? dashboard.docentes : 0}}</div>
         </div>
         <div
           class="flex align-items-center justify-content-center bg-purple-100 border-round"
           [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
         >
-          <i class="pi pi-comment text-purple-500 text-xl"></i>
+          <i class="pi pi-fw pi-users text-purple-500 text-xl"></i>
         </div>
       </div>
-      <span class="text-green-500 font-medium">85 </span>
-      <span class="text-500">responded</span>
+      <span class="text-green-500 font-medium">{{dashboard.docentesActivos ? dashboard.docentesActivos : 0}} </span>
+      <span class="text-500">Activos</span>
     </div>
   </div>
 
 </div>
+
+<p-toast [life]="10000"  ></p-toast>

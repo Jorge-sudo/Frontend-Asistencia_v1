@@ -34,7 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
     		ProgressBarModule,
     		ToastModule,
         CalendarModule,
-        TranslateModule
+        TranslateModule,
+        ButtonModule
     ],
     declarations: [ListAsistenciaComponent]
 })

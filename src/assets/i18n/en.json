@@ -128,8 +128,8 @@
     "menu": {
       "initiation": "Home",
       "dashboard": "Dashboard",
-      "table": "Table",
-      "form": "Form",
+      "table": "Consultations and Reports",
+      "form": "Data register",
       "docente": "Teacher",
       "supervisor": "Supervisor",
       "asignatura": "Course",

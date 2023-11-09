@@ -12,6 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { CookieService } from 'ngx-cookie-service';
+import { ButtonModule } from 'primeng/button';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -30,19 +31,21 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent
+        AppComponent,
+        NotfoundComponent
     ],
     imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        AppLayoutModule,
-        AppRoutingModule,
-        MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+      ButtonModule,
+      TranslateModule.forRoot({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: HttpLoaderFactory,
+              deps: [HttpClient]
+          }
+      }),
+      AppLayoutModule,
+      AppRoutingModule,
+      MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

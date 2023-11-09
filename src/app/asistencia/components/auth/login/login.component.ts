@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { MessageService } from 'primeng/api';
 import { HttpResponse } from '@angular/common/http';

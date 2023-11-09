@@ -19,7 +19,10 @@
           "options": {
             "allowedCommonJsDependencies": [
               "lodash",
-              "mqtt-browser"
+              "mqtt-browser",
+              "file-saver",
+              "canvg",
+              "jspdf-autotable"
             ],
             "outputPath": "dist/frontend-asistencia",
             "index": "src/index.html",

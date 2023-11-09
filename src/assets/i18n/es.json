@@ -136,8 +136,8 @@
     "menu": {
       "initiation": "Inicio",
       "dashboard": "Panel",
-      "table": "Tabla",
-      "form": "Formulario",
+      "table": "Consultas y Reportes",
+      "form": "Registro de Datos",
       "docente": "Docente",
       "supervisor": "Supervisor",
       "asignatura": "Asignatura",

@@ -127,6 +127,6 @@ export class AppMenuComponent implements OnInit {
     if (await this.authService.isAdmin()) {
       this.model.push(this.register);
     }
-    this.model.push(this.grafic);
+    //this.model.push(this.grafic);
   }
 }
