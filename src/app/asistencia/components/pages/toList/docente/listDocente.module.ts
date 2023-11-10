@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { ShowForRolesDirective } from '../../../auth/directives/show-for-roles.directive';
 
 @NgModule({
     imports: [
@@ -38,6 +39,9 @@ import { TranslateModule } from '@ngx-translate/core';
         ConfirmDialogModule,
         TranslateModule
     ],
-    declarations: [ListDocenteComponent]
+    declarations: [
+      ListDocenteComponent,
+      ShowForRolesDirective
+    ]
 })
 export class ListDocenteModule { }

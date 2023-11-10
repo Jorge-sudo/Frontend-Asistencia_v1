@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { LayoutService } from './service/app.layout.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../asistencia/components/auth/service/auth.service';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
@@ -27,8 +27,8 @@ export class AppTopBarComponent {
 
   goOut(): void {
     this.authService.logoutSession().pipe(
-      tap((response: any) => {
-        console.log(response);
+      finalize(() => {
+        this.authService.borrarSesión();
       })
     ).subscribe();
   }

@@ -26,7 +26,6 @@ export class ShowForRolesDirective implements OnInit, OnDestroy {
         map((user) => Boolean(user && this.allowedRole === user.role)),
         distinctUntilChanged(),
         tap((hasRole) => {
-          console.log('hasRole', hasRole);
           hasRole
             ? this.viewContainerRef.createEmbeddedView(this.templateRef)
             : this.viewContainerRef.clear()

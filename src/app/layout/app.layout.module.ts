@@ -19,7 +19,6 @@ import { AppConfigModule } from './config/config.module';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { ButtonModule } from 'primeng/button';
-import { ShowForRolesDirective } from '../asistencia/components/auth/directives/show-for-roles.directive';
 
 
 @NgModule({
@@ -29,8 +28,7 @@ import { ShowForRolesDirective } from '../asistencia/components/auth/directives/
         AppFooterComponent,
         AppMenuComponent,
         AppSidebarComponent,
-        AppLayoutComponent,
-        ShowForRolesDirective
+        AppLayoutComponent
     ],
     imports: [
         BrowserModule,

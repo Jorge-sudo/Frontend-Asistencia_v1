@@ -60,7 +60,7 @@ export class AuthService {
 
 
   private loadUserFromLocalStorage(): void {
-    const userFromLocal = localStorage.getItem(USER_LOCAL_STORAGE_KEY);
+    const userFromLocal = JSON.parse(Generic.localStorageGetItem(USER_LOCAL_STORAGE_KEY));
     if(userFromLocal){
       this.pushNewUser(userFromLocal);
     }
