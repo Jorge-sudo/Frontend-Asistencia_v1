@@ -12,7 +12,7 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-      <button class="p-link layout-topbar-button">
+      <button [routerLink]="['/paginas/perfil']" class="p-link layout-topbar-button">
         <i class="pi pi-user"></i>
         <span>Perfil</span>
       </button>

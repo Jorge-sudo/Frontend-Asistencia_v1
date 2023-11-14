@@ -39,7 +39,7 @@ export class HasRoleGuard {
         if (!isAllowed) {
 
           // 3. Redirigimos al usuario si no está permitido
-          this.router.navigate(['/auth/access_denied']).then();
+          this.router.navigate(['/autenticación/acceso_denegado']).then();
         }
       })
 
@@ -61,7 +61,7 @@ export class HasRoleGuard {
       tap((isAllowed) => {
         if (!isAllowed) {
           // redirigir al usuario no autorizado
-          this.router.navigate(['/auth/access_denied']).then();
+          this.router.navigate(['/autenticación/acceso_denegado']).then();
         }
       })
     );

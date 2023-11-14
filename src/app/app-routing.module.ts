@@ -21,23 +21,23 @@ import { AuthGuard } from './asistencia/components/auth/guard/auth.guard';
                         loadChildren: () => import('./asistencia/components/dashboard/dashboard.module').then(m => m.DashboardModule)
                     },
                     {
-                        path: 'pages',
+                        path: 'paginas',
                         canActivate: [AuthGuard],
                         loadChildren: () => import('./asistencia/components/pages/pages.module').then(m => m.PagesModule)
                     }
                 ]
             },
             {
-                path: 'auth',
+                path: 'autenticación',
                 loadChildren: () => import('./asistencia/components/auth/auth.module').then(m => m.AuthModule)
             },
             {
-                path: 'not_found',
+                path: 'extraviado',
                 component: NotfoundComponent
             },
             {
                 path: '**',
-                redirectTo: '/not_found'
+                redirectTo: '/extraviado'
             },
 
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
         { path: 'licencia', loadChildren: () => import('./licencia/listLicencia.module').then(m => m.ListLicenciaModule) },
         { path: 'materia', loadChildren: () => import('./materia/listMateria.module').then(m => m.ListMateriaModule) },
         { path: 'supervisor', loadChildren: () => import('./supervisor/listSupervisor.module').then(m => m.ListSupervisorModule) },
-        { path: '**', redirectTo: '/notfound' }
+        { path: '**', redirectTo: '/extraviado' }
     ])],
     exports: [RouterModule]
 })

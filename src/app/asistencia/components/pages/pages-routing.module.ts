@@ -6,19 +6,23 @@ import { HasRoleGuard } from '../auth/guard/has-role.guard';
   imports: [
     RouterModule.forChild([
       {
-        path: 'to_list',
+        path: 'listar',
         loadChildren: () =>
           import('./toList/toList.module').then((m) => m.ToListModule),
       },
       {
-        path: 'to_register',
+        path: 'registrar',
         canActivate: [HasRoleGuard],
         loadChildren: () =>
           import('./toRegister/toRegister.module').then(
             (m) => m.ToRegisterModule
           ),
       },
-      { path: '**', redirectTo: '/notfound' },
+      {
+        path: 'perfil',
+        loadChildren: () => import('./porfile/porfile.module').then(m => m.PorfileModule),
+      },
+      { path: '**', redirectTo: '/extraviado' },
     ]),
   ],
   exports: [RouterModule],

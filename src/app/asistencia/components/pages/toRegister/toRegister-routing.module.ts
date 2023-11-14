@@ -60,7 +60,7 @@ import { RouterModule } from '@angular/router';
             (m) => m.RegisterAulaModule
           ),
       },
-      { path: '**', redirectTo: '/notfound' },
+      { path: '**', redirectTo: '/extraviado' },
     ]),
   ],
   exports: [RouterModule],

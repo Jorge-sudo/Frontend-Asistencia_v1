@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UserWithToken } from '../api/UserWithToken';
 import { CookieService } from 'ngx-cookie-service';
 
+
 const USER_LOCAL_STORAGE_KEY = 'user_data';
 
 @Injectable({
@@ -34,7 +35,6 @@ export class AuthService {
   public login(user: any): Observable<any> {
     return this.httpClient.post(this.url + '/login', user, this.httpHeaders).pipe(
       map((response: any) => {
-        Generic.localStorageSetItem(USER_LOCAL_STORAGE_KEY, response);
         this.pushNewUser(response);
         this.redirectToDashboard();
       })
@@ -43,6 +43,7 @@ export class AuthService {
 
 
   private pushNewUser(response: any) {
+    Generic.localStorageSetItem(USER_LOCAL_STORAGE_KEY, window.btoa(JSON.stringify(response)));
     this.user.next(response);
   }
 
@@ -60,11 +61,17 @@ export class AuthService {
 
 
   private loadUserFromLocalStorage(): void {
-    const userFromLocal = JSON.parse(Generic.localStorageGetItem(USER_LOCAL_STORAGE_KEY));
-    if(userFromLocal){
-      this.pushNewUser(userFromLocal);
+    const data = Generic.localStorageGetItem(USER_LOCAL_STORAGE_KEY);
+    try {
+      const userFromLocal = JSON.parse(window.atob(data));
+      if(userFromLocal){
+        this.pushNewUser(userFromLocal);
+      }
+    } catch (e) {
+      console.info('NO se pudo decodificar el usuario desde el almacenamiento local', e);
     }
   }
+
 
   public isAdmin = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
@@ -86,7 +93,7 @@ export class AuthService {
   public borrarSesión = (): void => {
     localStorage.clear();
     this.user.next(null);
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/autenticación/acceso');
     this.cookieService.delete('jwt_access_asistencia');
     this.cookieService.deleteAll();
   }

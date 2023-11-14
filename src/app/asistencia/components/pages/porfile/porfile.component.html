@@ -1,0 +1,246 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>Perfil</h5>
+      <div class="field col-12 md:col-8">
+        <p-message
+              *ngIf="fileUpload == undefined"
+              severity="warn"
+              text="Por favor, cargue su imagen de perfil."
+        ></p-message>
+        <p-fileUpload
+          name="imageDocente"
+          (onSelect)="onSelect($event)"
+          (onClear)="onClear($event)"
+          accept="image/jpeg"
+          [maxFileSize]="1000000"
+          [showUploadButton]="false"
+          invalidFileLimitMessageSummary="Límite de archivo inválido"
+          invalidFileTypeMessageSummary="{0}: Tipo de archivo no válido,"
+          invalidFileLimitMessageDetail="El límite es {0} como máximo."
+          invalidFileTypeMessageDetail="Tipos de archivos permitidos: {0}."
+          invalidFileSizeMessageSummary="{0}: Tamaño de archivo no válido,"
+          invalidFileSizeMessageDetail="El tamaño máximo de carga es {0}."
+          invalidFileSizeMensajeResumen="{0}: Tamaño de archivo no válido,"
+        >
+          <ng-template pTemplate="content">
+            <ul>
+              <li>{{ fileUpload?.name }} - {{ fileUpload?.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+      <form [formGroup]="docente" (ngSubmit)="onSubmit()" method="POST">
+        <div class="p-fluid p-formgrid grid">
+          <div class="field col-12 md:col-4">
+            <label htmlFor="ci">C.I.: </label>
+            <p-inputNumber
+              formControlName="ci"
+              mode="decimal"
+              [useGrouping]="false"
+              [disabled]="true"
+            >
+            </p-inputNumber>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label htmlFor="nombre">Nombre: </label>
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              type="text"
+              [disabled]="true"
+            />
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label htmlFor="apellido">Apellido: </label>
+            <input
+              pInputText
+              id="apellido"
+              formControlName="apellido"
+              type="text"
+              [disabled]="true"
+            />
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+              *ngIf="
+                docente.get('email')?.invalid && docente.get('email')?.touched
+              "
+              severity="warn"
+              text="Por favor, ingrese su Email Personal"
+            ></p-message>
+            <label htmlFor="email">Email Personal: </label>
+            <input
+              pInputText
+              id="email"
+              formControlName="email"
+              type="text"
+              placeholder="text@text.com"
+            />
+          </div>
+
+          <div class="field col-12 md:col-4 flex flex-wrap gap-3">
+            <div class="flex align-items-center">
+              <p-radioButton
+                name="genero"
+                value="M"
+                inputId="masculino"
+                formControlName="genero"
+                [disabled]="true"
+              >
+              </p-radioButton>
+              <label for="masculino" class="ml-2">Masculino: </label>
+            </div>
+
+            <div class="flex align-items-center">
+              <p-radioButton
+                name="genero"
+                value="F"
+                inputId="femenino"
+                formControlName="genero"
+                [disabled]="true"
+              ></p-radioButton>
+              <label for="femenino" class="ml-2">Femenino: </label>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label htmlFor="correoInstitucional">Correo Institucional: </label>
+            <input
+              pInputText
+              id="correoInstitucional"
+              formControlName="correoInstitucional"
+              type="text"
+              [disabled]="true"
+            />
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+              *ngIf="
+                docente.get('contrasenia')?.invalid &&
+                docente.get('contrasenia')?.touched
+              "
+              severity="warn"
+              text="Para asegurar la seguridad de su contraseña, debe cumplir con los siguientes requisitos:
+                Al menos 8 caracteres de longitud.
+                Incluir al menos un número.
+                Incluir al menos una letra mayúscula.
+                Incluir al menos una letra minúscula.
+                Debe contener al menos un símbolo especial."
+            ></p-message>
+            <label htmlFor="password">Contraseña: </label>
+            <p-password
+              id="password"
+              placeholder="MMmm@1234\*?!"
+              formControlName="contrasenia"
+              required
+            ></p-password>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+              *ngIf="confirmPassword.invalid && confirmPassword.touched"
+              severity="warn"
+              text="Por favor, introduzca la confirmación de la contraseña."
+            ></p-message>
+            <p-message
+              *ngIf="passwordEquals"
+              severity="warn"
+              text="Las contraseñas no coinciden."
+            ></p-message>
+            <label htmlFor="password">Confirmar Contraseña: </label>
+            <p-password
+              [formControl]="confirmPassword"
+              placeholder="Confirme su contraseña"
+              id="password"
+              placeholder="Password"
+              required
+              (keyup)="comparePassword()"
+            ></p-password>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+              *ngIf="!ngxMqttService.cardRfidLoad"
+              severity="info"
+              text="Para obtener el código RFID, simplemente acerque la tarjeta RFID
+                a cualquier lector. Recuerde que debe cambiar el módulo al modo 'Registrar Docente'
+                para poder leer la tarjeta RFID."
+            ></p-message>
+            <p-message
+              *ngIf="ngxMqttService.cardRfidLoad"
+              severity="success"
+              text="El codigo RFID proviene de la Aula:
+                  {{ngxMqttService.aula.paralelo}} - {{ngxMqttService.aula.aula}} -
+                  {{ngxMqttService.aula.piso}} - {{ngxMqttService.aula.bloque}}"
+            ></p-message>
+            <div class="flex align-items-center">
+              <label htmlFor="cardRfid" class="m-3">Tarjeta RFID: </label>
+              <p-chip
+                [label]="ngxMqttService.messageDocenteRegister.codigoRfid"
+                image="/assets/asistencia/icons/registerDocente/rfid.png"
+                id="cardRfid"
+              ></p-chip>
+            </div>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <p-message
+                *ngIf="
+                  docente.get('rol')?.invalid
+                "
+                severity="warn"
+                text="Por favor, ingrese su rol"
+              ></p-message>
+            <label for="m-3 float-label ">Ingrese su Rol:</label>
+            <p-dropdown
+              [options]="roles"
+              placeholder="Ingrese sus Roles"
+              optionLabel="nombre"
+              inputId="float-label"
+              (onChange)="eventSelectRol($event)"
+              #selectRol
+            ></p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-4">
+
+            <div class="flex justify-content-center">
+              <label for="m-3" htmlFor="activo" >Activo: </label>
+              <p-inputSwitch
+              id="activo"
+              formControlName="activo"
+              class="m-3"></p-inputSwitch>
+            </div>
+
+          </div>
+
+        </div>
+
+        <p-button
+            label="Enviar"
+            [loading]="loading"
+            type="submit"
+            [disabled]="!(
+                docente.valid &&
+                !passwordEquals &&
+                ngxMqttService.cardRfidLoad &&
+                fileUpload !== undefined)"
+          ></p-button>
+        <p-button
+          [ngStyle]="{ 'margin': '10px' }"
+          label="Resetear"
+          (onClick)="clearForm()"
+          severity="secondary">
+        </p-button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p-toast [life]="10000" ></p-toast>
