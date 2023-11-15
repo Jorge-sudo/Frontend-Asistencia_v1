@@ -10,7 +10,7 @@
                     severity="warn"
                     text="Por favor, ingrese su C.I."
                   ></p-message>
-                  <label htmlFor="ci">C.I.: </label>
+                  <label htmlFor="ci">C.I.: (*)</label>
                   <p-inputNumber
                     formControlName="ci"
                     inputId="ci"
@@ -29,7 +29,7 @@
                     severity="warn"
                     text="Por favor, ingrese la fechas de su licencia"
                   ></p-message>
-                  <label htmlFor="fechaLicencia">Inserte la fecha de sus licencia: </label>
+                  <label htmlFor="fechaLicencia">Inserte la fecha de sus licencia: (*)</label>
                   <p-calendar
                       selectionMode="range"
                       [readonlyInput]="true"
@@ -46,7 +46,7 @@
                     severity="warn"
                     text="Por favor, ingrese la descripcion de su licencia"
                   ></p-message>
-                  <label htmlFor="descripcion">Descripcion: </label>
+                  <label htmlFor="descripcion">Descripcion: (*)</label>
                   <textarea
                       pKeyFilter="string"
                       rows="10"

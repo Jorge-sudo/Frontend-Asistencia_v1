@@ -15,6 +15,7 @@ import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { TranslateModule } from '@ngx-translate/core';
         DropdownModule,
         ProgressBarModule,
         ToastModule,
-        TranslateModule
+        TranslateModule,
+        ImageModule
     ],
     declarations: [ListAsignaturaComponent]
 })

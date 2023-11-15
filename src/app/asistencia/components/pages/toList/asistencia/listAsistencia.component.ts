@@ -138,7 +138,7 @@ export class ListAsistenciaComponent implements OnInit{
           throw error;
         })
       );
-  }else{
+    } else {
       if (this.carreraSelected.id === 0) {
         this.messageService.add({
           severity: 'warn',
@@ -158,7 +158,7 @@ export class ListAsistenciaComponent implements OnInit{
         });
       }
       return of(null);
-  }
+    }
   }
 
   loadData(event:any) {
@@ -242,13 +242,39 @@ export class ListAsistenciaComponent implements OnInit{
   }
 
   exportExcel() {
+    const data = this.dataForExport();
+    const today = new Date();
+    const date = today.toLocaleDateString();
+    const time = today.toLocaleTimeString();
     const dateSearch = this.dateSearch?.toLocaleDateString();
+
     import('xlsx').then((xlsx) => {
-        const worksheet = xlsx.utils.json_to_sheet(this.asistencias);
-        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, `Asistencia_${this.carreraSelected.nombre}_${this.semestreSelected.nombre}_${dateSearch}.pdf`);
+      // Crear un libro vacío
+      const workbook = xlsx.utils.book_new();
+      // Crear un arreglo bidimensional con el texto del encabezado y el pie de página
+      const headerFooter = [
+        ["Reporte de Asistencias", "", "", "", "", "", "Fecha de Reporte: " + date],
+        ["", "", "", "", "", "", "Hora de Reporte: " + time],
+        ["Fecha de Asistencia: " + dateSearch, "", "", "", "", "", ""],
+        ["Carrera: " + this.carreraSelected.nombre, "", "", "", "", "", ""],
+        ["Semestre: " + this.semestreSelected.nombre, "", "", "", "", "", ""],
+        ["Cantidad de Asistencias:  " + this.numberOfElements + " de " + this.totalRecords + "(total)", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", ""], // Dejar una fila vacía entre el encabezado y los datos
+        this.exportColumns // Agregar los títulos de las columnas
+      ];
+      // Crear una hoja de trabajo con el arreglo bidimensional
+      const ws = xlsx.utils.aoa_to_sheet(headerFooter);
+      // Agregar los datos JSON a la hoja de trabajo a partir de la fila 9
+      xlsx.utils.sheet_add_json(ws, data, {origin: "A9"});
+      // Agregar la hoja de trabajo al libro con el nombre "data"
+      xlsx.utils.book_append_sheet(workbook, ws, "data");
+      // Escribir el libro en un buffer
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      // Guardar el archivo Excel
+      this.saveAsExcelFile(excelBuffer,
+        `Asistencia_${this.carreraSelected.nombre}${this.semestreSelected.nombre}${dateSearch}.xlsx`);
     });
+
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {

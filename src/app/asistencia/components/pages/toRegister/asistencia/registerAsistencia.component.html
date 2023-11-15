@@ -11,7 +11,7 @@
                     severity="warn"
                     text="Por favor, ingrese su C.I. para registrar asistencia"
                   ></p-message>
-                  <label htmlFor="ci">C.I.: </label>
+                  <label htmlFor="ci">C.I.: (*)</label>
                   <p-inputNumber
                       formControlName="ci"
                       inputId="ci"
@@ -30,7 +30,7 @@
                       severity="warn"
                       text="Seleccione la aula" >
                   </p-message>
-                  <label htmlFor="aula">Aula: </label>
+                  <label htmlFor="aula">Aula: (*)</label>
                   <p-dropdown
                     [options]="optionsAula"
                     optionLabel="name"
@@ -49,7 +49,7 @@
                     severity="warn"
                     text=""
                   ></p-message>
-                  <label htmlFor="numberStudents">Cantidad de estudiantes: </label>
+                  <label htmlFor="numberStudents">Cantidad de estudiantes: (*)</label>
                   <p-inputNumber
                       formControlName="cantidadEstudiantes"
                       inputId="numberStudents"

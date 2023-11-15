@@ -5,16 +5,15 @@ import { PorfileComponent } from './porfile.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { MessageModule } from 'primeng/message';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
+import { TabViewModule } from 'primeng/tabview';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     imports: [
@@ -23,15 +22,15 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         ToastModule,
         InputNumberModule,
         InputTextModule,
-        RadioButtonModule,
         ReactiveFormsModule,
         PasswordModule,
         FileUploadModule,
         ButtonModule,
         ChipModule,
         MessageModule,
-        DropdownModule,
-        InputSwitchModule
+        InputSwitchModule,
+        TabViewModule,
+        ImageModule
     ],
     declarations: [PorfileComponent]
 })

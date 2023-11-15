@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ImageCompressService } from 'src/app/util/image-compress.service';
@@ -8,6 +8,7 @@ import { Observable, catchError, concatMap, finalize, tap, throwError } from 'rx
 import { SupervisorService } from 'src/app/asistencia/service/supervisor.service';
 import { PersonaService } from 'src/app/asistencia/service/persona.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { FileUpload } from 'primeng/fileupload';
 
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
@@ -29,6 +30,8 @@ export class RegisterSupervisorComponent {
   confirmPassword: FormControl = new FormControl('',[Validators.required]);
   passwordEquals: boolean = true;
   roles: Rol[] = [];
+
+  @ViewChild('file') fileComponent!: FileUpload;
 
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
@@ -109,6 +112,7 @@ export class RegisterSupervisorComponent {
     this.fileUpload = undefined;
     this.passwordEquals = true;
     this.progress = 0;
+    this.fileComponent.clear();
   }
 
   saveSupervisor(): Observable<any>{

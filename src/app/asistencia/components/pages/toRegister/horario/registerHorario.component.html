@@ -10,7 +10,7 @@
                     severity="warn"
                     text="La hora de inicio es requerida"
                   ></p-message>
-                  <label htmlFor="horaInicio">Hora de Inicio: </label>
+                  <label htmlFor="horaInicio">Hora de Inicio: (*)</label>
                   <p-calendar
                       [timeOnly]="true"
                       (onSelect)="eventSelectHoraInicio($event)"
@@ -24,7 +24,7 @@
                     severity="warn"
                     text="La hora de fin es requerida"
                   ></p-message>
-                  <label htmlFor="horaFin">Hora Final: </label>
+                  <label htmlFor="horaFin">Hora Final: (*)</label>
                   <p-calendar
                       [timeOnly]="true"
                       (onSelect)="eventSelectHoraFin($event)"
@@ -38,7 +38,7 @@
                     severity="warn"
                     text="El dia es requerido"
                   ></p-message>
-                  <label htmlFor="dia">Dia: </label>
+                  <label htmlFor="dia">Dia: (*)</label>
                   <p-dropdown
                     [options]="optionsDia"
                     optionLabel="nombre"
@@ -54,7 +54,7 @@
                     severity="warn"
                     text="El turno es requerido"
                   ></p-message>
-                  <label htmlFor="turno">Turno: </label>
+                  <label htmlFor="turno">Turno: (*)</label>
                   <p-dropdown
                     [options]="optionsTurno"
                     optionLabel="nombre"

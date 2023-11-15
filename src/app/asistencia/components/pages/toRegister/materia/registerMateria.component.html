@@ -14,7 +14,7 @@
                       [formControl]="exist"
                     >
                     </p-radioButton>
-                    <label for="existente" class="ml-2">Existente: </label>
+                    <label for="existente" class="ml-2">Existente: (*)</label>
                   </div>
 
                   <div  class="flex align-items-center">
@@ -24,7 +24,7 @@
                       inputId="nuevo"
                       [formControl]="exist"
                     ></p-radioButton>
-                    <label for="nuevo" class="ml-2">Nuevo: </label>
+                    <label for="nuevo" class="ml-2">Nuevo: (*)</label>
                   </div>
                 </div>
 
@@ -39,7 +39,7 @@
                     severity="success"
                     text="La materia cargada: {{materiaNombre}} "
                   ></p-message>
-                  <label htmlFor="sigla">Sigla: </label>
+                  <label htmlFor="sigla">Sigla: (*)</label>
                   <input
                     pInputText
                     id="sigla"
@@ -64,7 +64,7 @@
                     severity="warn"
                     text="Ingrese el nombre de la materia"
                   ></p-message>
-                  <label htmlFor="nombreMateria">Nombre: </label>
+                  <label htmlFor="nombreMateria">Nombre: (*)</label>
                   <input
                     pInputText
                     id="nombreMateria"
@@ -81,7 +81,7 @@
                     severity="warn"
                     text="Seleccione el semestre"
                   ></p-message>
-                  <label htmlFor="semestre">Semestre: </label>
+                  <label htmlFor="semestre">Semestre: (*)</label>
                   <p-dropdown
                     [options]="selectedSemestres"
                     placeholder="Seleccione un semestre"
@@ -98,7 +98,7 @@
                     severity="warn"
                     text="Seleccione la carrera"
                   ></p-message>
-                  <label htmlFor="carrera">Carrera: </label>
+                  <label htmlFor="carrera">Carrera: (*)</label>
                   <p-dropdown
                     [options]="selectedCarreras"
                     placeholder="Seleccione una carrera"
@@ -110,7 +110,7 @@
 
                 <div class="field col-12 md:col-4">
                   <div class="flex justify-content-center">
-                    <label for="m-3" htmlFor="activo" >Activo: </label>
+                    <label for="m-3" htmlFor="activo" >Activo: (*)</label>
                     <p-inputSwitch
                     id="activo"
                     formControlName="activo"

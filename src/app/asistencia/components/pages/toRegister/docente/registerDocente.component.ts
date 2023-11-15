@@ -10,6 +10,7 @@ import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { PersonaService } from 'src/app/asistencia/service/persona.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Dropdown } from 'primeng/dropdown';
+import { FileUpload } from 'primeng/fileupload';
 
 // Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
 //si no se cumple ese formato nos lanzara error
@@ -33,6 +34,7 @@ export class RegisterDocenteComponent implements OnInit {
   roles: Rol[] = [];
 
   @ViewChild('selectRol') elementSelectRol!: Dropdown;
+  @ViewChild('file') fileComponent!: FileUpload;
 
   constructor(private messageService: MessageService,
               private imageComprees: ImageCompressService,
@@ -116,6 +118,7 @@ export class RegisterDocenteComponent implements OnInit {
     this.progress = 0;
     this.elementSelectRol.writeValue(null);
     this.clearMqttRegistrarDocente();
+    this.fileComponent.clear();
   }
 
   saveDocente(): Observable<any>{
@@ -193,6 +196,7 @@ export class RegisterDocenteComponent implements OnInit {
 
   clearMqttRegistrarDocente(){
     this.ngxMqttService.messageDocenteRegister.codigoRfid = '';
+    this.ngxMqttService.cardRfidLoad = false;
   }
 
 }

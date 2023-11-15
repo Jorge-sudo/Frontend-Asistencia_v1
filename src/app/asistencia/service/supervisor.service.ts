@@ -16,8 +16,16 @@ export class SupervisorService {
         this.apiUrl = environment.controlAsistenciaApiUrl + '/api/supervisores';
     }
 
+    public updateSupervisorPerfil(command: any){
+        return this.http.post<any>(this.apiUrl + '/perfil', command, {headers: this.httpHeaders});
+    }
+
     public getSupervisores(): Observable<any> {
         return this.http.get<any>(this.apiUrl);
+    }
+
+    public getSupervisorByCi(ci: number): Observable<any> {
+        return this.http.get<any>(this.apiUrl + '/' + ci);
     }
 
     public updateSupervisorActivo(command: CommandDocenteAndSupervisorActivo) {

@@ -3,18 +3,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ImageCompressService } from 'src/app/util/image-compress.service';
 import { NgxMqttService } from '../../../service/ngx-mqtt/ngx-mqtt.service';
-import { RolService } from 'src/app/asistencia/service/rol.service';
-import { Rol } from 'src/app/asistencia/api/rol';
-import { Observable, catchError, concatMap, finalize, tap, throwError } from 'rxjs';
+import { catchError, finalize, tap, throwError } from 'rxjs';
 import { DocenteService } from 'src/app/asistencia/service/docente.service';
 import { PersonaService } from 'src/app/asistencia/service/persona.service';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Dropdown } from 'primeng/dropdown';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { SupervisorService } from 'src/app/asistencia/service/supervisor.service';
+import { AuthService } from '../../auth/service/auth.service';
+import { FileUpload } from 'primeng/fileupload';
+import { UserWithToken } from '../../auth/api/UserWithToken';
+import { Router } from '@angular/router';
 
-// Expresión regular que verifica si el correo institucional tiene un formato de texto.texto.numero
-//si no se cumple ese formato nos lanzara error
-const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@servicios\.usalesiana\.edu\.bo$/;
-// Expresión regular que verifica si la contraseña tiene por lo menos debe tener 1 texto, 1 numero y 1 caracteres especial
+
 
 @Component({
   templateUrl: './porfile.component.html',
@@ -22,125 +21,221 @@ const formatCorreoInstitucional = /^[a-zA-Z]+\.[a-zA-Z]+@servicios\.usalesiana\.
 })
 export class PorfileComponent implements OnInit {
 
-  docente: FormGroup = new FormGroup({});
+  userInfo : any = {};
+  isSupervisor: boolean = false;
+  data: FormGroup = new FormGroup({});
+  updatePassword: FormGroup = new FormGroup({});
   progress: number = 0;
-  loading: boolean = false;
+  loadingInfo: boolean = false;
+  loadingPassword: boolean = false;
   loadingDocente: boolean = false;
   loadingImage: boolean = false;
   fileUpload?: File ;
-  confirmPassword: FormControl = new FormControl('',[Validators.required]);
-  passwordEquals: boolean = true;
-  roles: Rol[] = [];
+  user: UserWithToken = {};
 
-  @ViewChild('selectRol') elementSelectRol!: Dropdown;
+  @ViewChild('file') fileComponent!: FileUpload;
 
-  constructor(private messageService: MessageService,
+  constructor(private authService: AuthService,
+              private messageService: MessageService,
               private imageComprees: ImageCompressService,
-              public ngxMqttService: NgxMqttService,
-              private rolService: RolService,
+              public  ngxMqttService: NgxMqttService,
               private docenteService: DocenteService,
-              private personaService: PersonaService) { }
+              private personaService: PersonaService,
+              private superisorService: SupervisorService,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.initRoles();
     this.initForm();
   }
 
-  initRoles(){
-    this.rolService.getRoles().pipe(
+  initForm(): void {
+    this.data = new FormGroup({
+      //creamos todos los atributos de supervisor dentro del from
+      ci: new FormControl(0, [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      activo: new FormControl(true, [Validators.required]),
+    });
+    this.updatePassword = new FormGroup({
+      //creamos todos los atributos de supervisor dentro del from
+      ci: new FormControl(0, [Validators.required]),
+      contrasenia: new FormControl('', [
+            Validators.required]),
+      contraseniaNueva: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8)]),
+    });
+    this.authService.user$.pipe(
       tap((data: any) => {
-        this.roles = data.data;
+        this.user = data;
+        this.isSupervisorVerify(data.ci);
+        this.data.controls['ci'].setValue(data.ci);
+        this.updatePassword.controls['ci'].setValue(data.ci);
       })
     ).subscribe();
   }
 
-  initForm(): void {
-    this.docente = new FormGroup({
-      //creamos todos los atributos de docente dentro del from
-      ci: new FormControl(0, [Validators.required]),
-      nombre: new FormControl('', [Validators.required]),
-      apellido: new FormControl('', [Validators.required]),
-      fotografia: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      genero: new FormControl('', [Validators.required]),
-      correoInstitucional: new FormControl('', [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(formatCorreoInstitucional),
-      ]),
-      contrasenia: new FormControl('', [
-        Validators.required,
-        Validators.minLength(7),
-        Validators.maxLength(20)
-      ]),
-      activo: new FormControl(true, [Validators.required]),
-      rol: new FormControl(0, [Validators.required, Validators.min(1)]),
-      codRfid: new FormControl('', []),
-    });
-  }
-
-  onSubmit(): void {
-    this.loading = true;
-    this.docente.get('codRfid')?.setValue(this.ngxMqttService.messageDocenteRegister.codigoRfid);
-    this.saveDocente().pipe(
-      concatMap(() => {
-        return this.saveImageDocente();
+  isSupervisorVerify(ci: number){
+    this.superisorService.getSupervisorByCi(ci).pipe(
+      tap((data: any) => {
+        this.isSupervisor = true;
+        this.userInfo = data.data;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
       }),
       finalize(() => {
-        if(this.loadingDocente && this.loadingImage){
-          this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Sus datos se guardaron correctamente.'});
-          this.clearForm();
+        if(this.isSupervisor){
+          this.initFormSupervisor();
+        }else{
+          this.initFormDocente();
         }
-        this.loading = false;
+        this.initData(ci);
       })
     ).subscribe();
   }
 
-  clearForm(){
-    this.docente.reset();
-    this.confirmPassword.reset();
-    this.fileUpload = undefined;
-    this.passwordEquals = true;
-    this.progress = 0;
-    this.elementSelectRol.writeValue(null);
-    this.clearMqttRegistrarDocente();
+  initData(ci: number): void{
+    if(!this.isSupervisor){
+      this.docenteService.getDocenteByCi(ci).pipe(
+        tap((data: any) => {
+          this.userInfo = data.data;
+        })
+      ).subscribe();
+    }
   }
 
-  saveDocente(): Observable<any>{
-    return this.docenteService.saveDocente(this.docente.value).pipe(
-      tap(data => {
-        this.loadingDocente = data.save;
-        this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Docente guardado correctamente.'});
+
+  initFormSupervisor(): void {
+    this.data.addControl('reporteEmail', new FormControl(true, [Validators.required]));
+    this.data.addControl('reporteInstitucional', new FormControl(true, [Validators.required]));
+  }
+
+  initFormDocente(): void{
+    this.data.addControl('codRfid', new FormControl('', []));
+  }
+
+  onSubmitInfo(): void {
+    this.loadingInfo = true;
+    if(this.isSupervisor){
+      this.saveSupervisor();
+    }else{
+      this.saveDocente();
+    }
+  }
+
+  saveDocente(): void{
+    this.data.controls['codRfid'].setValue(this.ngxMqttService.messageDocenteRegister.codigoRfid);
+    this.docenteService.updateDocentePerfil(this.data.value).pipe(
+      tap((data: any) => {
+        if(data.update){
+          this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Se actualizo la información.'});
+          this.clearForm();
+        }
       }),
-      catchError(error => {
-        // Aquí puedes agregar el código que se ejecutará cuando ocurra un error al insertar el docente
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo guardar el docente.'});
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizar la información.'});
         return throwError(() => error);
-      }));
+      }),
+      finalize(() => {
+        this.loadingInfo = false;
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Iniciar Session',
+          detail:  `Su correo electrónico ha sido actualizado exitosamente.
+                    Por favor, inicie sesión nuevamente con su nueva
+                    dirección de correo para continuar.
+                    Será redirigido automáticamente a la página de inicio.
+                    `
+        });
+        // Ejecutar después de 2 segundos
+        setTimeout(() => {
+          this.router.navigateByUrl('/autenticación/acceso');
+        }, 2000); // 2 segundos en milisegundos
+      })
+    ).subscribe();
   }
 
-  saveImageDocente(): Observable<any>{
-    let result = new Observable<HttpEvent<any>>();
+  saveSupervisor(): void{
+    this.superisorService.updateSupervisorPerfil(this.data.value).pipe(
+      tap((data: any) => {
+        if(data.update){
+          this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Se actualizo la información.'});
+          this.clearForm();
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizar la información.'});
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.loadingInfo = false;
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Iniciar Session',
+          detail:  `Su correo electrónico ha sido actualizado exitosamente.
+                    Por favor, inicie sesión nuevamente con su nueva
+                    dirección de correo para continuar.
+                    Será redirigido automáticamente a la página de inicio.
+                    `
+        });
+        // Ejecutar después de 2 segundos
+        setTimeout(() => {
+          this.router.navigateByUrl('/autenticación/acceso');
+        }, 2000); // 2 segundos en milisegundos
+      })
+    ).subscribe();
+  }
+
+  onSubmitPassword(): void {
+    this.loadingPassword = true;
+    this.personaService.updatePassword(this.updatePassword.value).pipe(
+      tap((data: any) => {
+        if(data.update){
+          this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Se actualizo la contraseña.'});
+          this.clearFormPassword();
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña actual incorrecta.'});
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.loadingPassword = false;
+      })
+    ).subscribe();
+  }
+
+
+  updateImage(): void{
     if(this.fileUpload !== undefined){
-      result = this.personaService.saveImagePersona(this.fileUpload, this.docente.get('ci')?.value).pipe(
+      this.personaService.saveImagePersona(this.fileUpload, this.data.get('ci')?.value).pipe(
         tap((event: HttpEvent<any>) => {
           if (event.type === HttpEventType.UploadProgress) {
             // El archivo se está subiendo, puedes mostrar el progreso aquí
             this.progress = Math.round(100 * (event.loaded / (event.total ?? event.loaded)));
-            console.log(`Archivo subido: ${this.progress}%`);
             this.loadingImage = true;
-            this.messageService.add({ severity: 'info', summary: 'Cargando', detail: `Archivo subido: ${this.progress}%`});
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Cargado',
+              detail: `Archivo actualizado: ${this.progress}%`
+            });
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Informacion',
+              detail: 'Los cambios de la imagen se notaran en la proxima sesión.'
+            });
+            this.fileUpload = undefined;
+            this.fileComponent.clear();
           }
-          return event;
         }),
         catchError((error: any) => {
           // Manejar el error aquí
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo guardar la imagen.'});
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizado la imagen.'});
           this.loadingImage = false;
           return throwError(() => error);
-        }));
+        })
+      ).subscribe();
     }
-    return result;
   }
 
   async onSelect(event:any) {
@@ -167,20 +262,23 @@ export class PorfileComponent implements OnInit {
     }
   }
 
-  eventSelectRol(event:any){
-    this.docente.get('rol')?.setValue(event.value.id);
-  }
-
-  comparePassword(){
-    this.passwordEquals = this.docente.get('contrasenia')?.value !== this.confirmPassword.value;
-  }
-
   onClear(event:any): void{
     this.fileUpload = undefined;
   }
 
   clearMqttRegistrarDocente(){
     this.ngxMqttService.messageDocenteRegister.codigoRfid = '';
+    this.ngxMqttService.cardRfidLoad = false;
+  }
+
+  clearForm(){
+    this.data.reset();
+    this.progress = 0;
+    this.clearMqttRegistrarDocente();
+  }
+
+  clearFormPassword(){
+    this.updatePassword.reset();
   }
 
 }

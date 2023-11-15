@@ -16,6 +16,10 @@ export class DocenteService {
         this.apiUrl = environment.controlAsistenciaApiUrl + '/api/docentes';
     }
 
+    public updateDocentePerfil(command: any) {
+        return this.http.post<any>(this.apiUrl + '/perfil', command, {headers: this.httpHeaders});
+    }
+
     public getDocentes( order:number ,page:number,
                         limit: number, short: string): Observable<any> {
         return this.http.get<any>(this.apiUrl + '/page/' +page + '/' +

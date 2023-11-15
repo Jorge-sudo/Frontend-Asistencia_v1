@@ -11,7 +11,7 @@
                 severity="warn"
                 text="Ingrese la sigla para filtrar las materias."></p-message>
 
-            <label htmlFor="sigla">Sigla para filtrar la materia: </label>
+            <label htmlFor="sigla">Sigla para filtrar la materia: (*)</label>
             <input
               pInputText
               id="sigla"
@@ -36,7 +36,7 @@
                 severity="warn"
                 text="Seleccione la materia"></p-message>
 
-            <label htmlFor="materia">Materia: </label>
+            <label htmlFor="materia">Materia: (*)</label>
             <p-dropdown
               [options]="optionsMateriaCarreraSemestre"
               placeholder="Seleccione la materia"
@@ -59,7 +59,7 @@
                 severity="success"
                 text="Docente cargado."></p-message>
 
-            <label htmlFor="ci" >C.I. del docente que dictara la materia: </label>
+            <label htmlFor="ci" >C.I. del docente que dictara la materia: (*)</label>
             <input
               pInputText
               id="ci"
@@ -83,7 +83,7 @@
                 severity="warn"
                 text="Seleccione la aula" >
             </p-message>
-            <label htmlFor="aula">Aula: </label>
+            <label htmlFor="aula">Aula: (*)</label>
             <p-dropdown
               [options]="optionsAula"
               optionLabel="name"
@@ -136,7 +136,7 @@
                 severity="warn"
                 text="Seleccione el horario 1" >
             </p-message>
-            <label htmlFor="horario1">Horario 1: Seleccione Horario</label>
+            <label htmlFor="horario1">Horario 1: Seleccione Horario (*)</label>
             <p-dropdown
               [options]="optionsHorario"
               optionLabel="name"
@@ -185,7 +185,7 @@
                 severity="warn"
                 text="Seleccione el horario 2" >
             </p-message>
-            <label htmlFor="horario2">Horario 2: Seleccione Horario</label>
+            <label htmlFor="horario2">Horario 2: Seleccione Horario (*)</label>
             <p-dropdown
               [options]="optionsHorario"
               optionLabel="name"

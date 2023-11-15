@@ -1,6 +1,8 @@
 import { Role } from "./Role";
 
 export interface UserWithToken {
-  role: Role;
-  token: string;
+  ci?: number;
+  base64Image?: string;
+  name?: string;
+  role?: Role;
 }
