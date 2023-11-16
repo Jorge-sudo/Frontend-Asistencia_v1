@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { CookieService } from 'ngx-cookie-service';
 import { ButtonModule } from 'primeng/button';
+import { environment } from '../environments/environment';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -20,12 +21,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: '20.197.225.76',
-  port: 9001,
+  hostname: environment.mqttServiceOptions.hostname,
+  port: environment.mqttServiceOptions.port,
   protocol: 'ws', // Utiliza 'wss' si tu broker soporta SSL/TLS, de lo contrario utiliza 'ws'
-  path: '',
-  username: 'jorge',
-  password: 'jor123',
+  path: environment.mqttServiceOptions.path,
+  username: environment.mqttServiceOptions.username,
+  password: environment.mqttServiceOptions.password,
 };
 
 
