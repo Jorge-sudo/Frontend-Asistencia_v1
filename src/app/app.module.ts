@@ -20,12 +20,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: '192.168.1.8',
+  hostname: '20.197.225.76',
   port: 9001,
   protocol: 'ws', // Utiliza 'wss' si tu broker soporta SSL/TLS, de lo contrario utiliza 'ws'
   path: '',
   username: 'jorge',
-  password: 'jor12*\"@#',
+  password: 'jor123',
 };
 
 
