@@ -28,7 +28,7 @@ import { AuthGuard } from './asistencia/components/auth/guard/auth.guard';
                 ]
             },
             {
-                path: 'autenticación',
+                path: 'auth',
                 loadChildren: () => import('./asistencia/components/auth/auth.module').then(m => m.AuthModule)
             },
             {

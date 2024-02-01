@@ -1,5 +1,5 @@
 export const environment = {
-    controlAsistenciaApiUrl: 'https://20.197.225.76:443',
+    controlAsistenciaApiUrl: 'http://localhost:8080',
     production: true,
     mqttServiceOptions: {
       hostname: '20.197.225.76',

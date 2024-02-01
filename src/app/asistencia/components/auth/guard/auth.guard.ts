@@ -18,7 +18,7 @@ export class AuthGuard {
     // Verifica si el usuario tiene un token válido
     if(!this.authService.isValidUser()) {
       // Si el token no es válido, redirige al usuario a la página de inicio de sesión
-      this.router.navigate(['/autenticación/acceso']).then();
+      this.router.navigate(['/auth/acceso']).then();
       // Retorna false para evitar que el usuario acceda a la ruta protegida
       return false;
     }
@@ -32,7 +32,7 @@ export class AuthGuard {
     // Verifica si el usuario tiene un token válido
     if(!this.authService.isValidUser()) {
       // Si el token no es válido, redirige al usuario a la página de inicio de sesión
-      this.router.navigate(['/autenticación/acceso']).then();
+      this.router.navigate(['/auth/acceso']).then();
       // Retorna false para evitar que el usuario acceda a la ruta protegida
       return false;
     }
